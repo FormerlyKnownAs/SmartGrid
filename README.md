@@ -4,3 +4,5 @@ The SmartGrid assignment repository for the group 'The Group Formerly Known as '
 Members:
 
 Ben Groot
+
+Momo Schaap
