@@ -71,10 +71,23 @@ if __name__ == "__main__":
             newHouse = House(houseData[0], houseData[1], houseData[2])
             houseList.append(newHouse)
     
+    totalCost = 0
+
     with open("paths.txt","w+") as f:
 
-        f.write("coordinates, output, route, battery\n")
+        f.write("coordinates, output, route, battery, cost\n")
 
         for house in houseList:
             house.BatteryCheck(batteryList)
             f.write(f"{house}")
+            totalCost += house.cost
+    
+    with open("results.txt", "w+") as f:
+
+        f.write(f"Results for {filePrefix}.\n\n")
+        f.write(f"Total Distance of Cable = €{totalCost / 9}\n")
+        f.write(f"Total Cost of Cable = €{totalCost}\n")
+
+        allCost = len(batteryList) * 5000 + totalCost
+        f.write(f"Total cost = €{allCost}\n")
+
