@@ -1,0 +1,5 @@
+Results for wijk1.
+
+Total Distance of Cable = €4186.0
+Total Cost of Cable = €37674.0
+Total cost = €62674.0
