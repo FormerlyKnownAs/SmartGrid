@@ -18,3 +18,20 @@ Visualizatie via matpylab (check requirements.txt)
 
 Potenieel een route class
 
+
+Matrix:
+
+Een grid object met een opslag voor een matrix. Deze matrix is een dictionary, met een dictionary daar in. 
+
+Grid slaat hetvolgend op, hier eerst een template.
+{ KEY : { KEY : DATA } }
+{ Coordinaten op grid : { Netwerk ID : Permutatie van objecten } }
+
+Potentieel, de sleutels van de permutatie:
+Leeg = 0
+Kabel = 1
+Kabel, huis = 2
+Kabel, batterij = 3
+
+{ (10, 5) : { 2 : 2 } }
+
