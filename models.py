@@ -62,3 +62,37 @@ class Battery(object):
 
     def __str__(self):
         return f"Battery: {self.coordinates}"
+
+class Grid(object):
+    """The model for treating cables and houses the same as a battery """
+
+    def __init__(self, x, y, output):
+        """Initializeert het huis."""
+
+        self.coordinates = (x, y)
+        self.output = output
+        self.route = (None, None)
+        self.battery = (None, None)
+        self.cost = 0
+
+
+    def Network(self):
+        self.network = []
+        
+
+    def Battery(self, x, y, capacity):
+        self.coordinates = (x,y)
+        self.capacity = capacity
+
+    #  Lijst van tuples dat uiteindelijk Alle coordinaten van kabels die op 1 specifiek batterij geconnect zijn. zodat er op deze coordinaten
+    #  Gecheckt kan worden voor afstand calculatie
+    
+
+
+    # Batterij coordinaten zodat er een initiele afstand berekening gedaan kan worden.
+
+    # Huis coordinaten die connected zijn met de berekende dichtstbijzijnde batterij en dus lid zijn van het netwerk waarop we willen connecten. Opgeslagen in een lijst van tuples.
+    self.houses = []
+
+    #  Vanaf de batterij berekenen naar welk huis eerst kabels gelegd wordt, prioriteit geven aan low output huizen.
+    

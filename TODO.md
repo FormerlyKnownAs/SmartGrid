@@ -18,3 +18,9 @@ Visualizatie via matpylab (check requirements.txt)
 
 Potenieel een route class
 
+Oplossingen:
+
+Categorieen voor huizen op basis van output niveau
+Grid systeem waar we de originele grid opsplitsen in meerdere kleinere grids.
+
+
