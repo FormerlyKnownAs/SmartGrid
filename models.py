@@ -7,6 +7,9 @@ De modellen voor de SmartGrid assignment.
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
 """
+
+from main import cablesDict,batteryCapacity
+
 class Network(object):
     """The model for a cable network."""
 
@@ -18,7 +21,7 @@ class Network(object):
         
         # Verandert naar een dictionarry van lijsten
         self.cables = {self.source :[]}
-        self.cables = {1:[], 2:[], 3:[], 4:[], 5:[]}
+        
 
 
         sourceCable = (x, y)
@@ -65,15 +68,41 @@ class House(object):
                 ObjectivePosition = (X,Y)
 
 
-                for i in Network.cables.keys():
+                for i in cablesDict.keys():
                  
-                    if ObjectivePosition in Network.cables[i]:
-                        if Network.capacity > self.output:
+                    if ObjectivePosition in cablesDict[i]:
+
+                        if batteryCapacity[i] > self.output:
+                            # Hoeveel x posities verplaatst moeten worden
+                            xRoute = self.coordinates[0] - ObjectivePosition[0]
+                            yRoute = self.coordinates[1] - ObjectivePosition[1]
+
+                            #  If x position of network location is higher than the position of the house
+                            if ObjectivePosition[0] > self.coordinates[0]:
+                                for j in range(xRoute):
+                                    cablePosition = (self.coordinates[0] + i)
+                                    cablesDict[i].add((cablePosition, self.coordinates[1]))
+                                    # cablePosition en je pakt self.coordinates
+
+                            #  If x position of network location is lower than the position of the house
+                            if ObjectivePosition[0] < self.coordinates[0]:
+                                for j in range(xRoute):
+                                    cablePosition = (self.coordinates[0] - i)
+
+                            #  If y position of network location is higher than the position of the house
+                            if ObjectivePosition[1] > self.coordinates[1]:
+                            
+                                for j in range(yRoute):
+                                    cablePosition = (self.coordinates[1] + i)
+
+                            #  If y position of network is lower than the position of the house
+                            if ObjectivePosition[1] < self.coordinates[1]:
+                                for j in range(yRoute):
+                                    cablePosition = (self.coordinates[1] - i)
 
 
-
-
-
+                            
+                            
 
                 # Over de lijst van bekende kabels loopen, if (Objectieve positie) in self.cables:
                 if ObjectivePosition in self.cables

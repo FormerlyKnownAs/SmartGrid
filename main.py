@@ -21,7 +21,12 @@ if __name__ == "__main__":
 
     # Makes empty lists to be filled with csv data
     houseList = []
-    batteryList = []
+    networkList = []
+
+    # Makes empty dictionairy for the network
+    cablesDict = {}
+    batterCapacity = {}
+
 
 
     # Reads battery data
@@ -30,24 +35,30 @@ if __name__ == "__main__":
         # Skips header
         csvreader = csv.reader(f)
         next(csvreader, None)
-
+        networkNumber = 1
         # Reads the lines
         for line in f:
 
             # Makes an empty list to append battery data to
-            batteryData = []
+            networkData = []
 
             # Splits the data per line
             for element in line.split(","):
 
                 # Reads out numbers and stores them as floats
                 element = element.strip('"[]"')
-                batteryData.append(float(element))
+                networkData.append(float(element))
 
             # Makes battery object and adds to list
-            newBattery = Battery(batteryData[0], batteryData[1], batteryData[2])
-            batteryList.append(newBattery)
-    
+
+            newNetwork = Network(networkData[0], networkData[1], networkData[2])
+            networkList.append(newNetwork)
+
+            # Adds the individual networks and their positioning to the cables dictionairy.
+            cablesDict[networkNumber] = (networkData[0], networkData[1])
+            batteryCapacity[networkNumber] = networkData[2]
+            networkNumber += 1
+
     # Reads house data
     with open(f"data/{filePrefix}_huizen.csv", "r") as f:
 
@@ -72,7 +83,7 @@ if __name__ == "__main__":
             houseList.append(newHouse)
     
     totalCost = 0
-
+"""
     with open("paths.txt","w+") as f:
 
         f.write("coordinates, output, route, battery, cost\n")
@@ -91,3 +102,4 @@ if __name__ == "__main__":
         allCost = len(batteryList) * 5000 + totalCost
         f.write(f"Total cost = €{allCost}\n")
 
+"""
