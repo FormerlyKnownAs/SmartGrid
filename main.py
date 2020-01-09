@@ -25,6 +25,6 @@ if __name__ == "__main__":
     batteryCSV = f"data/{filePrefix}_batterijen.csv"
 
     nearestBatterySimple.NearestBattery(houseList, batteryList)
-
+    
 
     
