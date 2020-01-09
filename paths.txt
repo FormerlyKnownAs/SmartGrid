@@ -1,2 +1,0 @@
-coordinates, output, route, battery, cost
-(34.0, 47.0), 53.97543253, (34.0, 46.0), (22.0, 46.0), 117.0
