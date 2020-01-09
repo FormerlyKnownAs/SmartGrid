@@ -12,6 +12,7 @@ import sys
 from code.classes import house, battery
 import csv
 import re
+import random
 
 if __name__ == "__main__":
 
@@ -76,6 +77,9 @@ if __name__ == "__main__":
     with open("resultaten/paths.txt","w+") as f:
 
         f.write("coordinates, output, route, battery, cost\n")
+
+        # Randomizesthe 
+        random.shuffle(houseList)
 
         for house in houseList:
             house.BatteryCheck(batteryList)
