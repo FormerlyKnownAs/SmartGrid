@@ -26,6 +26,7 @@ if __name__ == "__main__":
 
     houseList = house.LoadHouses(houseCSV)
     batteryList = battery.LoadBatteries(batteryCSV)
+    networkList = network.LoadNetwork(batteryCSV)
 
     nearestBatterySimple.NearestBattery(houseList, batteryList)
 
