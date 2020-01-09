@@ -9,7 +9,7 @@ Ben Groot, Boy Stekelbos, Momo Schaap
 """
 
 import sys
-from models import Battery, House
+from code.classes.models import House, Battery
 import csv
 import re
 
