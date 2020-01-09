@@ -31,6 +31,7 @@ class House(object):
 
             # Checks capacity and if available checks distance to battery
             if battery.capacity > self.output:
+
                 distance = abs(self.coordinates[0] - battery.coordinates[0]) + abs(self.coordinates[1] - battery.coordinates[1])
                 print(f"Self = {self.coordinates}. Battery = {battery.coordinates}, Capacity = {battery.capacity}")
 
@@ -47,6 +48,8 @@ class House(object):
         self.route = (self.coordinates[0], self.battery[1])
         self.cost = shortestDistance * 9
         battery.capacity -= self.output
+
+        
 
     def __str__(self):
         return f"{self.coordinates}, {self.output}, {self.route}, {self.battery}, {self.cost}\n"
@@ -78,3 +81,34 @@ class Network(object):
 
     def __str__(self):
         return f"{self.capacity}, {self.source}, cables: {self.cables}"
+
+
+    #https://stackoverflow.com/questions/398299/looping-in-a-spiral
+    #  Geef de huis coordinaten mee.
+    def spiral(self, X, Y):
+
+        #  maak een figuratieve (0,0) positie voor het huis.
+        x = y = 0
+
+        #  Search functie begint bij (0,-1)
+        dx = 0
+        dy = -1
+
+        for i in range(max(X, Y)**2):
+            
+            # Loopt over een grid van 4 bij 4 
+            if (-X/2 < x <= X/2) and (-Y/2 < y <= Y/2):
+               
+                print (x, y)
+                # Objectieve positie berekenen
+                abs(self.coordinates[0] - battery.coordinates[0])
+
+                # Over de lijst van bekende kabels loopen, if (Objectieve positie) in self.cables:
+
+                # Als het capaciteit heeft
+
+            if x == y or (x < 0 and x == -y) or (x > 0 and x == 1-y):
+                dx, dy = -dy, dx
+            x, y = x+dx, y+dy              
+        
+        
