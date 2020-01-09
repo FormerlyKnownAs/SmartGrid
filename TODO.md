@@ -19,6 +19,7 @@ Visualizatie via matpylab (check requirements.txt)
 Potenieel een route class
 
 
+OUTDATED
 Matrix:
 
 Een grid object met een opslag voor een matrix. Deze matrix is een dictionary, met een dictionary daar in. 
@@ -34,4 +35,14 @@ Kabel, huis = 2
 Kabel, batterij = 3
 
 { (10, 5) : { 2 : 2 } }
+
+Voor Jan 8 & 9:
+
+Ons probleem lijkt op de travelling Salesman, zal wss literatuur over zijn voor betere resultaten. 
+
+Randomization van lijst. 
+
+Meerdere resultaten creeeren in een run. 
+
+Dijkstra & Graph theory kan potentieel helpen. 
 
