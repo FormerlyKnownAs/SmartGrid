@@ -83,6 +83,7 @@ class House(object):
                                 for j in range(xRoute):
                                     cablePosition = (self.coordinates[0] + j)
                                     cablesDict[i].add((cablePosition, self.coordinates[1]))
+                                    adjustedX = self.coordinates[0] + xRoute
                                     # cablePosition en je pakt self.coordinates
 
                             #  If x position of network location is lower than the position of the house
@@ -90,18 +91,19 @@ class House(object):
                                 for j in range(xRoute):
                                     cablePosition = (self.coordinates[0] - j)
                                     cablesDict[i].add((cablePostion, self.coordinates[1]))
+                                    adjustedX = self.coordinates[0] - xRoute
 
                             #  If y position of network location is higher than the position of the house
                             if ObjectivePosition[1] > self.coordinates[1]:
                                 for j in range(yRoute):
                                     cablePosition = (self.coordinates[1] + j)
-                                    cablesDict[i].add((self.coordinates[0], cablePosition))
+                                    cablesDict[i].add((adjustedX, cablePosition))
 
                             #  If y position of network is lower than the position of the house
                             if ObjectivePosition[1] < self.coordinates[1]:
                                 for j in range(yRoute):
                                     cablePosition = (self.coordinates[1] - j)
-                                    cablesDict[i].add((self.coordinates[0], cablePosition)
+                                    cablesDict[i].add((adjustedX, cablePosition)
             
             if x == y or (x < 0 and x == -y) or (x > 0 and x == 1-y):
                 dx, dy = -dy, dx
