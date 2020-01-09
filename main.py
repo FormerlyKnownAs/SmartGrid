@@ -24,6 +24,9 @@ if __name__ == "__main__":
     houseCSV = f"data/{filePrefix}_huizen.csv"
     batteryCSV = f"data/{filePrefix}_batterijen.csv"
 
+    houseList = house.LoadHouses(houseCSV)
+    batteryList = battery.LoadBatteries(batteryCSV)
+
     nearestBatterySimple.NearestBattery(houseList, batteryList)
 
 
