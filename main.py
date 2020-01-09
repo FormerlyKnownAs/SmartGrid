@@ -9,7 +9,7 @@ Ben Groot, Boy Stekelbos, Momo Schaap
 """
 
 import sys
-from code.classes.models import House, Battery
+from code.classes import house, battery
 import csv
 import re
 
@@ -45,7 +45,7 @@ if __name__ == "__main__":
                 batteryData.append(float(element))
 
             # Makes battery object and adds to list
-            newBattery = Battery(batteryData[0], batteryData[1], batteryData[2])
+            newBattery = battery.Battery(batteryData[0], batteryData[1], batteryData[2])
             batteryList.append(newBattery)
     
     # Reads house data
@@ -68,12 +68,12 @@ if __name__ == "__main__":
                 houseData.append(float(element))
 
             # Makes house object and adds to list
-            newHouse = House(houseData[0], houseData[1], houseData[2])
+            newHouse = house.House(houseData[0], houseData[1], houseData[2])
             houseList.append(newHouse)
     
     totalCost = 0
 
-    with open("paths.txt","w+") as f:
+    with open("resultaten/paths.txt","w+") as f:
 
         f.write("coordinates, output, route, battery, cost\n")
 
@@ -82,7 +82,7 @@ if __name__ == "__main__":
             f.write(f"{house}")
             totalCost += house.cost
     
-    with open("results.txt", "w+") as f:
+    with open("resultaten/results.txt", "w+") as f:
 
         f.write(f"Results for {filePrefix}.\n\n")
         f.write(f"Total Distance of Cable = €{totalCost / 9}\n")
