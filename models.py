@@ -8,7 +8,6 @@ The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
 """
 
-from main import cablesDict,batteryCapacity
 
 class Network(object):
     """The model for a cable network."""
@@ -20,7 +19,7 @@ class Network(object):
         self.source = (x, y)
         
         # Verandert naar een dictionarry van lijsten
-        self.cables = {self.source :[]}
+        
         
 
 
@@ -42,13 +41,13 @@ class House(object):
         self.battery = (None, None)
         self.cost = 0
 
-    def BatteryCheck(self, batteries):
+    def BatteryCheck(self, cablesDict,batteryCapacity):
         """Checks the best battery based on distance and current capacity."""
 
     # https://stackoverflow.com/questions/398299/looping-in-a-spiral
-        #  maak een figuratieve (0,0) positie voor het huis.
-        X = self.coordinates[0]
-        Y = self.coordinates[1]
+        # specificeert de groote van search grid.
+        X = 5
+        Y = 5
 
         x = y = 0
 
@@ -58,14 +57,14 @@ class House(object):
 
         for i in range(max(X, Y)**2):
             
-            # Loopt over een grid van 4 bij 4 
+             
             if (-X/2 < x <= X/2) and (-Y/2 < y <= Y/2):
                
                 print (x, y)
                 # Objectieve positie berekenen
-                ObjectiveX: abs(self.coordinates[0] - x)
-                ObjectiveY: abs(self.coordinates[1] - y)
-                ObjectivePosition = (X,Y)
+                ObjectiveX = self.coordinates[0] + x
+                ObjectiveY = self.coordinates[1] + y
+                ObjectivePosition = (ObjectiveX, ObjectiveY)
 
 
                 for i in cablesDict.keys():
@@ -73,6 +72,8 @@ class House(object):
                     if ObjectivePosition in cablesDict[i]:
 
                         if batteryCapacity[i] > self.output:
+
+                            network = i
                             # Hoeveel x posities verplaatst moeten worden
                             xRoute = self.coordinates[0] - ObjectivePosition[0]
                             yRoute = self.coordinates[1] - ObjectivePosition[1]
@@ -80,50 +81,41 @@ class House(object):
                             #  If x position of network location is higher than the position of the house
                             if ObjectivePosition[0] > self.coordinates[0]:
                                 for j in range(xRoute):
-                                    cablePosition = (self.coordinates[0] + i)
+                                    cablePosition = (self.coordinates[0] + j)
                                     cablesDict[i].add((cablePosition, self.coordinates[1]))
                                     # cablePosition en je pakt self.coordinates
 
                             #  If x position of network location is lower than the position of the house
                             if ObjectivePosition[0] < self.coordinates[0]:
                                 for j in range(xRoute):
-                                    cablePosition = (self.coordinates[0] - i)
+                                    cablePosition = (self.coordinates[0] - j)
+                                    cablesDict[i].add((cablePostion, self.coordinates[1]))
 
                             #  If y position of network location is higher than the position of the house
                             if ObjectivePosition[1] > self.coordinates[1]:
-                            
                                 for j in range(yRoute):
-                                    cablePosition = (self.coordinates[1] + i)
+                                    cablePosition = (self.coordinates[1] + j)
+                                    cablesDict[i].add((self.coordinates[0], cablePosition))
 
                             #  If y position of network is lower than the position of the house
                             if ObjectivePosition[1] < self.coordinates[1]:
                                 for j in range(yRoute):
-                                    cablePosition = (self.coordinates[1] - i)
-
-
-                            
-                            
-
-                # Over de lijst van bekende kabels loopen, if (Objectieve positie) in self.cables:
-                if ObjectivePosition in self.cables
-
-                # Als het capaciteit heeft
-
+                                    cablePosition = (self.coordinates[1] - j)
+                                    cablesDict[i].add((self.coordinates[0], cablePosition)
+            
             if x == y or (x < 0 and x == -y) or (x > 0 and x == 1-y):
                 dx, dy = -dy, dx
             x, y = x+dx, y+dy              
 
 
-        # Sets battery and route
-        self.battery = batteries[shortestIndex].coordinates
-        self.route = (self.coordinates[0], self.battery[1])
-        self.cost = shortestDistance * 9
-        battery.capacity -= self.output
+    # Adjusts network capacity
+    batteryCapacity[network] -= self.output
+    print(cablesDict)
 
         
 
     def __str__(self):
-        return f"{self.coordinates}, {self.output}, {self.route}, {self.battery}, {self.cost}\n"
+        return f"{self.coordinates}, {self.output}, {self.route}, {self.cost}\n"
 
 class Battery(object):
     """Het model voor de batterij."""
