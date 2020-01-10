@@ -46,3 +46,6 @@ Meerdere resultaten creeeren in een run.
 
 Dijkstra & Graph theory kan potentieel helpen. 
 
+https://en.wikipedia.org/wiki/Quadtree
+
+https://en.wikipedia.org/wiki/Binary_space_partitioning

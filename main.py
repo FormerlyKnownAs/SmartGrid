@@ -14,21 +14,79 @@ import re
 import random
 
 from code.classes import house, battery, network
-from code.algorithms import nearestBatterySimple, nearestNetworkSimple
+from code.algorithms import nearestBatterySimple, nearestNetworkSimple, nearestNetworkv2, nearestNetworkv2random
 
 if __name__ == "__main__":
     
-    filePrefix = sys.argv[1]
+    filePrefix = None
+    algorithmChoice = None
 
-    houseCSV = f"data/{filePrefix}_huizen.csv"
-    batteryCSV = f"data/{filePrefix}_batterijen.csv"
+    try:
+        filePrefix = sys.argv[3]
+    except:
+        filePrefix = "wijk1"
 
-    houseList = house.LoadHouses(houseCSV)
-    batteryList = battery.LoadBatteries(batteryCSV)
-    networkList = network.LoadNetwork(batteryCSV)
+    try:
+        algorithmChoice = sys.argv[2]
+    except:
+        algorithmChoice = 10000
 
-    # nearestBatterySimple.NearestBattery(houseList, batteryList)
-    nearestNetworkSimple.NearestNetwork(houseList, networkList)
+    try:
+        repetition = int(sys.argv[1])
+    except:
+        repetition = 1
+
+    with open("resultaten/simulatieresulaten.txt", "w+") as f:
+        
+        numberList = []
+        unconnectedHouseList = []
+        totalCostList = []
+        for i in range(repetition):
+
+            houseCSV = f"data/{filePrefix}_huizen.csv"
+            batteryCSV = f"data/{filePrefix}_batterijen.csv"
+
+            houseList = house.LoadHouses(houseCSV)
+            batteryList = battery.LoadBatteries(batteryCSV)
+            networkList = network.LoadNetwork(batteryCSV)
+
+            
+            if algorithmChoice == 1:
+                nearestBatterySimple.NearestBattery(houseList, batteryList)
+            elif algorithmChoice == 2:
+                nearestNetworkSimple.NearestNetwork(houseList, networkList)
+            elif algorithmChoice == 3:    
+                nearestNetworkv2.NearestNetworkV2(houseList, networkList)
+            else:
+                results = nearestNetworkv2random.NearestNetworkV2(houseList, networkList, i)
+                numberList.append(results[0])
+                unconnectedHouseList.append(results[1])
+                totalCostList.append(results[2])
+                f.write(f"{results[0]}:\n")
+                f.write(f"Unconnected Houses: {results[1]}\n")
+                f.write(f"Total Cost: {results[2]}\n")
+
+        f.write("################\n")
+
+
+        f.write("results with no unconnected houses:\n")
+
+        unconnectedHousesLength = 0
+        for i in range(len(unconnectedHouseList)):
+            if unconnectedHouseList[i] == 0:
+                f.write(f"{numberList[i]},")
+                unconnectedHousesLength += 1
+
+        f.write("\n\nscore for these unconnected house results:\n")        
+
+        for i in range(len(unconnectedHouseList)):
+            if unconnectedHouseList[i] == 0:
+                f.write(f"{totalCostList[i]},")
+
+        f.write(f"\n{(unconnectedHousesLength / repetition) * 100}% of results have 0 unconnected houses.\n")
+        f.write(f"lowest score is {min(totalCostList)}. Average score is {sum(totalCostList)/len(totalCostList)}.\n")
+
+
 
 
     

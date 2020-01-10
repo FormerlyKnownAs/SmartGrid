@@ -1,4 +1,14 @@
-def track(start, end):
+"""
+09-01-2020
+
+
+Draws a line from source to destination with manhattan distance. 
+
+The Group Formerly Known as 'The Prince Statement'
+Ben Groot, Boy Stekelbos, Momo Schaap
+"""
+
+def LineTrack(start, end):
     """ Returns a list of all coordinates between two given points, except for the last one"""
 
     # Define variables
@@ -10,8 +20,6 @@ def track(start, end):
 
     distanceX = abs(startX - endX)
     distanceY = abs(startY - endY)
-
-    # distance = abs((startX - endX) + (startY - endY))
 
     coordinates = []
     
@@ -42,11 +50,3 @@ def track(start, end):
             coordinates.append((startX + distanceX, startY - i))
 
     return coordinates
-
-
-house = (2, 7)
-network = (10, 5)
-
-
-path = track(house, network)
-print(path)

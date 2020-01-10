@@ -11,6 +11,7 @@ class House(object):
         self.route = (None, None)
         self.battery = (None, None)
         self.cost = 0
+        self.connected = False
 
     def BatteryCheck(self, batteries):
         """Checks the best battery based on distance and current capacity."""
@@ -42,7 +43,7 @@ class House(object):
 
 
     def __str__(self):
-        return f"{self.coordinates}, {self.output}, {self.route}, {self.battery}, {self.cost}\n"
+        return f"{self.coordinates}, {self.output}, {self.route}, {self.battery}, {self.cost}, {self.connected}\n"
 
 def LoadHouses(filePath):
 
@@ -62,11 +63,11 @@ def LoadHouses(filePath):
 
             for element in line.split(","):
 
-                # Reads out numbers and stores them as floats
-                houseData.append(float(element))
+                # Reads out numbers
+                houseData.append(element)
 
             # Appends to list
-            newHouse = House(houseData[0], houseData[1], houseData[2])
+            newHouse = House(int(houseData[0]), int(houseData[1]), float(houseData[2]))
             houses.append(newHouse)
 
     return houses

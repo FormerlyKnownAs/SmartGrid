@@ -36,10 +36,10 @@ def LoadNetwork(filePath):
 
                 # Reads out numbers and stores them as floats
                 element = element.strip('"[]"')
-                networkData.append(float(element))
+                networkData.append(element)
 
             # Appends to list
-            newNetwork = Network(networkData[0], networkData[1], networkData[2])
+            newNetwork = Network(int(networkData[0]), int(networkData[1]), float(networkData[2]))
             networks.append(newNetwork)
 
     return networks
