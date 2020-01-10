@@ -38,20 +38,14 @@ def NearestNetwork(houses, networks):
             shortestIndex = distanceList.index(shortestDistance)
 
             # Sets battery and route
-            house.battery = batteries[shortestIndex].coordinates
+            house.battery = networks[shortestIndex].source
             house.route = (house.coordinates[0], house.battery[1])
             house.cost = shortestDistance * 9
             network.capacity -= house.output
 
-            # Adds routes to network
-
-            # Finds straight line between points
-            xDistance = house.coordinates[0] - house.route[0]
-            yDistance = house.coordinates[1] - house.route[1]
-            
-            if xDistance == 0:
-                for i in range(yDistance):
-                    network
+            print(f"This is the network for battery id {network.source}")
+            for cable in network.cables:
+                print(cable)
 
             # Writes the house data to output file
             f.write(f"{house}")
@@ -63,5 +57,5 @@ def NearestNetwork(houses, networks):
         f.write(f"Total Distance of Cable = €{totalCost / 9}\n")
         f.write(f"Total Cost of Cable = €{totalCost}\n")
 
-        allCost = len(batteries) * 5000 + totalCost
+        allCost = len(networks) * 5000 + totalCost
         f.write(f"Total cost = €{allCost}\n")
