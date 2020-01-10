@@ -1,3 +1,8 @@
+<<<<<<< HEAD
 
     matplotlibpyplot==3.1.2
     numpy
+=======
+matplotlib==3.1.2
+numpy
+>>>>>>> 196005ef59058c6c30faa6b82d887f25fecc2e33

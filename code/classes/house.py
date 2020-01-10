@@ -1,12 +1,4 @@
-"""
-06-01-2020
-
-
-De modellen voor de SmartGrid assignment.
-
-The Group Formerly Known as 'The Prince Statement'
-Ben Groot, Boy Stekelbos, Momo Schaap
-"""
+import csv
 
 class House(object):
     """Het model voor het huis object."""
@@ -48,17 +40,33 @@ class House(object):
         self.cost = shortestDistance * 9
         battery.capacity -= self.output
 
+
     def __str__(self):
         return f"{self.coordinates}, {self.output}, {self.route}, {self.battery}, {self.cost}\n"
 
-class Battery(object):
-    """Het model voor de batterij."""
+def LoadHouses(filePath):
 
-    def __init__(self, x, y, capacity):
-        """Initializeert de batterij."""
+    # Makes list to return to be filled with csv data
+    houses = []
 
-        self.coordinates = (x, y)
-        self.capacity = capacity
+    with open(filePath, "r") as f:
 
-    def __str__(self):
-        return f"Battery: {self.coordinates}"
+        # Skips header
+        csvreader = csv.reader(f)
+        next (csvreader, None)
+
+        # Reads the lines
+        for line in f:
+
+            houseData = []
+
+            for element in line.split(","):
+
+                # Reads out numbers and stores them as floats
+                houseData.append(float(element))
+
+            # Appends to list
+            newHouse = House(houseData[0], houseData[1], houseData[2])
+            houses.append(newHouse)
+
+    return houses
