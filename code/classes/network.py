@@ -1,3 +1,5 @@
+import csv
+
 class Network(object):
     """The model for a cable network."""
 
@@ -6,15 +8,15 @@ class Network(object):
 
         self.capacity = capacity
         self.source = (x, y)
-        self.cables = list()
+        self.cables = set()
 
         sourceCable = (x, y)
-        self.cables.append(sourceCable)
+        self.cables.add(sourceCable)
 
     def __str__(self):
         return f"{self.capacity}, {self.source}, cables: {self.cables}"
 
- def LoadNetwork(filePath):
+def LoadNetwork(filePath):
 
     # Makes list to return to be filled with csv data
     networks = []
@@ -33,10 +35,11 @@ class Network(object):
             for element in line.split(","):
 
                 # Reads out numbers and stores them as floats
+                element = element.strip('"[]"')
                 networkData.append(float(element))
 
-        # Appends to list
-        newNetwork = Network(networkData[0], networkData[1], networkData[2])
-        networks.append(newNetwork)
+            # Appends to list
+            newNetwork = Network(networkData[0], networkData[1], networkData[2])
+            networks.append(newNetwork)
 
     return networks

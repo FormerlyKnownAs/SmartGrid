@@ -14,12 +14,11 @@ import re
 import random
 
 from code.classes import house, battery, network
-from code.algorithms import nearestBatterySimple
+from code.algorithms import nearestBatterySimple, nearestNetworkSimple
 
 if __name__ == "__main__":
     
     filePrefix = sys.argv[1]
-    outputFile = sys.argv[2]
 
     houseCSV = f"data/{filePrefix}_huizen.csv"
     batteryCSV = f"data/{filePrefix}_batterijen.csv"
@@ -28,9 +27,8 @@ if __name__ == "__main__":
     batteryList = battery.LoadBatteries(batteryCSV)
     networkList = network.LoadNetwork(batteryCSV)
 
-    nearestBatterySimple.NearestBattery(houseList, batteryList)
-    bubbleSort.distanceCalculation(houseList, networkList)
-    
-    
+    # nearestBatterySimple.NearestBattery(houseList, batteryList)
+    nearestNetworkSimple.NearestNetwork(houseList, networkList)
+
 
     

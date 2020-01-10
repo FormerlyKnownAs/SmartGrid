@@ -1,5 +1,5 @@
 Results.
 
-Total Distance of Cable = €2366.0
-Total Cost of Cable = €21294.0
-Total cost = €46294.0
+Total Distance of Cable = €193.0
+Total Cost of Cable = €1737.0
+Total cost = €11737.0
