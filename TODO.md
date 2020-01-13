@@ -49,3 +49,14 @@ Dijkstra & Graph theory kan potentieel helpen.
 https://en.wikipedia.org/wiki/Quadtree
 
 https://en.wikipedia.org/wiki/Binary_space_partitioning
+
+
+WIJK 1
+WORST SCORE:
+10764
+
+BEST SCORE:
+6471
+
+HOUSES CONNECTED:
+27.339999999999996%
