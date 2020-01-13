@@ -1,4 +1,4 @@
-def track(start, end):
+def TrackRandom(start, end):
     """ Returns a list of all coordinates between two given points, except for the last one"""
 
     # Define variables
@@ -11,42 +11,76 @@ def track(start, end):
     distanceX = abs(startX - endX)
     distanceY = abs(startY - endY)
 
-    # distance = abs((startX - endX) + (startY - endY))
-
     coordinates = []
     
-    # Track along x-axis
-    for i in range(distanceX):
+    if np.random.randint(2) == 1:
 
-        # Move "right"
-        if endX > startX:
-            
-            coordinates.append((startX + i, startY))
+        newX = startX
+        newY = startY
 
-        # Move "left"
-        if endX < startX:
+        # Track along x-axis
+        for i in range(distanceX):
 
-            coordinates.append((startX - i, startY))
+            # Move "right"
+            if endX > startX:
+                
+                coordinates.append([newX, startY])
+                newX += 1
 
-    # Track along y-axis
-    for i in range(distanceY):
+            # Move "left"
+            if endX < startX:
 
-        # Move "up"
-        if endY > startY:
+                coordinates.append([newX, startY])
+                newX -= 1
 
-            coordinates.append((startX + distanceX, startY + i))
+        # Track along y-axis
+        for i in range(distanceY + 1):
 
-        # Move "down"
-        if endY < startY:
+            # Move "up"
+            if endY > startY:
 
-            coordinates.append((startX + distanceX, startY - i))
+                coordinates.append([newX, newY])
+                newY += 1
+
+            # Move "down"
+            if endY < startY:
+
+                coordinates.append([newX, newY])
+                newY -= 1
+
+    else:
+
+        newX = startX
+        newY = startY
+
+        # Track along y-axis
+        for i in range(distanceY):
+
+            # Move "up"
+            if endY > startY:
+
+                coordinates.append([startX, newY])
+                newY += 1
+
+            # Move "down"
+            if endY < startY:
+
+                coordinates.append([startX, newY])
+                newY -= 1
+                 
+        # Track along x-axis
+        for i in range(distanceX + 1):
+
+            # Move "right"
+            if endX > startX:
+                
+                coordinates.append([newX, newY])
+                newX += 1
+
+            # Move "left"
+            if endX < startX:
+
+                coordinates.append([newX, newY])
+                newX -= 1
 
     return coordinates
-
-
-house = (2, 7)
-network = (10, 5)
-
-
-path = track(house, network)
-print(path)
