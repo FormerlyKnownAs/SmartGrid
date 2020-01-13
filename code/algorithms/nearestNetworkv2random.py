@@ -79,7 +79,7 @@ def NearestNetworkV2(houses, networks, id):
     number = 1
     pathName = None
     while pathFound is False:
-        path = f"resultaten/networkresults_{number}"
+        path = f"resultaten/networkresults_{number}.txt"
         if o.path.exists(path):
             number +=1
         else:
