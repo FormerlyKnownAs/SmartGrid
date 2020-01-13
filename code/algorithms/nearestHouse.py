@@ -40,5 +40,7 @@ def NearestHouse(houses, networks, id):
 
             for i in range(len(houseSorted)):
                 network
+                
+
             
 
