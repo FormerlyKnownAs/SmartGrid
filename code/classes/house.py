@@ -12,6 +12,7 @@ class House(object):
         self.battery = (None, None)
         self.cost = 0
         self.connected = False
+        self.distance = 0
 
     def BatteryCheck(self, batteries):
         """Checks the best battery based on distance and current capacity."""
