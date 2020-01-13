@@ -38,7 +38,20 @@ def NearestHouse(houses, networks, id):
         # Connects to the nearest house until capacity threshold of 200 is met
         while network.capacity > 200:
 
-            for i in range(len(houseSorted)):
-                network
+            for house in houseSorted:
+                
+                # Finds and attaches all cables
+                for cable in LineTrack(house.coordinates, coordinateList):
+                    network.cables.add(cable)
+
+                totalCost += house.distance * 9
+                network.capacity -= house.output
+                house.connected = True
+                houseSorted.pop(house)
+
+        nearbyHouses = houseSorted[:9]
+
+                
+
             
 
