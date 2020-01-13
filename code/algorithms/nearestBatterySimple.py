@@ -56,3 +56,5 @@ def NearestBattery(houses, batteries):
 
         allCost = len(batteries) * 5000 + totalCost
         f.write(f"Total cost = €{allCost}\n")
+
+
