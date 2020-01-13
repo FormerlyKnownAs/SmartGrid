@@ -19,7 +19,7 @@ def NearestNetwork(houses, networks):
         
         for house in houses:
 
-            # Makes empty list to store distance between house and battery
+            # Makes empty list to store distance between house and networkpoint
             distanceList = []
 
             for network in networks:

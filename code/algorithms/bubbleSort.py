@@ -19,9 +19,9 @@ class House(object):
             self.distanceList = []
             self.locationList
 
-            for network in networks:
-                if network.capacity > house.output:
-                    distance = abs(house.coordinates[0] - network.coordinates[0]) + abs(house.coordinates[0] - network.coordinates[1])
+            for networkPoint in networks:
+                if networkPoint.capacity > house.output:
+                    distance = abs(house.coordinates[0] - networkPoint.coordinates[0]) + abs(house.coordinates[0] - networkPoint.coordinates[1])
                     self.distanceList.append(distance)
         
 
@@ -37,9 +37,12 @@ class House(object):
                     nlist[i+1] = temp
 
     nlist = [14,46,43,27,57,41,45,21,70]
-
+    
     bubbleSort(nlist)
     print(nlist)
+    networkUpdate()
+
+    def networkUpdate(self, )
 
 
 
