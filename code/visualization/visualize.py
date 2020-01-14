@@ -15,18 +15,14 @@ def Visualize(input):
     housesStrings = []
     house_index = 0
     battery_index = 0
-
-    # cables = {}
     
     networks = {}
     houses = []
     batteries = []
 
-
     # Loop over batteries
     for battery in json_dict:
 
-        
         networks[battery_index] = []
 
         # Save battery coordinates as strings
@@ -52,15 +48,11 @@ def Visualize(input):
                 # Save cable
                 cableList.append(cableCoordinate)
                 
-            # Save cable sequences in dict under house index
-            
+            # Save cable sequence in dict under network index          
             networks[battery_index].append(cableList)
-            # cables[house_index] = cableList
-            # house_index += 1
-        
+
         battery_index += 1
 
-    print(networks)
 
     # Convert house coordinates to list-in-list format
     for house in housesStrings:
