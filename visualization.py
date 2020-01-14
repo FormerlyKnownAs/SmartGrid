@@ -1,58 +1,82 @@
 import matplotlib.pyplot as plt 
 import numpy as np 
-import csv
+import json
 
-def load():
-    
-    allCoordinates = []
+def Visualize(input):
+    """ Loads JSON file, convert into dict or list-in-list format,
+        visualize using pyplot """
 
-    with open(f"paths.txt", "r") as f:
+    # Load JSON file
+    with open(f"{input}.json", 'r') as JSON:
+        json_dict = json.load(JSON)
 
-        next(f)
+    # Declare various lists and variables for converting
+    batteriesStrings = []
+    housesStrings = []
+    house_index = 0
 
-        for line in f:
+    cables = {}
+    houses = []
+    batteries = []
 
-            connection = []
-            connectionCoordinates = []
 
-            for element in line.split(','):
-                    
-                element = element.strip('" () "')
-                connection.append(float(element))
+    # Loop over batteries
+    for battery in json_dict:
+
+        # Save battery coordinates as strings
+        batteriesStrings.append(battery["locatie"])
+
+        for house in battery["huizen"]:
+
+            # Save house coordinates as strings 
+            locatie = house["locatie"]
+            housesStrings.append(locatie)
+            cableList = []
+
+            for line in house["kabels"]:
+
+                cableCoordinate = []
+
+                for element in line.split(","):
+
+                    # Save and convert cable segment coordinates
+                    strippedElement = element.strip("'()'")
+                    cableCoordinate.append(int(strippedElement))
                 
-            connectionCoordinates = [connection[0], connection[1], connection[3], connection[4], connection[5], connection[6]]
-            allCoordinates.append(connectionCoordinates)
+                # Save cable
+                cableList.append(cableCoordinate)
+                
+            # Save cable sequences in dict under house index
+            cables[house_index] = cableList
+            house_index += 1
 
-    return allCoordinates
 
+    # Convert house coordinates to list-in-list format
+    for house in housesStrings:
 
-def visualize():
+        houseCoordinate = []
 
-    allCoordinates = load()
+        for element in house.split(","):
 
-    xlist = []
-    ylist = []
-    lines = ['r:', 'b-.', 'c:', 'm-.']
+            # Convert house coordinates
+            houseCoordinate.append(int(element))
 
-    for connection in allCoordinates:
+        houses.append(houseCoordinate)
 
-        x = [connection[0], connection[2], connection[4]]
-        xlist.append(x)
+    # Convert battery coordinates to list-in-list format
+    for battery in batteriesStrings:
 
-        y = [connection[1], connection[3], connection[5]]
-        ylist.append(y)
+        batteryCoordinate = []
 
-    for i in range(len(allCoordinates)):
+        for element in battery.split(","):
 
-        # Lines
-        plt.plot(xlist[i], ylist[i], lines[i % 3])
-        
-        # Batteries
-        plt.plot(xlist[i][0], ylist[i][0], 'r^')
+            # Convert battery coordinates
+            batteryCoordinate.append(int(element))
 
-        # Houses
-        plt.plot(xlist[i][2], ylist[i][2], 'bs')
+        batteries.append(batteryCoordinate)
 
+    
+    # Set up grid for visualization
     ticks = np.arange(0,50,1)
     plt.axis([0, 50, 0, 50])
     plt.xticks(ticks)
@@ -60,20 +84,29 @@ def visualize():
     plt.title("SmartGrid")
     plt.xlabel("")
     plt.ylabel("")
-    plt.grid(True, linewidth=1)
+    plt.grid(True, linewidth=0.3)
+
+    # Line types for cable visualization
+    lines = ['r:', 'b:', 'c:', 'm:']
+
+
+    # Draw cable
+    for i, cable in enumerate(cables.values()):
+
+        # Convert line coordinates into array for visualization
+        cablearray = np.array(cable)
+
+        plt.plot(*cablearray.T, lines[i % len(lines)])
+
+    # Draw houses
+    for house in houses:
+
+        plt.plot(house[0], house[1], 'r^')
+
+    # Draw batteries
+    for battery in batteries:
+
+        plt.plot(battery[0], battery[1], 'bs')
+
+    # Display grid
     plt.show()
-
-
-def main():
-
-
-    """
-    https://stackoverflow.com/questions/35363444/plotting-lines-connecting-points
-
-    def connectpoints(x,y,p1,p2):
-        x1, x2 = x[p1], x[p2]
-        y1, y2 = y[p1], y[p2]
-        plt.plot([x1,x2],[y1,y2],'k-')
-    """
-
-visualize()
