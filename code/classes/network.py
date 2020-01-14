@@ -6,8 +6,9 @@ class Network(object):
     def __init__(self, x, y, capacity):
         """Initializes the source location and capacity of the battery."""
 
-        self.capacity = capacity
         self.source = (x, y)
+        self.capacity = capacity
+        self.houses = []
         self.cables = set()
 
         sourceCable = (x, y)

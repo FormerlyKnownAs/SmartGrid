@@ -10,7 +10,10 @@ class House(object):
         self.output = output
         self.route = (None, None)
         self.battery = (None, None)
+        self.cables = []
         self.cost = 0
+
+        # attributes used for battery first approach
         self.connected = False
         self.distance = 0
 

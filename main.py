@@ -14,7 +14,7 @@ import re
 import random
 
 from code.classes import house, battery, network
-from code.algorithms import nearestBatterySimple, nearestNetworkSimple, nearestNetworkv2, nearestNetworkv2random, bestFitNetwork, nearestHouse
+from code.algorithms import nearestBatterySimple, nearestNetworkSimple, nearestNetworkv2, nearestNetworkv2random, bestFitNetwork, nearestHouse, nearestNetworkv3random
 
 if __name__ == "__main__":
     
@@ -76,9 +76,10 @@ if __name__ == "__main__":
                 f.write(f"{results[0]}")
                 f.write(f"Unconnected Houses: {results[1]}\n")
                 f.write(f"Total Cost: {results[2]}\n")
-
-            else:
+            elif algorithmChoice == 6:
                 results = nearestHouse.NearestHouse(houseList, networkList, i)
+            elif algorithmChoice >= 7:
+                results = nearestNetworkv3random.NearestNetworkV2(houseList, networkList, i)
 
         # f.write("################\n")
 

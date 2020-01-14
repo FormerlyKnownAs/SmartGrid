@@ -60,3 +60,11 @@ BEST SCORE:
 
 HOUSES CONNECTED:
 27.339999999999996%
+
+(boy):
+
+maak een versie van nearestNetworkv2random die alle resultaten in een lijst zet en die meegeeft aan een algoritme dat de kabels tussen batteriejen opnieuwe spant, om de kosten to optimalizeren. 
+
+(ben):
+
+maak de beste versie uitleesbaar
