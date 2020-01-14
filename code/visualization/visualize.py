@@ -7,7 +7,7 @@ def Visualize(input):
         visualize using pyplot """
 
     # Load JSON file
-    with open(f"{input}.json", 'r') as JSON:
+    with open(input, 'r') as JSON:
         json_dict = json.load(JSON)
 
     # Declare various lists and variables for converting
