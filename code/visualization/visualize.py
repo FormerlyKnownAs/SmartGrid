@@ -14,14 +14,20 @@ def Visualize(input):
     batteriesStrings = []
     housesStrings = []
     house_index = 0
+    battery_index = 0
 
-    cables = {}
+    # cables = {}
+    
+    networks = {}
     houses = []
     batteries = []
 
 
     # Loop over batteries
     for battery in json_dict:
+
+        
+        networks[battery_index] = []
 
         # Save battery coordinates as strings
         batteriesStrings.append(battery["locatie"])
@@ -47,9 +53,14 @@ def Visualize(input):
                 cableList.append(cableCoordinate)
                 
             # Save cable sequences in dict under house index
-            cables[house_index] = cableList
-            house_index += 1
+            
+            networks[battery_index].append(cableList)
+            # cables[house_index] = cableList
+            # house_index += 1
+        
+        battery_index += 1
 
+    print(networks)
 
     # Convert house coordinates to list-in-list format
     for house in housesStrings:
@@ -87,16 +98,18 @@ def Visualize(input):
     plt.grid(True, linewidth=0.3)
 
     # Line types for cable visualization
-    lines = ['r:', 'b:', 'c:', 'm:']
+    lines = ['y-', 'b-', 'c-', 'm-', 'g-']
+    colors = ['y^', 'b^', 'c^', 'm^', 'g^']
 
 
     # Draw cable
-    for i, cable in enumerate(cables.values()):
+    for i, network in enumerate(networks.values()):
 
-        # Convert line coordinates into array for visualization
-        cablearray = np.array(cable)
+        for cable in network:
+            # Convert line coordinates into array for visualization
+            cablearray = np.array(cable)
 
-        plt.plot(*cablearray.T, lines[i % len(lines)])
+            plt.plot(*cablearray.T, lines[i % len(lines)])
 
     # Draw houses
     for house in houses:
