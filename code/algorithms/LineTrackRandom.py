@@ -14,6 +14,26 @@ def TrackRandom(start, end):
     # distance = abs((startX - endX) + (startY - endY))
 
     coordinates = []
+
+    if distanceY == 0:
+
+        newX = startX
+        newY = startY
+
+        # Track along x-axis
+        for i in range(distanceX + 1):
+
+            # Move "right"
+            if endX > startX:
+                
+                coordinates.append([newX, startY])
+                newX += 1
+
+            # Move "left"
+            if endX < startX:
+
+                coordinates.append([newX, startY])
+                newX -= 1
     
     if np.random.randint(2) == 1:
 
