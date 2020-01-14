@@ -9,12 +9,12 @@ The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
 """
 
-from code.algorithms.linetrack import LineTrack
+from code.algorithms.LineTrackRandom import TrackRandom
 import random as r
 import os as o
 import json
 
-def NearestNetworkV2(houses, networks, id):
+def NearestNetworkV3(houses, networks, id):
 
     totalCost = 0
     unconnectedHouses = [] 
@@ -69,7 +69,7 @@ def NearestNetworkV2(houses, networks, id):
             closestNetwork = networks[shortestIndex]
 
             # Finds all cables
-            for cable in LineTrack(house.coordinates, coordinateList[shortestIndex]):
+            for cable in TrackRandom(house.coordinates, coordinateList[shortestIndex]):
                 closestNetwork.cables.add(cable)
                 house.cables.append(cable)
 
@@ -84,7 +84,7 @@ def NearestNetworkV2(houses, networks, id):
     number = 1
     pathName = None
     while pathFound is False:
-        path = f"resultaten/networkresults_{number}.js"
+        path = f"resultaten/networkresults_{number}.json"
         if o.path.exists(path):
             number +=1
         else:
@@ -95,11 +95,11 @@ def NearestNetworkV2(houses, networks, id):
     if len(unconnectedHouses) == 0:
 
         finalOutput = [{
-            "locatie": network.source,
+            "locatie": f"{network.source[0]}, {network.source[1]}",
             "capaciteit": network.capacity,
             "huizen": [
                 {
-                    "locatie": house.coordinates,
+                    "locatie": f"{house.coordinates[0]}, {house.coordinates[1]}",
                     "output": house.output,
                     "kabels": [
                         str(cable) for cable in house.cables
@@ -111,7 +111,7 @@ def NearestNetworkV2(houses, networks, id):
         with open(pathName, "w+") as f:
             json.dump(finalOutput, f)
 
-        return finalOutput, totalCost
+        return finalOutput, totalCost, path
 
     return None
     

@@ -1,3 +1,6 @@
+import random
+import numpy as np
+
 def TrackRandom(start, end):
     """ Returns a list of all coordinates between two given points, except for the last one"""
 
@@ -36,7 +39,7 @@ def TrackRandom(start, end):
                 newX -= 1
 
         # Track along y-axis
-        for i in range(distanceY):
+        for i in range(distanceY + 1):
 
             # Move "up"
             if endY > startY:
@@ -72,7 +75,7 @@ def TrackRandom(start, end):
         
               # Track along x-axis
 
-        for i in range(distanceX):
+        for i in range(distanceX + 1):
 
             # Move "right"
             if endX > startX:
@@ -86,6 +89,8 @@ def TrackRandom(start, end):
                 coordinates.append([newX, newY])
                 newX -= 1
 
+    newCoordinates = []
+    for cable in coordinates:
+        newCoordinates.append((cable[0], cable[1]))
 
-
-    return coordinates
+    return newCoordinates

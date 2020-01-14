@@ -15,6 +15,7 @@ import random
 
 from code.classes import house, battery, network
 from code.algorithms import nearestBatterySimple, nearestNetworkSimple, nearestNetworkv2, nearestNetworkv2random, bestFitNetwork, nearestHouse, nearestNetworkv3random
+from code.visualization import visualize
 
 if __name__ == "__main__":
     
@@ -79,7 +80,10 @@ if __name__ == "__main__":
             elif algorithmChoice == 6:
                 results = nearestHouse.NearestHouse(houseList, networkList, i)
             elif algorithmChoice >= 7:
-                results = nearestNetworkv3random.NearestNetworkV2(houseList, networkList, i)
+                results = nearestNetworkv3random.NearestNetworkV3(houseList, networkList, i)
+
+                if results is not None:
+                    visualize.Visualize(results[2])
 
         # f.write("################\n")
 
