@@ -113,5 +113,8 @@ def Visualize(input):
 
         plt.plot(battery[0], battery[1], 'bs')
 
-    # Display grid
-    plt.show()
+
+
+    input = input.strip(".json")
+    plt.savefig(f'{input}.png')
+    print("Visaualization graph added to resultaten.")
