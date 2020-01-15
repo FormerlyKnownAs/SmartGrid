@@ -68,3 +68,9 @@ maak een versie van nearestNetworkv2random die alle resultaten in een lijst zet 
 (ben):
 
 maak de beste versie uitleesbaar
+
+Hillclimb versies:
+Disconnect één huis naar keuze, en verbindt dit opnieuw. Blijf dit herhalen totdat de score niet meer verbeterd. 
+
+Random optimalisatie:
+Shuffle de huizen verbonden met batterijen. 
