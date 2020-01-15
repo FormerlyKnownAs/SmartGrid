@@ -14,7 +14,7 @@ import re
 import random
 
 from code.classes import house, battery, network
-from code.algorithms import nearestBatterySimple, nearestNetworkSimple, nearestNetworkv2, nearestNetworkv2random, bestFitNetwork, nearestHouse, nearestNetworkv3random
+from code.algorithms import nearestBatterySimple, nearestNetworkSimple, nearestNetworkv2, nearestNetworkv2random, bestFitNetwork, nearestHouse, nearestNetworkv3random, nearestNetworkShuffle
 from code.visualization import visualize
 
 if __name__ == "__main__":
@@ -79,11 +79,17 @@ if __name__ == "__main__":
                 f.write(f"Total Cost: {results[2]}\n")
             elif algorithmChoice == 6:
                 results = nearestHouse.NearestHouse(houseList, networkList, i)
-            elif algorithmChoice >= 7:
+            elif algorithmChoice == 7:
                 results = nearestNetworkv3random.NearestNetworkV3(houseList, networkList, i)
-
                 if results is not None:
                     visualize.Visualize(results[2])
+            elif algorithmChoice >= 8:
+                results = nearestNetworkv3random.NearestNetworkV3(houseList, networkList, i)
+                if results is not None:
+                    print("Starting the shuffle")
+                    visualize.Visualize(results[2])
+                    resultsNew = nearestNetworkShuffle.Shuffle(results[2], results[1])
+                    # visualize.Visualize(results[1])
 
         # f.write("################\n")
 
