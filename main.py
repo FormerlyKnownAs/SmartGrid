@@ -28,7 +28,7 @@ if __name__ == "__main__":
         filePrefix = "wijk1"
 
     try:
-        algorithmChoice = sys.argv[2]
+        algorithmChoice = int(sys.argv[2])
     except:
         algorithmChoice = 10000
 
@@ -89,7 +89,7 @@ if __name__ == "__main__":
                     print("Starting the shuffle")
                     visualize.Visualize(results[2])
                     resultsNew = nearestNetworkShuffle.Shuffle(results[2], results[1])
-                    # visualize.Visualize(results[1])
+                    visualize.Visualize(resultsNew[2])
 
         # f.write("################\n")
 

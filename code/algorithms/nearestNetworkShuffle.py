@@ -35,8 +35,8 @@ def Shuffle(inputFile, previousScore):
 
         # Finds all houses associated with network
         for house in network["huizen"]:
-            houseList.append(house)
             house["kabels"] = []
+            houseList.append(house)
 
         r.shuffle(houseList)
 
@@ -45,12 +45,10 @@ def Shuffle(inputFile, previousScore):
             
             cableDistance = []
             cableLocation = []
-
-            coordinatesHouse = house["locatie"].strip("()").split(",")
-            coordinatesHouse = (int(coordinatesHouse[0]), int(coordinatesHouse[0]))
+            coordinatesHouse = house["locatie"].split(",")
+            coordinatesHouse = (int(coordinatesHouse[0]), int(coordinatesHouse[1]))
 
             for cable in cables:
-
                 # calculates distance between cable and house
                 distanceCable = abs(coordinatesHouse[0] - cable[0]) + abs(coordinatesHouse[1] - cable[1])
                 cableDistance.append(distanceCable)
@@ -67,7 +65,30 @@ def Shuffle(inputFile, previousScore):
 
             totalCost += shortestCableDistance * 9
 
+    # Creates correct output format
+    # Finds filename for results
+    inputFile = inputFile.strip(".json")
+            
+    finalOutput = [{
+        "locatie": network["locatie"],
+        "capaciteit": network["capaciteit"],
+        "huizen": [
+            {
+                "locatie": house["locatie"],
+                "output": house["output"],
+                "kabels": [
+                    str(cable) for cable in house["kabels"]
+                ]
+            } for house in network["huizen"]
+        ]
+    } for network in json_dict]
+
+    with open(f"{inputFile}shuffle.json", "w+") as f:
+        json.dump(finalOutput, f, indent=4)
+
     print(f"Originally: {previousScore}, now: {totalCost}")
+
+    return finalOutput, totalCost, f"{inputFile}shuffle.json"
 
 
 
