@@ -114,6 +114,3 @@ def NearestNetworkV3(houses, networks, id):
 
     return None
     
-            
-
-
