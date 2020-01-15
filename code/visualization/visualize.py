@@ -12,9 +12,9 @@ def Visualize(input):
 
     # Declare various lists and variables for converting
     batteriesStrings = []
-    housesStrings = []
-    house_index = 0
     battery_index = 0
+
+    housesStrings = []
     
     networks = {}
     houses = []
