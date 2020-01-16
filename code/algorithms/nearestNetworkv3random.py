@@ -90,7 +90,7 @@ def NearestNetworkV3(houses, networks, id):
         else:
             pathName = path
             pathFound = True
-            
+
     if len(unconnectedHouses) == 0:
 
         finalOutput = [{
@@ -106,9 +106,6 @@ def NearestNetworkV3(houses, networks, id):
                 } for house in network.houses
             ]
         } for network in networks]
-
-        with open(pathName, "w+") as f:
-            json.dump(finalOutput, f, indent=4)
 
         return finalOutput, totalCost, path
 
