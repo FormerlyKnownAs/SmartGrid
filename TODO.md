@@ -73,4 +73,11 @@ Hillclimb versies:
 Disconnect één huis naar keuze, en verbindt dit opnieuw. Blijf dit herhalen totdat de score niet meer verbeterd. 
 
 Random optimalisatie:
-Shuffle de huizen verbonden met batterijen. 
+Shuffle de huizen verbonden met batterijen, en stuur een beter resultaat terug. 
+
+Heuristiek:
+Laat de bocht keuze afhangen van het meeste mogelijk nieuwe connecties
+
+SmartGrid:
+minimum spanningtree (https://en.wikipedia.org/wiki/Kruskal%27s_algorithm, https://en.wikipedia.org/wiki/Minimum_spanning_tree)
+Kijk naar pickle

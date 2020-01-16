@@ -117,4 +117,5 @@ def Visualize(input):
 
     input = input.strip(".json")
     plt.savefig(f'{input}.png')
+    plt.clf()
     print("Visaualization graph added to resultaten.")

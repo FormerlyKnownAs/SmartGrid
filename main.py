@@ -11,47 +11,35 @@ Ben Groot, Boy Stekelbos, Momo Schaap
 import sys
 import csv
 import re
-import random
+import random as r
 
 from code.classes import house, battery, network
-from code.algorithms import nearestBatterySimple, nearestNetworkSimple, nearestNetworkv2, nearestNetworkv2random, bestFitNetwork, nearestHouse, nearestNetworkv3random, nearestNetworkShuffle
+from code.algorithms import nearestBatterySimple, nearestNetworkSimple, nearestNetworkv2, nearestNetworkv2random, bestFitNetwork, nearestHouse, nearestNetworkv3random, nearestNetworkShuffle, nearestNetworkSort
 from code.visualization import visualize
 
-if __name__ == "__main__":
-    
-    filePrefix = None
-    algorithmChoice = None
+def main(filePrefix, algorithmChoice, repetition):
+    """
+        Chooses the file, function and repetition, and sends the output to the visualizer.
+    """
 
-    try:
-        filePrefix = sys.argv[3]
-    except:
-        filePrefix = "wijk1"
-
-    try:
-        algorithmChoice = int(sys.argv[2])
-    except:
-        algorithmChoice = 10000
-
-    try:
-        repetition = int(sys.argv[1])
-    except:
-        repetition = 1
-
+    # Opens the results file to possibly write results in
     with open("resultaten/simulatieresulaten.txt", "w+") as f:
         
+        # Sets the information to be called upon later
         numberList = []
         unconnectedHouseList = []
         totalCostList = []
+
+        # Loads in the data types
+        houseCSV = f"data/{filePrefix}_huizen.csv"
+        batteryCSV = f"data/{filePrefix}_batterijen.csv"
+        houseList = house.LoadHouses(houseCSV)
+        batteryList = battery.LoadBatteries(batteryCSV)
+        networkList = network.LoadNetwork(batteryCSV)
+
+        # Chooses the algorithm
         for i in range(repetition):
 
-            houseCSV = f"data/{filePrefix}_huizen.csv"
-            batteryCSV = f"data/{filePrefix}_batterijen.csv"
-
-            houseList = house.LoadHouses(houseCSV)
-            batteryList = battery.LoadBatteries(batteryCSV)
-            networkList = network.LoadNetwork(batteryCSV)
-
-            
             if algorithmChoice == 1:
                 nearestBatterySimple.NearestBattery(houseList, batteryList)
             elif algorithmChoice == 2:
@@ -83,33 +71,106 @@ if __name__ == "__main__":
                 results = nearestNetworkv3random.NearestNetworkV3(houseList, networkList, i)
                 if results is not None:
                     visualize.Visualize(results[2])
-            elif algorithmChoice >= 8:
+            elif algorithmChoice == 8:
                 results = nearestNetworkv3random.NearestNetworkV3(houseList, networkList, i)
                 if results is not None:
-                    print("Starting the shuffle")
+                    baseCost = results[1]
+                    print("Starting the sort")
                     visualize.Visualize(results[2])
-                    resultsNew = nearestNetworkShuffle.Shuffle(results[2], results[1])
-                    visualize.Visualize(resultsNew[2])
+                    j = 0
+                    k = 0
+                    allResults = []
+                    allCostResults = []
+                    while j < 100 and k < 500:
+                        resultsNew = nearestNetworkShuffle.Shuffle(results[2], results[1])
+                        allCostResults.append(resultsNew[1])
+                        allResults.append(resultsNew)
+                        k += 1
+                        if resultsNew[1] < baseCost:
+                            j += 1
 
-        # f.write("################\n")
+                    # Gets information of run
+                    print(f"best Change: {min(allCostResults)}, total of {baseCost - min(allCostResults)}\nworst Change: {max(allCostResults)}, total of {baseCost - max(allCostResults)}\naverage change: {baseCost - (sum(allCostResults) / len(allCostResults))}.\n Total attempts: {k}, unsuccessful ones = {k - j}")
+                    
+                    # Visualizes best result
+                    visualize.Visualize(allResults[allCostResults.index(min(allCostResults))][2])
+            elif algorithmChoice == 9:
+                results = nearestNetworkv3random.NearestNetworkV3(houseList, networkList, i)
+                if results is not None:
+                    baseCost = results[1]
+                    print("Starting the sort")
+                    visualize.Visualize(results[2])
+                    j = 0
+                    k = 0
+                    allResults = []
+                    allCostResults = []
+                    while j < 500:
+                        resultsNew = nearestNetworkSort.Sort(results[2], results[1])
+                        allCostResults.append(resultsNew[1])
+                        allResults.append(resultsNew)
+                        k += 1
+                        if resultsNew[1] < baseCost:
+                            j += 1
 
+                    # Gets information of run
+                    print(f"best Change: {min(allCostResults)}, total of {baseCost - min(allCostResults)}\nworst Change: {max(allCostResults)}, total of {baseCost - max(allCostResults)}\naverage change: {baseCost - (sum(allCostResults) / len(allCostResults))}.\n Total attempts: {k}, unsuccessful ones = {k - j}")
+                    
+                    # Visualizes best result
+                    visualize.Visualize(allResults[allCostResults.index(min(allCostResults))][2])
+            elif algorithmChoice >= 10:
+                results = nearestNetworkv3random.NearestNetworkV3(houseList, networkList, i)
+                if results is not None:
+                    baseCost = results[1]
+                    print("starting the shuffle & sort")
+                    visualize.Visualize(results[2])
+                    j = 0
+                    totalRuns = 0
+                    sortRuns = 0
+                    shuffleRuns = 0
+                    allResults = []
+                    allCostResults = []
+                    while j < 100:
+                        optimizerChoice = r.randint(1, 2)
 
-        # f.write("results with no unconnected houses:\n")
+                        if optimizerChoice == 1:
+                            resultsNew = nearestNetworkShuffle.Shuffle(results[2], results[1])
+                            shuffleRuns += 1
+                        else:
+                            resultsNew = nearestNetworkSort.Sort(results[2], results[1])
+                            sortRuns += 1
 
-        # unconnectedHousesLength = 0
-        # for i in range(len(unconnectedHouseList)):
-        #     if unconnectedHouseList[i] == 0:
-        #         f.write(f"{numberList[i]},")
-        #         unconnectedHousesLength += 1
+                        allCostResults.append(resultsNew[1])
+                        allResults.append(resultsNew)
+                        totalRuns += 1
+                        if resultsNew[1] < baseCost:
+                            j += 1
 
-        # f.write("\n\nscore for these unconnected house results:\n")        
+                    # Gets information of run
+                    print(f"did {totalRuns} runs. {shuffleRuns} were shuffled, {sortRuns} were sorted")
+                    print(f"best Change: {min(allCostResults)}, total of {baseCost - min(allCostResults)}\nworst Change: {max(allCostResults)}, total of {baseCost - max(allCostResults)}\naverage change: {baseCost - (sum(allCostResults) / len(allCostResults))}.\n Total attempts: {totalRuns}, unsuccessful ones = {totalRuns - j}")
+                    
+                    # Visualizes best result
+                    visualize.Visualize(allResults[allCostResults.index(min(allCostResults))][2])
 
-        # for i in range(len(unconnectedHouseList)):
-        #     if unconnectedHouseList[i] == 0:
-        #         f.write(f"{totalCostList[i]},")
+if __name__ == "__main__":
 
-        # f.write(f"\n{(unconnectedHousesLength / repetition) * 100}% of results have 0 unconnected houses.\n")
-        # f.write(f"lowest score is {min(totalCostList)}. Average score is {sum(totalCostList)/len(totalCostList)}.\n")
+    # Sets the parameters of the function based on the input, and creates default values
+    try:
+        filePrefix = sys.argv[3]
+    except:
+        filePrefix = "wijk1"
+
+    try:
+        algorithmChoice = int(sys.argv[2])
+    except:
+        algorithmChoice = 10000
+
+    try:
+        repetition = int(sys.argv[1])
+    except:
+        repetition = 1
+
+    main(filePrefix, algorithmChoice, repetition)
 
 
 
