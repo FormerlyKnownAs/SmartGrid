@@ -11,10 +11,7 @@ def Visualize(input):
         json_dict = json.load(JSON)
 
     # Declare various lists and variables for converting
-    batteriesStrings = []
     battery_index = 0
-
-    housesStrings = []
     
     networks = {}
     houses = []
@@ -26,25 +23,20 @@ def Visualize(input):
         networks[battery_index] = []
 
         # Save battery coordinates as strings
-        batteriesStrings.append(battery["locatie"])
+        batteries.append(ListFormat(battery["locatie"]))
 
         for house in battery["huizen"]:
 
             # Save house coordinates as strings 
             locatie = house["locatie"]
-            housesStrings.append(locatie)
+            houses.append(ListFormat(locatie))
+
             cableList = []
 
             for line in house["kabels"]:
 
-                cableCoordinate = []
+                cableCoordinate = ListFormat(line)
 
-                for element in line.split(","):
-
-                    # Save and convert cable segment coordinates
-                    strippedElement = element.strip("'()'")
-                    cableCoordinate.append(int(strippedElement))
-                
                 # Save cable
                 cableList.append(cableCoordinate)
                 
@@ -54,29 +46,17 @@ def Visualize(input):
         battery_index += 1
 
 
-    # Convert house coordinates to list-in-list format
-    for house in housesStrings:
+def ListFormat(string):
 
-        houseCoordinate = []
+    outputList = []
 
-        for element in house.split(","):
 
-            # Convert house coordinates
-            houseCoordinate.append(int(element))
+    for element in string.split(","):
 
-        houses.append(houseCoordinate)
+        element = element.strip("'()'")
+        outputList.append(int(element))
 
-    # Convert battery coordinates to list-in-list format
-    for battery in batteriesStrings:
-
-        batteryCoordinate = []
-
-        for element in battery.split(","):
-
-            # Convert battery coordinates
-            batteryCoordinate.append(int(element))
-
-        batteries.append(batteryCoordinate)
+    return outputList
 
     
     # Set up grid for visualization

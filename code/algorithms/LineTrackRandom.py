@@ -106,8 +106,7 @@ def TrackRandom(start, end):
                 coordinates.append([startX, newY])
                 newY -= 1
         
-              # Track along x-axis
-
+        # Track along x-axis
         for i in range(distanceX + 1):
 
             # Move "right"
