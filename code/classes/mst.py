@@ -58,12 +58,14 @@ def Sort(inputFile, previousScore):
 
 def Formatting(houseCoordinates):
     i = 0
+    id = 0
     for network in houseCoordinates:
         i += 1 
         print("network:", i)
         for house in network:
             coordinates  = house.strip(", ")
-            xLocation = house
+            Vertix(coordinates, id)
+            id += 1
             print(coordinates)
             # for house in network:
             #     distance = abs(house.coordinates[0] - )
@@ -160,7 +162,24 @@ class Graph:
         for u,v,weight  in result: 
             #print str(u) + " -- " + str(v) + " == " + str(weight) 
             print("%d -- %d == %d" % (u,v,weight)) 
+
+class Vertix():
+
+    def __init__(self, coordinates, id):
+        self.coordinates = coordinates
+        self.id = id
+        self.distances = {}
     
+        
+        print("House id:",self.id)
+        print("Works:" self.id[2])
+
+    def distanceCalculation():
+        distaceLists = []
+        for house in houseCoordinates[0]
+        self.coordinates 
+
+
 
    
 
