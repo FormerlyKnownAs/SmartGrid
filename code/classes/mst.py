@@ -9,6 +9,7 @@ def Sort(inputFile, previousScore):
     # Set variables to be measured
     totalCost = 0
     distanceList = [[] for i in range(5)]
+    i = -1
 
     # Load JSON file
     with open(inputFile, 'r') as JSON:
@@ -16,6 +17,8 @@ def Sort(inputFile, previousScore):
 
     # Declare the conversion lists
     newJSON = []
+
+    houseCoordinates = [[]for i in range(5)]
     
     for network in json_dict:
 
@@ -26,25 +29,44 @@ def Sort(inputFile, previousScore):
         sourceCable = network["locatie"].strip("()").split(",")
         sourceCable = (int(sourceCable[0]), int(sourceCable[1]))
         cables.add(sourceCable)
+        i += 1
 
         # Finds all houses associated with network
         for house in network["huizen"]:
+            
+            houseCoordinates[i].append(house["locatie"])
+            
             house["kabels"] = []
             coordinatesHouse = house["locatie"].split(",")
             coordinatesHouse = (int(coordinatesHouse[0]), int(coordinatesHouse[1]))
+           
             # For each house in the network loop over all houses in the network again to calculate distances 
-            for location in network["huizen"]:
-                if house.coordinates != location.coordinates:
-
-                    distance = abs(house.coordinates[0] - location.coordinates[0]) + abs(house.coordinates[1] - location.coordinates[1])
 
 
+            # for location in network["huizen"]:
+            #     if house.coordinates != location.coordinates:
 
-            
+            #         distance = abs(house.coordinates[0] - location.coordinates[0]) + abs(house.coordinates[1] - location.coordinates[1])
+
+    # print(houseCoordinates[3])
+    # print(houseCoordinates[1])
+    # print(houseCoordinates[2])
+
+    Formatting(houseCoordinates)
     return houseList
         
 
-def preparation():
+def Formatting(houseCoordinates):
+    i = 0
+    for network in houseCoordinates:
+        i += 1 
+        print("network:", i)
+        for house in network:
+            coordinates  = house.strip(", ")
+            xLocation = house
+            print(coordinates)
+            # for house in network:
+            #     distance = abs(house.coordinates[0] - )
 
     
 
@@ -158,6 +180,8 @@ if __name__ == "__main__":
     
     g.KruskalMST()
     Sort("networkresults_1.json",6570)
+    
+    
 
     
 
