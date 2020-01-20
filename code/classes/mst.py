@@ -4,19 +4,18 @@ import json
 # Source: https://www.geeksforgeeks.org/kruskals-minimum-spanning-tree-algorithm-greedy-algo-2/
 
 
-def ListFormat(string):
+class Vertix():
 
-    outputList = []
+    def __init__(self, coordinates, id, network):
+        self.coordinates = coordinates
+        self.id = id
+        self.distances = {}
+        self.network = network
+    
+    def __str__(self):
+        return f" coordinates:{self.coordinates}, id: {self.id}, network: {self.network}\n"
 
-
-    for element in string.split(","):
-
-        element = element.strip("'()'")
-        outputList.append(int(element))
-
-    return outputList
-
-def HouseObjects(inputFile):
+def Sort(inputFile, previousScore):
 
 
     # Load JSON file
@@ -25,24 +24,38 @@ def HouseObjects(inputFile):
 
     networks = {}
     
-    for i, network in enumerate(json_dict):
-
-
-        houseList = []
-
+    for network in json_dict:
+        i += 1
 
         for house in network["huizen"]:
-
-
-    
-
-
+            
+            houseCoordinates[i].append(house["locatie"])
+            
+            # Hier vertix object aanmaken
 
     Formatting(houseCoordinates)
-    return houseList
+
         
 
-
+def Formatting(houseCoordinates):
+    i = 0
+    id = 0
+    network = 1
+    for network in houseCoordinates:
+        i += 1 
+        # print("network:", i)
+        for house in network:
+            coordinates  = house.strip(", ")
+            Vertix(coordinates, id, network)
+            id += 1
+            # print(coordinates)
+    print("netwerk 3:", houseCoordinates[2][0])
+    
+    for house in houseCoordinates[2]:
+        
+        id += 1
+        print('id', id, house)
+    print(houseCoordinates[2])
 
 
 #Class to represent a graph 
@@ -134,27 +147,6 @@ class Graph:
             #print str(u) + " -- " + str(v) + " == " + str(weight) 
             print("%d -- %d == %d" % (u,v,weight)) 
 
-class Vertix(object):
-
-    def __init__(self, coordinates, id):
-        self.coordinates = coordinates
-        self.id = id
-        self.distances = {}
-    
-        
-        print("House id:",self.id)
-        print("Works:" self.id[2])
-
-    def distanceCalculation():
-        distaceLists = []
-        for house in houseCoordinates[0]
-        self.coordinates 
-
-
-
-   
-
-
 if __name__ == "__main__":
 
     # Elke batterij heeft een bepaalde hoeveelheid huizen
@@ -172,8 +164,3 @@ if __name__ == "__main__":
     Sort("networkresults_1.json",6570)
     
     
-
-    
-
-
-

@@ -44,12 +44,24 @@ def NearestHouse(houses, networks, id):
             nearestHouseDistance = min(cableDistances)
             nearestHouseIndex = houseDistances.index(nearestHouseDistance)
 
-            shortestConnection = houseLocation[nearestHouseIndex]
+            nearestHouse = houseLocation[nearestHouseIndex]
+
 
 
 
 
         
+def ShortestConnection(cable, distanceList, houseList):
+
+        shortestDistance = min(distanceList)
+        shortestDistanceIndex = distanceList.index(shortestDistance)
+        houseCoordinates = houseList[shortestDistanceIndex]
+        
+
+
+
+    return path, houseCoordinates
+
 
 
 
