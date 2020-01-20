@@ -105,7 +105,7 @@ def main(filePrefix, algorithmChoice, repetition):
                     bestScore = 10000
                     finalOption = None
 
-                    while failedImprovements < 500:
+                    while failedImprovements < 100:
                         runCounter += 1
 
                         results = nearestNetworkv3random.NearestNetworkV3(houseList, networkList, i)

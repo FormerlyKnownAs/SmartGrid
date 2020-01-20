@@ -81,3 +81,7 @@ Laat de bocht keuze afhangen van het meeste mogelijk nieuwe connecties
 SmartGrid:
 minimum spanningtree (https://en.wikipedia.org/wiki/Kruskal%27s_algorithm, https://en.wikipedia.org/wiki/Minimum_spanning_tree)
 Kijk naar pickle
+
+VISUALISATIE
+oud-nieuwe kabels
+vizzz
