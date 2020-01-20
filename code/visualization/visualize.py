@@ -2,6 +2,19 @@ import matplotlib.pyplot as plt
 import numpy as np 
 import json
 
+
+def ListFormat(string):
+
+    outputList = []
+
+    for element in string.split(","):
+
+        element = element.strip("'()'")
+        outputList.append(int(element))
+
+    return outputList
+
+
 def Visualize(input):
     """ Loads JSON file, convert into dict or list-in-list format,
         visualize using pyplot """
@@ -10,53 +23,33 @@ def Visualize(input):
     with open(input, 'r') as JSON:
         json_dict = json.load(JSON)
 
-    # Declare various lists and variables for converting
-    battery_index = 0
-    
+    # Declare various lists and variables for converting  
     networks = {}
     houses = []
     batteries = []
 
     # Loop over batteries
-    for battery in json_dict:
+    for i, battery in enumerate(json_dict):
 
-        networks[battery_index] = []
+        networks[i] = []
 
-        # Save battery coordinates as strings
+        # Format battery coordinate strings as list and append to battery list
         batteries.append(ListFormat(battery["locatie"]))
 
         for house in battery["huizen"]:
 
-            # Save house coordinates as strings 
-            locatie = house["locatie"]
-            houses.append(ListFormat(locatie))
+            # Format house coordinate strings as list and append to house list
+            houses.append(ListFormat(house["locatie"]))
 
             cableList = []
 
             for line in house["kabels"]:
 
-                cableCoordinate = ListFormat(line)
-
-                # Save cable
-                cableList.append(cableCoordinate)
+                # Format cable coordinate strings as list and append to cable list
+                cableList.append(ListFormat(line))
                 
             # Save cable sequence in dict under network index          
-            networks[battery_index].append(cableList)
-
-        battery_index += 1
-
-
-def ListFormat(string):
-
-    outputList = []
-
-
-    for element in string.split(","):
-
-        element = element.strip("'()'")
-        outputList.append(int(element))
-
-    return outputList
+            networks[i].append(cableList)
 
     
     # Set up grid for visualization
@@ -71,13 +64,12 @@ def ListFormat(string):
 
     # Line types for cable visualization
     lines = ['y-', 'b-', 'c-', 'm-', 'g-']
-    colors = ['y^', 'b^', 'c^', 'm^', 'g^']
-
 
     # Draw cable
     for i, network in enumerate(networks.values()):
 
         for cable in network:
+
             # Convert line coordinates into array for visualization
             cablearray = np.array(cable)
 
@@ -93,8 +85,7 @@ def ListFormat(string):
 
         plt.plot(battery[0], battery[1], 'bs')
 
-
-
+    # Add visualization png to resultaten folder
     input = input.strip(".json")
     plt.savefig(f'{input}.png')
     plt.clf()
