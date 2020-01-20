@@ -4,6 +4,17 @@ import json
 # Source: https://www.geeksforgeeks.org/kruskals-minimum-spanning-tree-algorithm-greedy-algo-2/
 
 
+class Vertix():
+
+    def __init__(self, coordinates, id, network):
+        self.coordinates = coordinates
+        self.id = id
+        self.distances = {}
+        self.network = network
+    
+    def __str__(self):
+        return f" coordinates:{self.coordinates}, id: {self.id}, network: {self.network}\n"
+
 def Sort(inputFile, previousScore):
 
     # Set variables to be measured
@@ -21,14 +32,6 @@ def Sort(inputFile, previousScore):
     houseCoordinates = [[]for i in range(5)]
     
     for network in json_dict:
-
-        houseList = []
-        cables = set()
-
-        # Sets the battery as the first cable
-        sourceCable = network["locatie"].strip("()").split(",")
-        sourceCable = (int(sourceCable[0]), int(sourceCable[1]))
-        cables.add(sourceCable)
         i += 1
 
         # Finds all houses associated with network
@@ -36,42 +39,31 @@ def Sort(inputFile, previousScore):
             
             houseCoordinates[i].append(house["locatie"])
             
-            house["kabels"] = []
-            coordinatesHouse = house["locatie"].split(",")
-            coordinatesHouse = (int(coordinatesHouse[0]), int(coordinatesHouse[1]))
-           
-            # For each house in the network loop over all houses in the network again to calculate distances 
-
-
-            # for location in network["huizen"]:
-            #     if house.coordinates != location.coordinates:
-
-            #         distance = abs(house.coordinates[0] - location.coordinates[0]) + abs(house.coordinates[1] - location.coordinates[1])
-
-    # print(houseCoordinates[3])
-    # print(houseCoordinates[1])
-    # print(houseCoordinates[2])
+            # Hier vertix object aanmaken
 
     Formatting(houseCoordinates)
-    return houseList
+
         
 
 def Formatting(houseCoordinates):
     i = 0
     id = 0
+    network = 1
     for network in houseCoordinates:
         i += 1 
-        print("network:", i)
+        # print("network:", i)
         for house in network:
             coordinates  = house.strip(", ")
-            Vertix(coordinates, id)
+            Vertix(coordinates, id, network)
             id += 1
-            print(coordinates)
-            # for house in network:
-            #     distance = abs(house.coordinates[0] - )
-
+            # print(coordinates)
+    print("netwerk 3:", houseCoordinates[2][0])
     
-
+    for house in houseCoordinates[2]:
+        
+        id += 1
+        print('id', id, house)
+    print(houseCoordinates[2])
 
 
 #Class to represent a graph 
@@ -163,27 +155,6 @@ class Graph:
             #print str(u) + " -- " + str(v) + " == " + str(weight) 
             print("%d -- %d == %d" % (u,v,weight)) 
 
-class Vertix():
-
-    def __init__(self, coordinates, id):
-        self.coordinates = coordinates
-        self.id = id
-        self.distances = {}
-    
-        
-        print("House id:",self.id)
-        print("Works:" self.id[2])
-
-    def distanceCalculation():
-        distaceLists = []
-        for house in houseCoordinates[0]
-        self.coordinates 
-
-
-
-   
-
-
 if __name__ == "__main__":
 
     # Elke batterij heeft een bepaalde hoeveelheid huizen
@@ -201,8 +172,3 @@ if __name__ == "__main__":
     Sort("networkresults_1.json",6570)
     
     
-
-    
-
-
-
