@@ -19,7 +19,7 @@ def ListFormat(string):
     return outputList
 
 
-def Visualize(input, underlay):
+def Visualize(input, underlay=False):
     """ Loads JSON file, put data in dict,
         visualize using pyplot """
 

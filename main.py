@@ -163,7 +163,7 @@ def main(filePrefix, algorithmChoice, repetition):
                             json.dump(optimizedResult[0], f, indent=4)
                 
                     # Visualizes best result
-                    visualize.Visualize(optimizedResult[2], False)
+                    visualize.Visualize(optimizedResult[2])
 
 
 if __name__ == "__main__":
