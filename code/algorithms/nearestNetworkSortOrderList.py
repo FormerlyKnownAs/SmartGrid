@@ -1,7 +1,7 @@
 """
 09-01-2020
 
-Generates a set of turns and changes them 
+Takes a json file and keeps its connections, but reconfiguring its connections based on distance
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
@@ -9,10 +9,11 @@ Ben Groot, Boy Stekelbos, Momo Schaap
 
 from code.algorithms.LineTrackRandominput import TrackRandom
 import random as r
+import numpy as np
 import os as o
 import json
 
-def hillSort(inputFile, previousScore, randomizationList):
+def Sort(inputFile, previousScore):
 
     # Set variables to be measured
     totalCost = 0
@@ -21,15 +22,9 @@ def hillSort(inputFile, previousScore, randomizationList):
     with open(inputFile, 'r') as JSON:
         json_dict = json.load(JSON)
 
-    # Makes one random change in the inputfile
-    randomNetwork = json_dict[r.randint(0, len(json_dict) - 1)]
-    randomHouse = randomNetwork["huizen"][r.randint(0, len(randomNetwork["huizen"]) - 1)]
-    if randomHouse["corner"] == 0:
-        randomHouse["corner"] = 1
-    else:
-        randomHouse["corner"] = 0
-
-    networkID = 0
+    # Declare the conversion lists
+    newJSON = []
+    
     for network in json_dict:
 
         houseList = []
@@ -41,7 +36,6 @@ def hillSort(inputFile, previousScore, randomizationList):
         cables.add(sourceCable)
 
         # Finds all houses associated with network
-        houseId = 0
         for house in network["huizen"]:
             house["kabels"] = []
             coordinatesHouse = house["locatie"].split(",")
@@ -70,14 +64,13 @@ def hillSort(inputFile, previousScore, randomizationList):
             shortestCableIndex = cableDistance.index(shortestCableDistance)
 
             # Connect the house to the nearest cable
-            for cable in TrackRandom(coordinatesHouse, cableLocation[shortestCableIndex], house["corner"]):
+            corner = np.random.randint(2)
+            house["corner"] = corner
+            for cable in TrackRandom(coordinatesHouse, cableLocation[shortestCableIndex], corner):
                 cables.add(cable)
                 house["kabels"].append(cable)
 
             totalCost += shortestCableDistance * 9
-            houseId += 1
-
-        networkID += 1
 
     # Creates correct output format
     # Finds filename for results
@@ -98,7 +91,7 @@ def hillSort(inputFile, previousScore, randomizationList):
         ]
     } for network in json_dict]
 
-    return finalOutput, totalCost, f"{inputFile}.json", randomizationList, houseList
+    return finalOutput, totalCost, f"{inputFile}sort.json", houseList
 
 
 

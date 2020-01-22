@@ -11,6 +11,7 @@ from code.algorithms.LineTrackRandom import TrackRandom
 import random as r
 import os as o
 import json
+import numpy as np
 
 def Sort(inputFile, previousScore):
 
