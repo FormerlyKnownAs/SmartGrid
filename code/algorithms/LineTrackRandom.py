@@ -17,8 +17,6 @@ def TrackRandom(start, end):
     newX = startX
     newY = startY
 
-    # distance = abs((startX - endX) + (startY - endY))
-
     coordinates = []
 
     if distanceY == 0:

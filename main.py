@@ -140,7 +140,7 @@ def main(filePrefix, algorithmChoice, repetition):
 
                     baseCost = finalOption[1]
                     print("Starting the sort")
-                    visualize.Visualize(finalOption[2])
+                    visualize.Visualize(finalOption[2], True)
 
                     optimizationAttempts = 0
                     optimizedResult = finalOption
