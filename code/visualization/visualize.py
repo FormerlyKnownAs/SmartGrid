@@ -4,19 +4,23 @@ import json
 
 
 def ListFormat(string):
+    """ Converts coordinate strings to correct list-in-list
+        format for visualization """
 
     outputList = []
 
+    # Split string into seperate elements
     for element in string.split(","):
-
+        
+        # Strip of any brackets or quotes, put in list as integer
         element = element.strip("'()'")
         outputList.append(int(element))
 
     return outputList
 
 
-def Visualize(input):
-    """ Loads JSON file, convert into dict or list-in-list format,
+def Visualize(input, underlay):
+    """ Loads JSON file, put data in dict,
         visualize using pyplot """
 
     # Load JSON file
@@ -64,29 +68,42 @@ def Visualize(input):
 
     # Line types for cable visualization
     lines = ['y-', 'b-', 'c-', 'm-', 'g-']
+    dotted = ['y:', 'b:', 'c:', 'm:', 'g:']
 
     # Draw cable
-    for i, network in enumerate(networks.values()):
+    if underlay:
 
-        for cable in network:
+        for i, network in enumerate(networks.values()):
 
-            # Convert line coordinates into array for visualization
-            cablearray = np.array(cable)
+            for cable in network:
 
-            plt.plot(*cablearray.T, lines[i % len(lines)])
+                cablearray = np.array(cable)
 
-    # Draw houses
-    for house in houses:
+                plt.plot(*cablearray.T, dotted[i % len(dotted)])
 
-        plt.plot(house[0], house[1], 'r^')
+    else:
 
-    # Draw batteries
-    for battery in batteries:
+        for i, network in enumerate(networks.values()):
 
-        plt.plot(battery[0], battery[1], 'bs')
+            for cable in network:
 
-    # Add visualization png to resultaten folder
-    input = input.strip(".json")
-    plt.savefig(f'{input}.png')
-    plt.clf()
-    print("Visaualization graph added to resultaten.")
+                # Convert line coordinates into array for visualization
+                cablearray = np.array(cable)
+
+                plt.plot(*cablearray.T, lines[i % len(lines)])
+
+        # Draw houses
+        for house in houses:
+
+            plt.plot(house[0], house[1], 'r^')
+
+        # Draw batteries
+        for battery in batteries:
+
+            plt.plot(battery[0], battery[1], 'bs')
+
+        # Add visualization png to resultaten folder
+        input = input.strip(".json")
+        plt.savefig(f'{input}.png')
+        plt.clf()
+        print("Visaualization graph added to resultaten.")
