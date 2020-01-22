@@ -56,10 +56,13 @@ WORST SCORE:
 10764
 
 BEST SCORE:
-5670
+5670 (networkresults_10shuffle.png)
 
 HOUSES CONNECTED:
 27.339999999999996%
+
+Potential lowerbound:
+3798.0
 
 (boy):
 
