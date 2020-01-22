@@ -2,6 +2,19 @@ import matplotlib.pyplot as plt
 import numpy as np 
 import json
 
+
+def ListFormat(string):
+
+    outputList = []
+
+    for element in string.split(","):
+
+        element = element.strip("'()'")
+        outputList.append(int(element))
+
+    return outputList
+
+
 def Visualize(input):
     """ Loads JSON file, convert into dict or list-in-list format,
         visualize using pyplot """
@@ -10,73 +23,33 @@ def Visualize(input):
     with open(input, 'r') as JSON:
         json_dict = json.load(JSON)
 
-    # Declare various lists and variables for converting
-    batteriesStrings = []
-    battery_index = 0
-
-    housesStrings = []
-    
+    # Declare various lists and variables for converting  
     networks = {}
     houses = []
     batteries = []
 
     # Loop over batteries
-    for battery in json_dict:
+    for i, battery in enumerate(json_dict):
 
-        networks[battery_index] = []
+        networks[i] = []
 
-        # Save battery coordinates as strings
-        batteriesStrings.append(battery["locatie"])
+        # Format battery coordinate strings as list and append to battery list
+        batteries.append(ListFormat(battery["locatie"]))
 
         for house in battery["huizen"]:
 
-            # Save house coordinates as strings 
-            locatie = house["locatie"]
-            housesStrings.append(locatie)
+            # Format house coordinate strings as list and append to house list
+            houses.append(ListFormat(house["locatie"]))
+
             cableList = []
 
             for line in house["kabels"]:
 
-                cableCoordinate = []
-
-                for element in line.split(","):
-
-                    # Save and convert cable segment coordinates
-                    strippedElement = element.strip("'()'")
-                    cableCoordinate.append(int(strippedElement))
-                
-                # Save cable
-                cableList.append(cableCoordinate)
+                # Format cable coordinate strings as list and append to cable list
+                cableList.append(ListFormat(line))
                 
             # Save cable sequence in dict under network index          
-            networks[battery_index].append(cableList)
-
-        battery_index += 1
-
-
-    # Convert house coordinates to list-in-list format
-    for house in housesStrings:
-
-        houseCoordinate = []
-
-        for element in house.split(","):
-
-            # Convert house coordinates
-            houseCoordinate.append(int(element))
-
-        houses.append(houseCoordinate)
-
-    # Convert battery coordinates to list-in-list format
-    for battery in batteriesStrings:
-
-        batteryCoordinate = []
-
-        for element in battery.split(","):
-
-            # Convert battery coordinates
-            batteryCoordinate.append(int(element))
-
-        batteries.append(batteryCoordinate)
+            networks[i].append(cableList)
 
     
     # Set up grid for visualization
@@ -91,13 +64,12 @@ def Visualize(input):
 
     # Line types for cable visualization
     lines = ['y-', 'b-', 'c-', 'm-', 'g-']
-    colors = ['y^', 'b^', 'c^', 'm^', 'g^']
-
 
     # Draw cable
     for i, network in enumerate(networks.values()):
 
         for cable in network:
+
             # Convert line coordinates into array for visualization
             cablearray = np.array(cable)
 
@@ -113,8 +85,7 @@ def Visualize(input):
 
         plt.plot(battery[0], battery[1], 'bs')
 
-
-
+    # Add visualization png to resultaten folder
     input = input.strip(".json")
     plt.savefig(f'{input}.png')
     plt.clf()
