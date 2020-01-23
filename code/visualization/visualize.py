@@ -59,11 +59,20 @@ def Visualize(input, underlay=False):
     # Set up grid for visualization
     ticks = np.arange(0,50,1)
     plt.axis([0, 50, 0, 50])
-    plt.xticks(ticks)
-    plt.yticks(ticks)
+    plt.xticks(ticks, labels=ticks)
+    plt.yticks(ticks, labels=ticks)
     plt.title("SmartGrid")
     plt.xlabel("")
     plt.ylabel("")
+
+    for index, label in enumerate(ax.xaxis.get_ticklabels()):
+        if index % 5 != 0:
+            label.set_visible(False)
+
+    for index, label in enumerate(ax.yaxis.get_ticklabels()):
+        if index % 5 != 0:
+            label.set_visible(False)
+
     plt.grid(True, linewidth=0.3)
 
     # Line types for cable visualization
