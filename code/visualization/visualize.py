@@ -65,14 +65,6 @@ def Visualize(input, underlay=False):
     plt.xlabel("")
     plt.ylabel("")
 
-    for index, label in enumerate(ax.xaxis.get_ticklabels()):
-        if index % 5 != 0:
-            label.set_visible(False)
-
-    for index, label in enumerate(ax.yaxis.get_ticklabels()):
-        if index % 5 != 0:
-            label.set_visible(False)
-
     plt.grid(True, linewidth=0.3)
 
     # Line types for cable visualization

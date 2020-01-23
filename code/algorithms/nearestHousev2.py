@@ -25,11 +25,11 @@ def NearestHouse(houses, networks, id):
     # Iterates through all houses
     networksClone = networks
     networkIndex = 0
-    modoloNum = len(networks)
-    while len(houses) > 0 and modoloNum > 0:
+    moduloNum = len(networks)
+    while len(houses) > 0 and moduloNum > 0:
 
         # Selects current network to attach house to
-        currentNetwork = networksClone[networkIndex % modoloNum]
+        currentNetwork = networksClone[networkIndex % moduloNum]
 
         # Finds nearest house
         houseDistance = []
@@ -56,9 +56,9 @@ def NearestHouse(houses, networks, id):
 
         # Checks if houses within capacity exist
         if all(i is None for i in houseDistance):
-            networksClone.pop(networkIndex % modoloNum)
+            networksClone.pop(networkIndex % moduloNum)
             allCapacities.append(currentNetwork.capacity)
-            modoloNum -= 1
+            moduloNum -= 1
 
         else:
             houseMinDistance = min(i for i in houseDistance if i is not None)
@@ -81,8 +81,8 @@ def NearestHouse(houses, networks, id):
 
         networkIndex += 1
 
-    if modoloNum > 0:
-        print("modolo is groter dan nul en we benne klaar")
+    if moduloNum > 0:
+        print("modulo is groter dan nul en we benne klaar")
 
         # Creates correct output format
         # Finds filename for results
