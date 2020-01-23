@@ -9,6 +9,7 @@ Ben Groot, Boy Stekelbos, Momo Schaap
 
 from code.algorithms.LineTrackRandominput import TrackRandom
 import random as r
+import numpy as np
 import os as o
 import json
 
@@ -23,11 +24,28 @@ def hillSort(inputFile, previousScore, randomizationList):
 
     # Makes one random change in the inputfile
     randomNetwork = json_dict[r.randint(0, len(json_dict) - 1)]
-    randomHouse = randomNetwork["huizen"][r.randint(0, len(randomNetwork["huizen"]) - 1)]
-    if randomHouse["corner"] == 0:
-        randomHouse["corner"] = 1
+    randomHouseIndex = r.randint(0, len(randomNetwork["huizen"] - 1))
+    randomHouse = randomNetwork["huizen"][randomHouseIndex ]
+
+    randomChoice = r.randint(0, 1)
+
+    # Changes either the corner layout or moves a house in order
+    if randomChoice == 1:
+        
+        if randomHouse["corner"] == 0:
+            randomHouse["corner"] = 1
+        else:
+            randomHouse["corner"] = 0
     else:
-        randomHouse["corner"] = 0
+        changeIndex = 0
+
+        while changeIndex <= 0 or changeIndex > len(randomNetwork["huizen"]) - 1:
+            changeIndex = r.randint(-3, 3) + randomHouseIndex
+
+        randomNetwork["huizen"].pop(randomHouseIndex)
+        randomNetwork["huizen"].insert(changeIndex, randomHouse)
+
+
 
     networkID = 0
     for network in json_dict:
@@ -41,7 +59,6 @@ def hillSort(inputFile, previousScore, randomizationList):
         cables.add(sourceCable)
 
         # Finds all houses associated with network
-        houseId = 0
         for house in network["huizen"]:
             house["kabels"] = []
             coordinatesHouse = house["locatie"].split(",")
@@ -49,14 +66,35 @@ def hillSort(inputFile, previousScore, randomizationList):
             house["distance"] = abs(coordinatesHouse[0] - sourceCable[0]) + abs(coordinatesHouse[1] - sourceCable[1])
             houseList.append(house)
 
-        houseList = sorted(houseList, key=lambda x: x["distance"])
-
         # Finds closest point on network for each house
-        for house in houseList:
+        while len(houseList) > 0:
             
+            # Finds nearest house
+            houseDistance = []
+            houseLocation = []
+            for house in houseList:
+
+                coordinatesHouse = house["locatie"].split(",")
+                coordinatesHouse = (int(coordinatesHouse[0]), int(coordinatesHouse[1]))
+
+                currentDistance = 1000
+                for cable in cables:
+                   distance = abs(coordinatesHouse[0] - cable[0]) + abs(coordinatesHouse[1] - cable[1])
+                   if distance < currentDistance:
+                       currentDistance = distance
+                houseDistance.append(currentDistance)
+                houseLocation.append(house)
+
+            houseMinimalDistance = min(houseDistance)
+            indexHouseMinimalDistance = houseDistance.index(houseMinimalDistance)
+
+            currentHouse = houseLocation[indexHouseMinimalDistance]
+
+
+            # Once house is found, put down cables
             cableDistance = []
             cableLocation = []
-            coordinatesHouse = house["locatie"].split(",")
+            coordinatesHouse = currentHouse["locatie"].split(",")
             coordinatesHouse = (int(coordinatesHouse[0]), int(coordinatesHouse[1]))
 
             for cable in cables:
@@ -70,14 +108,17 @@ def hillSort(inputFile, previousScore, randomizationList):
             shortestCableIndex = cableDistance.index(shortestCableDistance)
 
             # Connect the house to the nearest cable
-            for cable in TrackRandom(coordinatesHouse, cableLocation[shortestCableIndex], house["corner"]):
+            corner = np.random.randint(2)
+            currentHouse["corner"] = corner
+            for cable in TrackRandom(coordinatesHouse, cableLocation[shortestCableIndex], corner):
                 cables.add(cable)
-                house["kabels"].append(cable)
+                currentHouse["kabels"].append(cable)
 
             totalCost += shortestCableDistance * 9
-            houseId += 1
 
-        networkID += 1
+            # Find index of current house in houselist
+            houseListIndex = houseList.index(currentHouse)
+            houseList.pop(houseListIndex)
 
     # Creates correct output format
     # Finds filename for results
@@ -98,9 +139,8 @@ def hillSort(inputFile, previousScore, randomizationList):
         ]
     } for network in json_dict]
 
-    return finalOutput, totalCost, f"{inputFile}.json", randomizationList, houseList
+    return finalOutput, totalCost, f"{inputFile}sort.json", houseList
 
 
 
             
-        
