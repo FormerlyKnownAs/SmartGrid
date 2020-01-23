@@ -7,11 +7,11 @@ The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
 """
 
-from code.algorithms.LineTrackRandom import TrackRandom
+from code.algorithms.LineTrackRandominput import TrackRandom
 import random as r
+import numpy as np
 import os as o
 import json
-import numpy as np
 
 def Sort(inputFile, previousScore):
 
@@ -43,14 +43,35 @@ def Sort(inputFile, previousScore):
             house["distance"] = abs(coordinatesHouse[0] - sourceCable[0]) + abs(coordinatesHouse[1] - sourceCable[1])
             houseList.append(house)
 
-        houseList = sorted(houseList, key=lambda x: x["distance"])
-
         # Finds closest point on network for each house
-        for house in houseList:
+        while len(houseList) > 0:
             
+            # Finds nearest house
+            houseDistance = []
+            houseLocation = []
+            for house in houseList:
+
+                coordinatesHouse = house["locatie"].split(",")
+                coordinatesHouse = (int(coordinatesHouse[0]), int(coordinatesHouse[1]))
+
+                currentDistance = 1000
+                for cable in cables:
+                   distance = abs(coordinatesHouse[0] - cable[0]) + abs(coordinatesHouse[1] - cable[1])
+                   if distance < currentDistance:
+                       currentDistance = distance
+                houseDistance.append(currentDistance)
+                houseLocation.append(house)
+
+            houseMinimalDistance = min(houseDistance)
+            indexHouseMinimalDistance = houseDistance.index(houseMinimalDistance)
+
+            currentHouse = houseLocation[indexHouseMinimalDistance]
+
+
+            # Once house is found, put down cables
             cableDistance = []
             cableLocation = []
-            coordinatesHouse = house["locatie"].split(",")
+            coordinatesHouse = currentHouse["locatie"].split(",")
             coordinatesHouse = (int(coordinatesHouse[0]), int(coordinatesHouse[1]))
 
             for cable in cables:
@@ -64,11 +85,17 @@ def Sort(inputFile, previousScore):
             shortestCableIndex = cableDistance.index(shortestCableDistance)
 
             # Connect the house to the nearest cable
-            for cable in TrackRandom(coordinatesHouse, cableLocation[shortestCableIndex]):
+            corner = np.random.randint(2)
+            currentHouse["corner"] = corner
+            for cable in TrackRandom(coordinatesHouse, cableLocation[shortestCableIndex], corner):
                 cables.add(cable)
-                house["kabels"].append(cable)
+                currentHouse["kabels"].append(cable)
 
             totalCost += shortestCableDistance * 9
+
+            # Find index of current house in houselist
+            houseListIndex = houseList.index(currentHouse)
+            houseList.pop(houseListIndex)
 
     # Creates correct output format
     # Finds filename for results
@@ -81,6 +108,7 @@ def Sort(inputFile, previousScore):
             {
                 "locatie": house["locatie"],
                 "output": house["output"],
+                "corner": house["corner"],
                 "kabels": [
                     str(cable) for cable in house["kabels"]
                 ]
@@ -88,7 +116,7 @@ def Sort(inputFile, previousScore):
         ]
     } for network in json_dict]
 
-    return finalOutput, totalCost, f"{inputFile}shuffle.json"
+    return finalOutput, totalCost, f"{inputFile}sort.json", houseList
 
 
 

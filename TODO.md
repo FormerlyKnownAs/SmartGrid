@@ -56,10 +56,17 @@ WORST SCORE:
 10764
 
 BEST SCORE:
-5670
+5670 (networkresults_10shuffle.png) Wijk1
+5292 (networkresults_12shuffle.png) Wijk2
+5238 (networkresults_15shuffle.ong) Wijk3
 
 HOUSES CONNECTED:
 27.339999999999996%
+
+Potential lowerbound:
+3798.0 wijk1
+3978.0 wijk2
+3735.0 Wijk3
 
 (boy):
 

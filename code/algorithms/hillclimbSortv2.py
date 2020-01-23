@@ -1,19 +1,18 @@
 """
 09-01-2020
 
-Takes a json file and keeps its connections, but reconfiguring its connections based on distance
+Generates a set of turns and changes them 
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
 """
 
-from code.algorithms.LineTrackRandom import TrackRandom
+from code.algorithms.LineTrackRandominput import TrackRandom
 import random as r
 import os as o
 import json
-import numpy as np
 
-def Sort(inputFile, previousScore):
+def hillSort(inputFile, previousScore, randomizationList):
 
     # Set variables to be measured
     totalCost = 0
@@ -22,9 +21,15 @@ def Sort(inputFile, previousScore):
     with open(inputFile, 'r') as JSON:
         json_dict = json.load(JSON)
 
-    # Declare the conversion lists
-    newJSON = []
-    
+    # Makes one random change in the inputfile
+    randomNetwork = json_dict[r.randint(0, len(json_dict) - 1)]
+    randomHouse = randomNetwork["huizen"][r.randint(0, len(randomNetwork["huizen"]) - 1)]
+    if randomHouse["corner"] == 0:
+        randomHouse["corner"] = 1
+    else:
+        randomHouse["corner"] = 0
+
+    networkID = 0
     for network in json_dict:
 
         houseList = []
@@ -36,6 +41,7 @@ def Sort(inputFile, previousScore):
         cables.add(sourceCable)
 
         # Finds all houses associated with network
+        houseId = 0
         for house in network["huizen"]:
             house["kabels"] = []
             coordinatesHouse = house["locatie"].split(",")
@@ -64,11 +70,14 @@ def Sort(inputFile, previousScore):
             shortestCableIndex = cableDistance.index(shortestCableDistance)
 
             # Connect the house to the nearest cable
-            for cable in TrackRandom(coordinatesHouse, cableLocation[shortestCableIndex]):
+            for cable in TrackRandom(coordinatesHouse, cableLocation[shortestCableIndex], house["corner"]):
                 cables.add(cable)
                 house["kabels"].append(cable)
 
             totalCost += shortestCableDistance * 9
+            houseId += 1
+
+        networkID += 1
 
     # Creates correct output format
     # Finds filename for results
@@ -81,6 +90,7 @@ def Sort(inputFile, previousScore):
             {
                 "locatie": house["locatie"],
                 "output": house["output"],
+                "corner": house["corner"],
                 "kabels": [
                     str(cable) for cable in house["kabels"]
                 ]
@@ -88,7 +98,7 @@ def Sort(inputFile, previousScore):
         ]
     } for network in json_dict]
 
-    return finalOutput, totalCost, f"{inputFile}shuffle.json"
+    return finalOutput, totalCost, f"{inputFile}.json", randomizationList, houseList
 
 
 
