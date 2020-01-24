@@ -29,6 +29,7 @@ def NearestHouse(houses, networks, id):
     while len(houses) > 0 and moduloNum > 0:
 
         # Selects current network to attach house to
+        print(moduloNum)
         currentNetwork = networksClone[networkIndex % moduloNum]
 
         # Finds nearest house
@@ -56,11 +57,13 @@ def NearestHouse(houses, networks, id):
 
         # Checks if houses within capacity exist
         if all(i is None for i in houseDistance):
+        
             networksClone.pop(networkIndex % moduloNum)
             allCapacities.append(currentNetwork.capacity)
             moduloNum -= 1
 
         else:
+            
             houseMinDistance = min(i for i in houseDistance if i is not None)
             houseMinIndex = houseDistance.index(houseMinDistance)
 
@@ -81,36 +84,34 @@ def NearestHouse(houses, networks, id):
 
         networkIndex += 1
 
-    if moduloNum > 0:
-        print("modulo is groter dan nul en we benne klaar")
+    print("modulo is groter dan nul en we benne klaar")
 
-        # Creates correct output format
-        # Finds filename for results
-        pathFound = False
-        number = 1
-        pathName = None
-        while pathFound is False:
-            path = f"resultaten/networkresults_{number}.json"
-            if o.path.exists(path):
-                number +=1
-            else:
-                pathName = path
-                pathFound = True
+    # Creates correct output format
+    # Finds filename for results
+    pathFound = False
+    number = 1
+    pathName = None
+    while pathFound is False:
+        path = f"resultaten/networkresults_{number}.json"
+        if o.path.exists(path):
+            number +=1
+        else:
+            pathName = path
+            pathFound = True
 
-        finalOutput = [{
-            "locatie": f"{network.source[0]}, {network.source[1]}",
-            "capaciteit": network.capacity,
-            "huizen": [
-                {
-                    "locatie": f"{house.coordinates[0]}, {house.coordinates[1]}",
-                    "output": house.output,
-                    "kabels": [
-                        str(cable) for cable in house.cables
-                    ]
-                } for house in network.houses
-            ]
-        } for network in networks]
+    finalOutput = [{
+        "locatie": f"{network.source[0]}, {network.source[1]}",
+        "capaciteit": network.capacity,
+        "huizen": [
+            {
+                "locatie": f"{house.coordinates[0]}, {house.coordinates[1]}",
+                "output": house.output,
+                "kabels": [
+                    str(cable) for cable in house.cables
+                ]
+            } for house in network.houses
+        ]
+    } for network in networks]
 
-        return finalOutput, totalCost, path
+    return finalOutput, totalCost, path
 
-    return None

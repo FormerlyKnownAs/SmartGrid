@@ -14,12 +14,67 @@ import random as r
 import os as o
 import json
 
-def NearestHouse(houses, networks, id):
+def NearestHouse(network, houses):
+
+    houseDistance = []
+    houseLocation = []
+    connectionCable = []
+
+    for house in houses:
+
+        if house.output < network.capacity:
+
+            currentDistance = 1000
+            currentCable = None
+
+            for cable in network.cables:
+
+                distance = abs(house.coordinates[0] - cable[0]) + abs(house.coordinates[1] - cable[1])
+
+                if distance < currentDistance:
+
+                    currentDistance = distance
+                    currentCable = cable
+                
+            houseDistance.append(currentDistance)
+            houseLocation.append(house.coordinates)
+            connectionCable.append(cable)
+
+
+
+def BatteryFirst(houses, networks, id):
 
     totalCost = 0
     unconnectedHouses = []
 
     r.shuffle(networks)
+
+    networksClone = networks
+
+    
+    for network in networksClone:
+
+
+        for cable in network.cables:
+
+            ShortestConnection = []
+
+            for house in houses:
+
+                if house.output < network.capacity:
+                    currentDistance = 1000
+
+
+
+
+
+
+
+
+
+
+
+
 
     for network in networks:
 
