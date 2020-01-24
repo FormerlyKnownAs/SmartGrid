@@ -24,7 +24,7 @@ def hillSort(inputFile, previousScore, randomizationList):
 
     # Makes one random change in the inputfile
     randomNetwork = json_dict[r.randint(0, len(json_dict) - 1)]
-    randomHouseIndex = r.randint(0, len(randomNetwork["huizen"] - 1))
+    randomHouseIndex = r.randint(0, len(randomNetwork["huizen"]) - 1)
     randomHouse = randomNetwork["huizen"][randomHouseIndex ]
 
     randomChoice = r.randint(0, 1)
