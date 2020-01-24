@@ -9,11 +9,10 @@ class Vertix():
     def __init__(self, coordinates, id, network):
         self.coordinates = coordinates
         self.id = id
-        self.distances = {}
         self.network = network
     
     def __str__(self):
-        return f" coordinates:{self.coordinates}, id: {self.id}, network: {self.network}\n"
+        return f"Vertix id: {self.id}, coordinates: {self.coordinates}, network: {self.network}"
 
 
 def ListFormat(string):
@@ -38,7 +37,7 @@ def Load(input):
 
     # Declare various lists and variables for converting  
     networks = {}
-
+    vertixes = []
 
     # Loop over batteries
     for i, battery in enumerate(json_dict):
@@ -48,12 +47,17 @@ def Load(input):
         # Format battery coordinate strings as list and append to battery list
         networks[i].append(ListFormat(battery["locatie"]))
 
-        for house in battery["huizen"]:
+        for j, house in enumerate(battery["huizen"]):
 
             # Format house coordinate strings as list and append to house list
             networks[i].append(ListFormat(house["locatie"]))
 
-    return networks
+            v = Vertix(ListFormat(house["locatie"]), j, i)
+            vertixes.append(v)
+
+    
+
+    return vertixes
 
 
 def DistanceCalculator(network):
@@ -80,7 +84,6 @@ class Graph:
         self.V= vertices #No. of vertices 
         self.graph = [] # default dictionary  
                                 # to store graph 
-        
           
    
     # function to add an edge to graph 
@@ -112,11 +115,9 @@ class Graph:
         else : 
             parent[yroot] = xroot 
             rank[xroot] += 1
-
-        
-
-
-     
+  
+    # The main function to construct MST using Kruskal's  
+        # algorithm 
     def KruskalMST(self): 
   
         result =[] #This will store the resultant MST 
@@ -157,31 +158,43 @@ class Graph:
             # Else discard the edge 
   
         # print the contents of result[] to display the built MST 
-        print("Following are the edges in the constructed MST")
+        print ("Following are the edges in the constructed MST")
         for u,v,weight  in result: 
             #print str(u) + " -- " + str(v) + " == " + str(weight) 
-            print("%d -- %d == %d" % (u,v,weight)) 
+            print ("%d, %d" % (u, v)) 
+  
 
 if __name__ == "__main__":
 
-    g = Graph(30)
+    
 
-    networks = Load("networkresults_1.json")
+    vertixes = Load("networkresults_1.json")
+
+    for vertix in vertixes:
+        print(vertix)
+
+
     networkNodeList = []
 
 
-    for network in networks.values():
+    # for network in networks.values():
 
-        nodes = DistanceCalculator(network)
+    #     nodes = DistanceCalculator(network)
 
-        networkNodeList.append(nodes)
+    #     networkNodeList.append(nodes)
 
+    # g = Graph(31)
   
+    # for i, network in enumerate(networkNodeList):
 
-    for node in networkNodeList[0]:
-        print(node[0], node[1], node[2])
-        g.addEdge(node[0], node[1], node[2])
+        
 
-    g.KruskalMST()
+    #     for node in networkNodeList[i]:
+
+    #         if node[0] != node[1]:
+    #             g.addEdge(node[0], node[1], node[2])
+
+    #     g.KruskalMST()
+    #     print("\n")
 
     
