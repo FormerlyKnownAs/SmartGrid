@@ -298,7 +298,7 @@ def main(filePrefix, algorithmChoice, repetition):
                     bestScore = 10000
                     finalOption = None
 
-                    while failedImprovements < 200:
+                    while failedImprovements < 2:
                         runCounter += 1
 
                         results = nearestNetworkv3random.NearestNetworkV3(houseList, networkList, i)
@@ -338,7 +338,7 @@ def main(filePrefix, algorithmChoice, repetition):
                     optimizationAttempts = 0
                     optimizedResult = finalOption
 
-                    while optimizationAttempts < 5000:
+                    while optimizationAttempts < 5:
                         resultsNew = nearestNetworkSortv2.Sort(finalOption[2], finalOption[1])
 
                         if resultsNew[1] < baseCost:
@@ -366,7 +366,7 @@ def main(filePrefix, algorithmChoice, repetition):
                     hillClimbAttempts = 0
                     hillclimbResult = optimizedResult
 
-                    while hillClimbAttempts < 1000:
+                    while hillClimbAttempts < 10:
                         resultsNew = hillclimbSortv2.hillSort(newPath, hillclimbResult[1], hillclimbResult[3])
 
                         if resultsNew[1] <= hillclimbResult[1]:
@@ -463,7 +463,7 @@ def main(filePrefix, algorithmChoice, repetition):
                     hillClimbAttempts = 0
                     hillclimbResult = optimizedResult
 
-                    while hillClimbAttempts < 2:
+                    while hillClimbAttempts < 10:
                         resultsNew = hillclimbSortv2.hillSort(newPath, hillclimbResult[1], hillclimbResult[3])
 
                         if resultsNew[1] <= hillclimbResult[1]:

@@ -56,9 +56,9 @@ WORST SCORE:
 10764
 
 BEST SCORE:
-5670 (networkresults_10shuffle.png) Wijk1
-5094 (networkresults_1sort.png) Wijk2
-5238 (networkresults_15shuffle.ong) Wijk3
+5643 (networkresults_29sort.png) Wijk1
+5094 (networkresults_10sort.png) Wijk2
+5067 (networkresults_2sort.png) Wijk3
 
 HOUSES CONNECTED:
 27.339999999999996%

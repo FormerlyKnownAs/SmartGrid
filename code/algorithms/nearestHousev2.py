@@ -12,6 +12,7 @@ Ben Groot, Boy Stekelbos, Momo Schaap
 from code.algorithms.LineTrackRandom import TrackRandom
 import random as r
 import os as o
+import copy
 import json
 
 def NearestHouse(houses, networks, id):
@@ -23,21 +24,22 @@ def NearestHouse(houses, networks, id):
     r.shuffle(networks)
 
     # Iterates through all houses
-    networksClone = networks
+    networksClone = copy.copy(networks)
+    housesClone = copy.copy(houses)
     networkIndex = 0
     moduloNum = len(networks)
-    while len(houses) > 0 and moduloNum > 0:
+
+    while len(housesClone) > 0 and moduloNum > 0:
 
         # Selects current network to attach house to
-        print(moduloNum)
         currentNetwork = networksClone[networkIndex % moduloNum]
-
+        print(f"cables associated with this network: {len(currentNetwork.cables)}")
         # Finds nearest house
         houseDistance = []
         houseLocation = []
         connectionPoints = []
 
-        for house in houses:
+        for house in housesClone:
 
             if house.output < currentNetwork.capacity:
                 currentDistance = 1000
@@ -79,8 +81,9 @@ def NearestHouse(houses, networks, id):
             totalCost += houseMinDistance * 9
             currentNetwork.capacity -= currentHouse.output
             currentNetwork.houses.append(currentHouse)
+            print(f"len of current houses = {len(currentNetwork.houses)}")
             currentHouse.connected = True
-            houses.pop(houses.index(currentHouse))
+            housesClone.pop(housesClone.index(currentHouse))
 
         networkIndex += 1
 
@@ -99,6 +102,25 @@ def NearestHouse(houses, networks, id):
             pathName = path
             pathFound = True
 
+    print(f"network length is {len(networks)}")
+    totalconnectedhouses = 0
+    for network in networks:
+        print(f"{len(network.houses)} is len, {network.capacity} is capacity.")
+        totalconnectedhouses += len(network.houses)
+
+    print(f"unconnected houses = {150 - totalconnectedhouses}")
+    for house in houses:
+        if house.connected is False:
+            unconnectedHouse = house
+            print(house)
+
+    for network in networks:
+        totalHouseCable = 0
+        for house in network.houses:
+            totalHouseCable += len(house.cables)
+        print(f"Length of total cable = {len(network.cables)}, totalHouseCable = {totalHouseCable}. dif = {len(network.cables) - totalHouseCable}")
+
+
     finalOutput = [{
         "locatie": f"{network.source[0]}, {network.source[1]}",
         "capaciteit": network.capacity,
@@ -112,6 +134,11 @@ def NearestHouse(houses, networks, id):
             } for house in network.houses
         ]
     } for network in networks]
+
+    totalhouses = 0
+    for network in networks:
+        totalhouses += len(network.houses)
+    print(totalhouses)
 
     return finalOutput, totalCost, path
 
