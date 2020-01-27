@@ -92,3 +92,11 @@ Kijk naar pickle
 VISUALISATIE
 oud-nieuwe kabels
 vizzz
+
+PRESENTATIE FEEDBACK
+Visualisatie van mindere resultaten
+Visualisatie van algorithmen, aparte slides
+NP-hard probleem bij Steiner
+Introductie netwerk aanleggen uitleggen
+Opschonen visualisatie
+Upperbound bijstellen -- hoeveelheid mogelijke kabels != 50*50

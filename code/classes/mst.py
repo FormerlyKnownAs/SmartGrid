@@ -168,13 +168,23 @@ if __name__ == "__main__":
 
     
 
-    vertixes = Load("networkresults_1.json")
+    vertixes, networks = Load("networkresults_1.json")
 
     for vertix in vertixes:
         print(vertix)
 
+    for i, network in enumerate(networks):
+
+        for vertix in vertixes in vertix.network == i:
+
+            
+
+
+
 
     networkNodeList = []
+
+
 
 
     # for network in networks.values():
