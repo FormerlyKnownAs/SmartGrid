@@ -4,7 +4,7 @@ import json
 
 
 def ListFormat(string):
-    """ Converts coordinate strings to correct list-in-list
+    """ Converts coordinate strings to correct list
         format for visualization """
 
     outputList = []
@@ -55,33 +55,44 @@ def Visualize(input, underlay=False):
             # Save cable sequence in dict under network index          
             networks[i].append(cableList)
 
-    
-    # Set up grid for visualization
-    ticks = np.arange(0,50,1)
-    plt.axis([0, 50, 0, 50])
-    plt.xticks(ticks, labels=ticks)
-    plt.yticks(ticks, labels=ticks)
-    plt.title("SmartGrid")
-    plt.xlabel("")
-    plt.ylabel("")
 
-    plt.grid(True, linewidth=0.3)
+    # Set up grid for visualization
+    plt.title("SmartGrid")
+
+    ticks = np.arange(0,51,5)
+    labels = np.arange(0,51,5)
+    plt.axis([-1, 51, -1, 51])
+    plt.xticks(ticks, labels)
+    plt.yticks(ticks, labels)
+
+    # Lock graph aspect ratio
+    plt.gca().set_aspect('equal', adjustable='box')
+
+    # Determine tick labels
+    ax = plt.axes()
+    ax.yaxis.set_minor_locator(plt.MultipleLocator(1))
+    ax.xaxis.set_minor_locator(plt.MultipleLocator(1))
+
+    # Plot grid
+    plt.grid(True, which='both', linewidth=0.3)
+
 
     # Line types for cable visualization
     lines = ['y-', 'b-', 'c-', 'm-', 'g-']
     dotted = ['y:', 'b:', 'c:', 'm:', 'g:']
 
-    # Draw cable
+    # Draw dotted underlay vables
     if underlay:
 
         for i, network in enumerate(networks.values()):
 
             for cable in network:
 
-                cablearray = np.array(cable)
+                cableArray = np.array(cable)
 
-                plt.plot(*cablearray.T, dotted[i % len(dotted)])
+                plt.plot(*cableArray.T, dotted[i % len(dotted)])
 
+    # Draw cables
     else:
 
         for i, network in enumerate(networks.values()):
@@ -89,9 +100,9 @@ def Visualize(input, underlay=False):
             for cable in network:
 
                 # Convert line coordinates into array for visualization
-                cablearray = np.array(cable)
+                cableArray = np.array(cable)
 
-                plt.plot(*cablearray.T, lines[i % len(lines)])
+                plt.plot(*cableArray.T, lines[i % len(lines)])
 
         # Draw houses
         for house in houses:
