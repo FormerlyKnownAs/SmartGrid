@@ -20,7 +20,6 @@ Berekent de lower bound van een wijk gebaseerd op de afstand tussen huizen en ba
 
 nearestBatterySimple.py
 Een simpel algoritme dat huizen verbindt met een batterij gebaseerd op de afstand tussen het huis en de dichtstbijzijnde batterij locatie en de capaciteit.
-
 nearestHouseReworkv2.py:
 
 ----Moet nog gemaakt worden
@@ -40,6 +39,17 @@ Niet volledig afgemaakt, maar aangepast om de configuratie tussen huizen en batt
 nearestNetworkSortOrderList.py :
 Neemt een json bestand, waarin de netwerken van huizen en batterijen al aangemaakt zijn. Vervolgens worden de kabels in deze netwerken weggehaald. Dan wordt er over elk netwerk en elk huis geloopt waarbij elk huis nieuwe connecties maakt naar het netwerk toe, vervolgens zoeken de volgende huizen connectiepunten aan het netwerk, waar elke kabel die deel uitmaakt van het netwerk een connectiepunt is.
 
+
+
+
+Resultaten reproduceren:
+    python main.py is altijd het begin.
+    
+    pthon  main.py 10 geeft aan hoeveel iteraties het programma moet doen voordat het klaar is.
+    
+    python main.py 10 wijk1  hier heb je de keuze van wijk1 tot wijk3
+    
+    python main.py 10 wijk1 1  besluit de keuze van algoritme, waarbij 1 tot 4 opties zijn.
 
 
 SmartGrid bevat de volgende mapjes en files:
@@ -63,9 +73,4 @@ SmartGrid bevat de volgende mapjes en files:
 
 
 
-Resultaten reproduceren:
-    python main.py ----------  is altijd het begin.
-    pthon  main.py 10 --------  geeft aan hoeveel iteraties het programma moet doen voordat het klaar is.
-    python main.py 10 wijk1--  hier heb je de keuze van wijk1 tot wijk3
-    python main.py 10 wijk 1-  besluit de keuze van algoritme, waarbij 1 tot 4 opties zijn.
 
