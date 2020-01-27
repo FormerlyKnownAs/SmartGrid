@@ -43,6 +43,7 @@ Neemt een json bestand, waarin de netwerken van huizen en batterijen al aangemaa
 
 
 Resultaten reproduceren:
+
     python main.py is altijd het begin.
     
     pthon  main.py 10 geeft aan hoeveel iteraties het programma moet doen voordat het klaar is.
