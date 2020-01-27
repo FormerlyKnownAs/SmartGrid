@@ -15,7 +15,7 @@ import random as r
 import json
 
 from code.classes import house, battery, network
-from code.algorithms import nearestBatterySimple, nearestNetworkSimple, nearestNetworkv2, nearestNetworkv2random, bestFitNetwork, nearestHouse, nearestNetworkv3random, nearestNetworkShuffle, nearestNetworkSort, lowerboundCalculator, hillclimbSort, nearestNetworkSortOrderList, nearestNetworkSortv2, hillclimbSortv2, nearestHousev2
+from code.algorithms import nearestBatterySimple, nearestNetworkSimple, nearestNetworkv2, nearestNetworkv2random, bestFitNetwork, nearestHouse, nearestNetworkv3random, nearestNetworkShuffle, nearestNetworkSort, lowerboundCalculator, hillclimbSort, nearestNetworkSortOrderList, nearestNetworkSortv2, hillclimbSortv2, nearestHousev2, nearestHousev2rework
 from code.visualization import visualize
 
 def main(filePrefix, algorithmChoice, iterations):
@@ -32,8 +32,10 @@ def main(filePrefix, algorithmChoice, iterations):
             result = HillClimb(SortOptimize(RandomV3(filePrefix, iterations), iterations * 2), iterations * 4, True)
         elif algorithmChoice == 3:
             result = HillClimb(SortOptimize(RandomV3(filePrefix, iterations), iterations * 2, True), iterations * 4)
-        elif algorithmChoice >= 4:
+        elif algorithmChoice == 4:
             result = HillClimb(SortOptimize(RandomV3(filePrefix, iterations), iterations * 2, True), iterations * 4, True)
+        elif algorithmChoice >= 5 or algorithmChoice < 1:
+            results = HillClimb(SortOptimize(NetworkSearch(filePrefix, iterations), iterations * 2, True), iterations * 4, True)
         
         
 def readinInfo(filePrefix, networkBool):
@@ -108,6 +110,32 @@ def RandomV3(filePrefix, iterations):
     VisualJSON(bestRandom)
 
     return bestRandom
+
+def NetworkSearch(filePrefix, iterations):
+
+    runCounter = 0
+    failedImprovements = 0
+    bestScore = 1000
+    bestRandom = None
+
+    while failedImprovements < iterations:
+
+        runCounter += 1
+        houseList, networkList = readinInfo(filePrefix, True)
+
+        results = nearestHousev2rework.NearestHouse(houseList, networkList)
+
+        if bestRandom is None:
+            bestRandom = results
+
+        failedImprovements, bestRandom = ScoreCheck(results, bestRandom, failedImprovements)
+
+    print(f"NearestHouseV2rework: couldn't find a better result after {iterations} attemps. Ran a total of {runCounter}. Final Score = {bestRandom[1]}")
+
+    VisualJSON(bestRandom)
+
+    return bestRandom
+
 
 def SortOptimize(goodRandom, iterations, dynamic=False):
     """

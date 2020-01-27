@@ -56,7 +56,7 @@ WORST SCORE:
 10764
 
 BEST SCORE:
-5643 (networkresults_29sort.png) Wijk1
+5904 -> 5400 (networkresults_6sort.png) Wijk1
 5094 (networkresults_10sort.png) Wijk2
 5067 (networkresults_2sort.png) Wijk3
 
