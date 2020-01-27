@@ -31,15 +31,15 @@ def main(filePrefix, algorithmChoice, iterations):
     with open("resultaten/simulatieresulaten.txt", "w+") as f:
 
         if algorithmChoice == 1:
-            result = HillClimb(SortOptimize(RandomV3(filePrefix, iterations), iterations * 2), iterations * 4)
+            result = HillClimb(Optimize(RandomV3(filePrefix, iterations), iterations * 2, 1), iterations * 4)
         elif algorithmChoice == 2:
-            result = HillClimb(SortOptimize(RandomV3(filePrefix, iterations), iterations * 2), iterations * 4, True)
+            result = HillClimb(Optimize(RandomV3(filePrefix, iterations), iterations * 2, 1), iterations * 4, True)
         elif algorithmChoice == 3:
-            result = HillClimb(SortOptimize(RandomV3(filePrefix, iterations), iterations * 2, True), iterations * 4)
+            result = HillClimb(Optimize(RandomV3(filePrefix, iterations), iterations * 2, 2), iterations * 4)
         elif algorithmChoice == 4:
-            result = HillClimb(SortOptimize(RandomV3(filePrefix, iterations), iterations * 2, True), iterations * 4, True)
+            result = HillClimb(Optimize(RandomV3(filePrefix, iterations), iterations * 2, 2), iterations * 4, True)
         elif algorithmChoice >= 5 or algorithmChoice < 1:
-            results = HillClimb(SortOptimize(NetworkSearch(filePrefix, iterations), iterations * 2, True), iterations * 4, True)
+            results = HillClimb(Optimize(NetworkSearch(filePrefix, iterations), iterations * 2, 2), iterations * 4, True)
         
         
 def readinInfo(filePrefix, networkBool):

@@ -43,6 +43,7 @@ def NearestHouse(houses, networks):
             if currentNetwork.capacity > house.output and house.connected is False:
                 
                 nearestCableDistance = 10000
+                subCable = None
                 cableDistances = []
                 for cable in currentNetwork.cables:
                     
@@ -51,11 +52,12 @@ def NearestHouse(houses, networks):
 
                     if cableDistance < nearestCableDistance:
                         nearestCableDistance = cableDistance
-                        chosenCable = cable
+                        subCable = cable
 
                 if nearestCableDistance < nearestHouseDistance:
                     nearestHouseDistance = nearestCableDistance
                     chosenHouse = house
+                    chosenCable = subCable
 
         if chosenHouse is None:
             filledNetworks.append(curNetID)
@@ -70,8 +72,11 @@ def NearestHouse(houses, networks):
                 currentNetwork.cables.add(cable)
                 chosenHouse.cables.append(cable)
 
+            network.capacity -= chosenHouse.output
             totalCost += nearestHouseDistance * 9
             print(f"connected {chosenHouse.coordinates} to {chosenCable}. It has been added to {curNetID}. {filledNetworks}")
+    for network in networks:
+        print(f"this is the leftover capacity of {network.source}: {network.capacity}")
     # Creates correct output format
     # Finds filename for results
     pathFound = False
