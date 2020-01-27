@@ -15,7 +15,11 @@ import random as r
 import json
 
 from code.classes import house, battery, network
-from code.algorithms import nearestBatterySimple, nearestNetworkSimple, nearestNetworkv2, nearestNetworkv2random, bestFitNetwork, nearestHouse, nearestNetworkv3random, nearestNetworkShuffle, nearestNetworkSort, lowerboundCalculator, hillclimbSort, nearestNetworkSortOrderList, nearestNetworkSortv2, hillclimbSortv2, nearestHousev2, nearestHousev2rework
+from code.algorithms import nearestBatterySimple, nearestNetworkSimple, \
+    nearestNetworkv2, nearestNetworkv2random, bestFitNetwork, nearestHouse, \
+    nearestNetworkv3random, nearestNetworkShuffle, nearestNetworkSort, lowerboundCalculator, \
+    hillclimbSort, nearestNetworkSortOrderList, nearestNetworkSortv2, hillclimbSortv2, \
+    nearestHousev2, nearestHousev2rework
 from code.visualization import visualize
 
 def main(filePrefix, algorithmChoice, iterations):
@@ -137,7 +141,7 @@ def NetworkSearch(filePrefix, iterations):
     return bestRandom
 
 
-def SortOptimize(goodRandom, iterations, dynamic=False):
+def Optimize(goodRandom, iterations, subChoice):
     """
     Runs the Sort random algorithm as many times as interations, and returns the best one. 
     """
@@ -148,10 +152,12 @@ def SortOptimize(goodRandom, iterations, dynamic=False):
 
     while optimizationAttempts < iterations:
 
-        if dynamic:
+        if subChoice == 1:
             results = nearestNetworkSortv2.Sort(goodRandom[2], goodRandom[1])
-        else:
+        elif subChoice == 2:
             results = nearestNetworkSortOrderList.Sort(goodRandom[2], goodRandom[1])
+        elif subChoice == 3:
+            results = nearestNetworkShuffle.Shuffle(goodrandom[2], goodrandom[1])
 
         optimizationAttempts, optimizedResult = ScoreCheck(results, optimizedResult, optimizationAttempts)
 
