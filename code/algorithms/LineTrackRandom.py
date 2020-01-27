@@ -2,7 +2,8 @@ import random
 import numpy as np
 
 def TrackRandom(start, end):
-    """ Returns a list of all coordinates between two given points, except for the last one"""
+    """ Returns a list of all coordinates 
+        between two given points. """
 
     # Define variables
     startX = start[0]
@@ -19,9 +20,10 @@ def TrackRandom(start, end):
 
     coordinates = []
 
+    # Execute if line moves on x-axis only
     if distanceY == 0:
 
-        # Track along x-axis
+        # Track along x-axis, distance + 1 for final segment
         for i in range(distanceX + 1):
 
             # Move "right"
@@ -36,10 +38,10 @@ def TrackRandom(start, end):
                 coordinates.append([newX, startY])
                 newX -= 1
                 
-
+    # Execute if line moves on y-axis only
     elif distanceX == 0:
 
-        # Track along y-axis
+        # Track along y-axis, distance + 1 for final segment
         for i in range(distanceY + 1):
 
             # Move "up"
@@ -54,7 +56,7 @@ def TrackRandom(start, end):
                 coordinates.append([startX, newY])
                 newY -= 1
 
-
+    # Random, move on x-axis first
     elif np.random.randint(2) == 1:
 
         # Track along x-axis
@@ -72,7 +74,7 @@ def TrackRandom(start, end):
                 coordinates.append([newX, startY])
                 newX -= 1
 
-        # Track along y-axis
+        # Track along y-axis, distance + 1 for final segment
         for i in range(distanceY + 1):
 
             # Move "up"
@@ -87,6 +89,7 @@ def TrackRandom(start, end):
                 coordinates.append([newX, newY])
                 newY -= 1
 
+    # Random, move on y-axis first
     else:
 
         # Track along y-axis
@@ -104,7 +107,7 @@ def TrackRandom(start, end):
                 coordinates.append([startX, newY])
                 newY -= 1
         
-        # Track along x-axis
+        # Track along x-axis, distance + 1 for final segment
         for i in range(distanceX + 1):
 
             # Move "right"

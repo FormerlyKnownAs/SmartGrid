@@ -55,6 +55,10 @@ def Visualize(input, underlay=False):
             # Save cable sequence in dict under network index          
             networks[i].append(cableList)
 
+    # Determine tick labels
+    ax = plt.axes()
+    ax.yaxis.set_minor_locator(plt.MultipleLocator(1))
+    ax.xaxis.set_minor_locator(plt.MultipleLocator(1))
 
     # Set up grid for visualization
     plt.title("SmartGrid")
@@ -67,11 +71,6 @@ def Visualize(input, underlay=False):
 
     # Lock graph aspect ratio
     plt.gca().set_aspect('equal', adjustable='box')
-
-    # Determine tick labels
-    ax = plt.axes()
-    ax.yaxis.set_minor_locator(plt.MultipleLocator(1))
-    ax.xaxis.set_minor_locator(plt.MultipleLocator(1))
 
     # Plot grid
     plt.grid(True, which='both', linewidth=0.3)
