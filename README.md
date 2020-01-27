@@ -7,11 +7,9 @@ De case die ons team gegeven is heet SmartGrid, het objectief voor dit probleem 
 
 
 bestFitNetwork.py:
-
-Algorithm that connects houses on separate networks to the battery that fits it best.
+Algoritme dat huizen verbindt op aparte netwerken aan de batterijen waar die het beste in passen.
 
 hillclimbSortv2.py:
-
 Neemt een redelijk geoptimaliseerde oplossing en vervolgens verandert het de hoek die de kabels nemen om de connectiepunt van het netwerk te bereiken.(Mogelijk ook de inleesvolgorde veranderen van huizen)
 
 lineTrackRandom.py:
@@ -31,7 +29,6 @@ nearestNetworkCluster.py:
 Een algoritme dat huizen verbindt op basis van afstand met andere huizen, dit vormt dat uiteindelijk een cluster van huizen wat leidt tot het efficient leggen van kabel.
 
 nearestNetworkShuffle.py:
-
 Houdt de configuratie die gemaakt is tussen welke huizen verbonden zijn met welke batterijen. Vervolgens verwijdert het de kabels en maakt nieuwe kabels aan gebaseerd op de afstand tussen het huis en de dichstbijzijnde netwerk punt wat een kabel, batterij en huis kan zijn.
 
 nearestNetworkv3Random.py:
@@ -67,8 +64,8 @@ SmartGrid bevat de volgende mapjes en files:
 
 
 Resultaten reproduceren:
--python main.py ----------  is altijd het begin.
--pthon main.py 10 --------  geeft aan hoeveel iteraties het programma moet doen voordat het klaar is.
--python main.py 10 wijk1--  hier heb je de keuze van wijk1 tot wijk3
--python main.py 10 wijk 1-  besluit de keuze van algoritme, waarbij 1 tot 4 opties zijn.
+    python main.py ----------  is altijd het begin.
+    pthon  main.py 10 --------  geeft aan hoeveel iteraties het programma moet doen voordat het klaar is.
+    python main.py 10 wijk1--  hier heb je de keuze van wijk1 tot wijk3
+    python main.py 10 wijk 1-  besluit de keuze van algoritme, waarbij 1 tot 4 opties zijn.
 
