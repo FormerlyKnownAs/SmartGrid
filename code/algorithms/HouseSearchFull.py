@@ -2,7 +2,8 @@
 
 HouseSearchFull.py
 
-Algorithm that connects houses on separate networks to the closest available network node.
+Algorithm that connects houses on separate networks to the 
+closest available network node.
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
@@ -17,6 +18,8 @@ import copy
 import json
 
 def NearestHouse(houses, networks):
+    """ Connects houses on seperate networks to
+        closes available network node. """
 
     totalCost = 0
     r.shuffle(networks)
@@ -26,12 +29,15 @@ def NearestHouse(houses, networks):
     # Loops over all houses
     for i, house in enumerate(houses):
 
-        # Picks an available network, or stores the house in the overflow list if none are available
+        # Picks an available network, or stores the house in the 
+        # overflow list if none are available
         curNetID = i % len(networks)
-        while curNetID in filledNetworks and len(filledNetworks) < len(networks):
+        while curNetID in filledNetworks and 
+                            len(filledNetworks) < len(networks):
             curNetID = (curNetID + 1) % len(networks)
 
-        # If no networks are available for connection, the house is registered as unconnected
+        # If no networks are available for connection, 
+        # the house is registered as unconnected
         if len(filledNetworks) >= len(networks):
             unconnectedHouses.append(house)   
 
@@ -42,8 +48,10 @@ def NearestHouse(houses, networks):
 
         for house in houses:
 
-            #  Checks for capacity and if the house hasn't already been connected
-            if currentNetwork.capacity > house.output and house.connected is False:
+            #  Checks for capacity and if the house 
+            #  hasn't already been connected
+            if currentNetwork.capacity > house.output and 
+                                        house.connected is False:
                 
                 nearestCableDistance = 10000
                 subCable = None
@@ -52,10 +60,12 @@ def NearestHouse(houses, networks):
                 # Loops over all the cables in the current network
                 for cable in currentNetwork.cables:
                     
-                    cableDistance = abs(house.coordinates[0] - cable[0]) + abs(house.coordinates[1] - cable[1])
+                    cableDistance = abs(house.coordinates[0] - cable[0]) +
+                                    abs(house.coordinates[1] - cable[1])
                     cableDistances.append((cableDistance, cable))
                     
-                    #  Finds the shortest distance between a house and all the cables
+                    #  Finds the shortest distance between a house 
+                    #  and all the cables
                     if cableDistance < nearestCableDistance:
                         nearestCableDistance = cableDistance
                         subCable = cable
@@ -73,7 +83,8 @@ def NearestHouse(houses, networks):
             corner = np.random.randint(2)
             currentNetwork.houses.append(chosenHouse)
             chosenHouse.connected = True
-            for cable in TrackRandom(chosenHouse.coordinates, chosenCable, corner):
+            for cable in TrackRandom(chosenHouse.coordinates,
+                                            chosenCable, corner):
 
                 currentNetwork.cables.add(cable)
                 chosenHouse.cables.append(cable)

@@ -2,7 +2,8 @@
 
 ResultShuffle.py
 
-Takes a json file and keeps its connections, but shuffling its cable connections.
+Takes a json file and keeps its connections, but shuffling its 
+cable connections.
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
@@ -15,6 +16,7 @@ import os as o
 import json
 
 def Shuffle(inputFile, previousScore):
+    """ Shuffles cable connections in an existing network. """
 
     # Set variables to be measured
     totalCost = 0
@@ -48,12 +50,14 @@ def Shuffle(inputFile, previousScore):
             cableDistance = []
             cableLocation = []
             coordinatesHouse = house["locatie"].split(",")
-            coordinatesHouse = (int(coordinatesHouse[0]), int(coordinatesHouse[1]))
+            coordinatesHouse = (int(coordinatesHouse[0]), 
+                                int(coordinatesHouse[1]))
 
             for cable in cables:
                 
                 # calculates distance between cable and house
-                distanceCable = abs(coordinatesHouse[0] - cable[0]) + abs(coordinatesHouse[1] - cable[1])
+                distanceCable = abs(coordinatesHouse[0] - cable[0]) + 
+                                abs(coordinatesHouse[1] - cable[1])
                 cableDistance.append(distanceCable)
                 cableLocation.append(cable)
 
@@ -62,7 +66,8 @@ def Shuffle(inputFile, previousScore):
             shortestCableIndex = cableDistance.index(shortestCableDistance)
 
             # Connect the house to the nearest cable
-            for cable in TrackRandom(coordinatesHouse, cableLocation[shortestCableIndex]):
+            for cable in TrackRandom(coordinatesHouse, 
+                            cableLocation[shortestCableIndex]):
                 cables.add(cable)
                 house["kabels"].append(cable)
 

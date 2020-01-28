@@ -2,7 +2,8 @@
 
 BatterySearch.py
 
-Algorithm that connects houses on separate networks to the closest available network. 
+Algorithm that connects houses on separate networks to the 
+closest available network. 
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
@@ -14,6 +15,8 @@ import random as r
 import os as o
 
 def NearestNetwork(houses, networks):
+    """ Connects houses on seperate networks to closest
+        available network. """
 
     unconnectedHouses = []
 
@@ -28,7 +31,8 @@ def NearestNetwork(houses, networks):
 
             # Checks capacity and if available checks distance to battery
             if network.capacity > house.output:
-                distance = abs(house.coordinates[0] - network.source[0]) + abs(house.coordinates[1] - network.source[1])
+                distance = abs(house.coordinates[0] - network.source[0]) + 
+                            abs(house.coordinates[1] - network.source[1])
                 distanceList.append(distance)
 
             else:

@@ -15,7 +15,8 @@ import random
 import numpy as np
 
 def TrackRandom(start, end, corner):
-    """ Returns a list of all coordinates between two given points, except for the last one"""
+    """ Returns a list of all coordinates between two 
+        given points. """
 
     # Define variables
     startX = start[0]

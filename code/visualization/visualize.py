@@ -60,7 +60,8 @@ def Visualize(input, underlay=False):
 
             for line in house["kabels"]:
 
-                # Format cable coordinate strings as list and append to cable list
+                # Format cable coordinate strings as list and append to 
+                # cable list
                 cableList.append(ListFormat(line))
                 
             # Save cable sequence in dict under network index          

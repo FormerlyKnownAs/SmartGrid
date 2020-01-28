@@ -2,7 +2,8 @@
 
 ResultsDynamicSort.py
 
-Takes a json file and keeps its connections, but reconfiguring its connections based on distance to all other points on the network
+Takes a json file and keeps its connections, but reconfiguring its connections 
+based on distance to all other points on the network.
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
@@ -16,6 +17,8 @@ import os as o
 import json
 
 def Sort(inputFile, previousScore):
+    """ Reconfigures network connections based on all other
+        points in network. """
 
     # Set variables to be measured
     totalCost = 0
@@ -41,8 +44,10 @@ def Sort(inputFile, previousScore):
         for house in network["huizen"]:
             house["kabels"] = []
             coordinatesHouse = house["locatie"].split(",")
-            coordinatesHouse = (int(coordinatesHouse[0]), int(coordinatesHouse[1]))
-            house["distance"] = abs(coordinatesHouse[0] - sourceCable[0]) + abs(coordinatesHouse[1] - sourceCable[1])
+            coordinatesHouse = (int(coordinatesHouse[0]), 
+                                int(coordinatesHouse[1]))
+            house["distance"] = abs(coordinatesHouse[0] - sourceCable[0]) + 
+                                abs(coordinatesHouse[1] - sourceCable[1])
             houseList.append(house)
 
         # Finds closest point on network for each house
@@ -54,17 +59,20 @@ def Sort(inputFile, previousScore):
             for house in houseList:
 
                 coordinatesHouse = house["locatie"].split(",")
-                coordinatesHouse = (int(coordinatesHouse[0]), int(coordinatesHouse[1]))
+                coordinatesHouse = (int(coordinatesHouse[0]), 
+                                    int(coordinatesHouse[1]))
 
                 currentDistance = 1000
                 for cable in cables:
-                   distance = abs(coordinatesHouse[0] - cable[0]) + abs(coordinatesHouse[1] - cable[1])
+                   distance = abs(coordinatesHouse[0] - cable[0]) + 
+                                abs(coordinatesHouse[1] - cable[1])
                    if distance < currentDistance:
                        currentDistance = distance
                 houseDistance.append(currentDistance)
                 houseLocation.append(house)
 
-            #  Takes the shortest distance found from houseDistance, then finds the house that is linked to that distance
+            #  Takes the shortest distance found from houseDistance, 
+            #  then finds the house that is linked to that distance
             houseMinimalDistance = min(houseDistance)
             indexHouseMinimalDistance = houseDistance.index(houseMinimalDistance)
 
@@ -75,12 +83,14 @@ def Sort(inputFile, previousScore):
             cableDistance = []
             cableLocation = []
             coordinatesHouse = currentHouse["locatie"].split(",")
-            coordinatesHouse = (int(coordinatesHouse[0]), int(coordinatesHouse[1]))
+            coordinatesHouse = (int(coordinatesHouse[0]), 
+                                int(coordinatesHouse[1]))
 
             for cable in cables:
                 
                 # calculates distance between cable and house
-                distanceCable = abs(coordinatesHouse[0] - cable[0]) + abs(coordinatesHouse[1] - cable[1])
+                distanceCable = abs(coordinatesHouse[0] - cable[0]) + 
+                                abs(coordinatesHouse[1] - cable[1])
                 cableDistance.append(distanceCable)
                 cableLocation.append(cable)
 
@@ -91,7 +101,8 @@ def Sort(inputFile, previousScore):
             # Connect the house to the nearest cable
             corner = np.random.randint(2)
             currentHouse["corner"] = corner
-            for cable in TrackRandom(coordinatesHouse, cableLocation[shortestCableIndex], corner):
+            for cable in TrackRandom(coordinatesHouse, 
+                                cableLocation[shortestCableIndex], corner):
                 cables.add(cable)
                 currentHouse["kabels"].append(cable)
 

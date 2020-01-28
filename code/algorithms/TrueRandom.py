@@ -35,7 +35,8 @@ def RandomConnect(houses, networks):
             unconnectedHouses.append(house)
 
         else:
-            randomNetwork = availabilityList[r.randint(0, len(availabilityList) - 1)]
+            randomNetwork = availabilityList[r.randint(0, 
+                                    len(availabilityList) - 1)]
 
 
             # Sets battery and route

@@ -2,7 +2,8 @@
 
 NetworkSearch.py
 
-Algorithm that connects houses on separate networks to the closest available network node.
+Algorithm that connects houses on separate networks to the 
+closest available network node.
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
@@ -15,6 +16,8 @@ import os as o
 import json
 
 def NearestNetworkV3(houses, networks, id):
+    """ Connects houses on seperate networks to the closest
+        available network node. """
 
     totalCost = 0
     unconnectedHouses = [] 
@@ -24,7 +27,8 @@ def NearestNetworkV3(houses, networks, id):
     # Iterates through all houses
     for house in houses:
 
-        # Creates empty list to add distances to and a variable to store coordinates
+        # Creates empty list to add distances to and a variable 
+        # to store coordinates
         distanceList = []
         coordinateList = []
         pointOfConnection = None
@@ -43,7 +47,8 @@ def NearestNetworkV3(houses, networks, id):
                 for cable in network.cables:
 
                     # calculates distance between cable and house
-                    distanceCable = abs(house.coordinates[0] - cable[0]) + abs(house.coordinates[1] - cable[1])
+                    distanceCable = abs(house.coordinates[0] - cable[0]) + 
+                                    abs(house.coordinates[1] - cable[1])
                     cableDistances.append(distanceCable)
                     cableLocation.append(cable)
 
@@ -69,7 +74,8 @@ def NearestNetworkV3(houses, networks, id):
             closestNetwork = networks[shortestIndex]
 
             # Finds all cables
-            for cable in TrackRandom(house.coordinates, coordinateList[shortestIndex]):
+            for cable in TrackRandom(house.coordinates, 
+                                coordinateList[shortestIndex]):
                 closestNetwork.cables.add(cable)
                 house.cables.append(cable)
 
