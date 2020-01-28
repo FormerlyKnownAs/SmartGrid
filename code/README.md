@@ -12,49 +12,49 @@ In de map visualization staat het bestand om de outputs te kunnen functioneren.
 ## Algorithms:
 
 #### BatterySearch:
-Leest willekeurig de huizen in, gaat daarna op basis van afstand  en beschikbaardheid connecties maken met batterijen
+Randomizer: Leest willekeurig de huizen in, gaat daarna op basis van afstand en beschikbaardheid connecties maken met batterijen
 
 #### bestFitNetwork.py:
-Algoritme dat huizen verbindt op aparte netwerken aan de batterijen waar die het beste in passen qua capaciteit.
+Randomizer: Leest willekeurig de huizen in en verbindt de huizen met batterijen gebaseerd op grootste beschikbare capaciteit.
 
 #### CornerChange.py:
-Neemt een redelijk geoptimaliseerde oplossing en vervolgens verandert het de hoek die de kabels nemen om de connectiepunt van het netwerk te bereiken.
+Finalizer: Leest een geoptimalizeerde output in en verandert één bocht-aanlegging in de data, en legt vervolgens gebaseerd op afstand tot het netwerk opnieuw kabels aan. 
 
 #### CornerPositionChange.py:
-Neemt een redelijk geoptimaliseerde oplossing en vervolgens verandert het de hoek die de kabels nemen om de connectiepunt van het netwerk te bereiken. Ook verandert het de inleesvolgorde van de huizen met gerugeleerde mate.
+Finalizer: Identiek aan CornerChange.py, maar kan ook mogelijk ook de aanleg volgorde van een netwerk aanpassen, door de inleesvolgorde van de huizen aan te passen en een huis een klein aantal plaatsen te veranderen.
 
 #### HouseSearchFull.py:
-Werkt uit een battery first approach waar het van nature clusters vormt met huizen. Vanaf de batterij zoekt het de dichtsbijzijnde huis en maakt daar een connectie mee vervolgens zoekt het naar de dichstbijzijdnste huis vanaf dat punt en maakt weer een connectie
+Randomizer: Leest willekeurige de netwerken in en loopt er door heen. Voor elk netwerk vindt het het dichtsbijzijnde huis en verbindt het zolang de capaciteit dat acht. 
 
 #### HouseSearchHybrid.py:
-Doet hezelfde als de HouseSearchFull maar sinds er geen viable solutions uit deze versie kwam, zorgt deze versie er voor dat de laatste 10 huizen willekeurig verbonden raken. Dit vermeidt het probleem van dat er geen oplossingen gevonden worden.
+Randomizer: Identiek aan HouseSearchFull.py, maar stopt de aanpak vlak voor het einde en verbindt de laatste huizen gebaseerd op volgorde van de huizen in de lijst, in plaats van afstand tot netwerk
 
 #### linetrack.py:
-Maakt en slaat een lijn op van begin punt tot eind punt waar Manhattan distance gebruikt wordt.
+Ondersteunend: Maakt en slaat een lijn op van begin punt tot eind punt waar Manhattan distance gebruikt wordt.
 
 #### LineTrackRandom.py:
-Maakt en slaat een lijn op van begin punt tot eind punt waar de hoek die de lijn neemt willekeurig is terwijl deze altijd vast staat bij de normale lineTrack.
+Ondersteunend: Maakt en slaat een lijn op van begin punt tot eind punt waar de hoek die de lijn neemt willekeurig is terwijl deze altijd vast staat bij de normale lineTrack.
 
 #### LineTrackRandomInput:
-Doet hetzelfde als LineTrackRandom maar de manier hoe de hoek genomen wordt, wordt besloten door de gebruiker van het programma.
+Ondersteunend: Doet hetzelfde als LineTrackRandom maar de manier hoe de hoek genomen wordt, wordt besloten door de gebruiker van het programma.
 
 #### lowerBoundCalculator.py:
-Berekent de lower bound van een wijk gebaseerd op de afstand tussen huizen en batterijen, neemt de capaciteit van de batterijen niet in cosideratie, waardoor dit alleen de theoretische lowerbound is.
+Ondersteunend: Berekent een mogelijke lowerbound van een wijk gebaseerd op de afstand tussen huizen en batterijen, neemt de capaciteit van de batterijen niet in consideratie, waardoor dit alleen de theoretische lowerbound is.
 
-#### mst.py(conceptueel onverenigbaar):
-Niet volledig afgemaatk, maar aangepast om de configuratie tussen huizen en batterijen te onthouden en te accepteren in het programma. Deze als nodes in het programma te stoppen om vervolgens de minimum spanning tree te vinden.
+#### mst.py:
+Ondersteunend: Kan de configuratie van verbindingen tussen batterijen en huizen inlezen en verbindt ze optimaal via een Kruskal minimal spanning tree algorithme, en geeft deze nodes terug als return value. Dit bestand kan resultaten produceren en laat een mogelijke aanpak zien, maar wordt niet daadwerkelijk gebruikt. Functioneerd als proof of concept.
 
 #### NetworkSearch.py:
-Genereert de initiele configuratie waar andere algoritmen uiteindelijk mee verder werken. De volgorde van het inlezen van de huizen is willekeurig, vervolgens maakt het verbindingen tussen huizen en batterijen op basis van afstand. dit generereert een netwerk van kabels die vervolgens ook meegenomen worden in de afstandsberekening.
+Randomizer: De volgorde van het inlezen van de huizen is willekeurig, vervolgens maakt het verbindingen tussen huizen en netwerken, gebaseerd op de dichtsbijzijnde beschikbare kabel.
 
 #### ResultsDynamicSort.py:
-Houdt de configuratie die gemaakt is tussen welke huizen verbonden zijn met welke batterijen. Vervolgens verwijdert het de kabels en maakt nieuwe kabels aan gebaseerd op de afstand tussen het huis en de dichstbijzijnde netwerk punt wat een kabel, batterij en huis kan zijn.
+Optimizer: Houdt de configuratie die gemaakt is tussen welke huizen verbonden zijn met welke batterijen. Vervolgens verwijdert het de kabels en maakt nieuwe kabels gebaseerd op afstand tussen een huis en netwerk. Verbindt altijd het dichtsbijzijnde huis. 
 
 #### ResultsShuffle.py:
-Doet hetzelfde als ResultsDynamicSort behalve dat de inleesvolgorde van huizen willekeurig is gemaakt.
+Optimizer: Doet hetzelfde als ResultsDynamicSort behalve dat de inleesvolgorde van huizen willekeurig is, in plaats van op afstand.
 
 #### ResultsSort.py:
-Houdt de configuratie die gemaakt is tussen welke huizen verbonden zijn met welke batterijen. vervolgens haalt het deze kabels weg. Gaat over elk netwerk heen en sorteert de huizen op basis van afstand en maakt nieuwe kabels aan.
+Optimizer: Houdt de configuratie die gemaakt is tussen welke huizen verbonden zijn met welke batterijen. Vervolgens haalt het deze kabels weg. Gaat over elk netwerk heen en sorteert de huizen op basis van afstand en maakt nieuwe kabels aan.
 
 #### TrueRandom.py:
-Verbindt de huizen met een willekeurige batterij. De huizen staan in een willekeurige volgorde.
+Randomizer: Leest de huizen in op een willekeurige volgorde en verbindt ze aan een willekeurige batterij.

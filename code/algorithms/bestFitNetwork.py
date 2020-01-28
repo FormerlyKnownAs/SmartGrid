@@ -2,8 +2,8 @@
 
 BestFitNetwork.py
 
-Algorithm that connects houses on separate networks 
-to the battery that fits it best.
+Algorithm that connects houses to the networks with 
+the most remaining capacity.
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
@@ -16,7 +16,8 @@ import os as o
 
 def BestFit(houses, networks):
     """ Connects houses on seperate networks to battery
-        that fits it the best. """
+        that fits it the best.  Takes a list of house objects
+        and a list of network objects as argument."""
 
     totalCost = 0
     cableCost = 9
