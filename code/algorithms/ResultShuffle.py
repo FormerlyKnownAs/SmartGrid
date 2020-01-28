@@ -5,8 +5,9 @@ The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
 """
 
-from code.algorithms.LineTrackRandom import TrackRandom
+from code.algorithms.LineTrackRandominput import TrackRandom
 import random as r
+import numpy as np
 import os as o
 import json
 
@@ -60,7 +61,9 @@ def Shuffle(inputFile, previousScore):
             shortestCableIndex = cableDistance.index(shortestCableDistance)
 
             # Connect the house to the nearest cable
-            for cable in TrackRandom(coordinatesHouse, cableLocation[shortestCableIndex]):
+            corner = np.random.randint(2)
+            house["corner"] = corner
+            for cable in TrackRandom(coordinatesHouse, cableLocation[shortestCableIndex], corner):
                 cables.add(cable)
                 house["kabels"].append(cable)
 
@@ -77,6 +80,7 @@ def Shuffle(inputFile, previousScore):
             {
                 "locatie": house["locatie"],
                 "output": house["output"],
+                "corner": house["corner"],
                 "kabels": [
                     str(cable) for cable in house["kabels"]
                 ]

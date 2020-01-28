@@ -10,7 +10,7 @@ import random as r
 import os as o
 import json
 
-def hillSort(inputFile, previousScore, randomizationList):
+def hillSort(inputFile, randomizationList, previousScore):
 
     # Set variables to be measured
     totalCost = 0

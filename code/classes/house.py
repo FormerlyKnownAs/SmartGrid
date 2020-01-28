@@ -61,33 +61,4 @@ class House(object):
 
 
     def __str__(self):
-        return f"{self.coordinates}, {self.output}, {self.route}, {self.battery}, {self.cost}, {self.connected}\n"
-
-def LoadHouses(filePath):
-    """ Reads out, parses input file, generates
-        House objects. """
-
-    # Makes list to return to be filled with csv data
-    houses = []
-
-    with open(filePath, "r") as f:
-
-        # Skips header
-        csvreader = csv.reader(f)
-        next (csvreader, None)
-
-        # Reads the lines
-        for line in f:
-
-            houseData = []
-
-            for element in line.split(","):
-
-                # Reads out numbers
-                houseData.append(element)
-
-            # Appends to list
-            newHouse = House(int(houseData[0]), int(houseData[1]), float(houseData[2]))
-            houses.append(newHouse)
-
-    return houses
+        return f"{self.coordinates}, {self.output}, {self.route}, {self.battery}, {self.cost}, {self.connected}. {self.corner}\n"

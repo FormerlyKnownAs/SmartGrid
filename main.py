@@ -28,7 +28,7 @@ def main(iterations, filePrefix, Randomizer, Optimizer, Finisher):
         if Optimizer != 0:
             optimizedResult = Optimize(randomizedResult, iterations * 2, Optimizer)
             if Finisher != 0:
-                finalResult = Finalize(randomizedResult, iterations * 4, Finisher)
+                finalResult = Finalize(optimizedResult, iterations * 4, Finisher)
     else:
         print("Please select an algorithm.")
 
@@ -60,9 +60,11 @@ def ScoreCheck(newResults, previousResults, failedImprovements):
 def VisualJSON(result, previousResult=None):
     """ Creates a JSON file and visualizes the result. If a previousResult is given, creates an underlay."""
 
+    # Writes the JSON file
     with open(result[2], "w+") as f:
         json.dump(result[0], f, indent=4)
 
+    # Checks if there's a background layer and visualizes the data
     if previousResult is not None:
         visualize.Visualize(previousResult[2], True)
     visualize.Visualize(result[2])
@@ -127,15 +129,17 @@ def Optimize(goodRandom, iterations, subChoice):
 
         optimizationAttempts, optimizedResult = ScoreCheck(results, optimizedResult, optimizationAttempts)
 
-    VisualJSON(optimizedResult, goodRandom)
-
-    print(f"Result Optimization: couldn't find a better result after {iterations} attempts. Final Score = {optimizedResult[1]}")
+    if results[1] < goodRandom[1]:
+        print(f"Result Optimization: couldn't find a better result after {iterations} attempts. Final Score = {optimizedResult[1]}")
+        VisualJSON(optimizedResult, goodRandom)
+    else:
+        print(f"Optimizing did not improve the score. No visualization made. Score remains {optimizedResult[1]}")
 
     return optimizedResult
 
 def Finalize(optimizedRandom, iterations, subChoice):
     """ Runs the hillclimb algorithm as many times as iterations and returns the best result."""
-
+    
     # Sets the base for improvement
     optimizationAttempts = 0
     optimizedResult = optimizedRandom
@@ -149,20 +153,19 @@ def Finalize(optimizedRandom, iterations, subChoice):
     while optimizationAttempts < iterations:
 
         if subChoice == 1:
-            results = CornerChange.hillSort(newPath, optimizedResult[1], optimizedResult[3])
+            results = CornerChange.hillSort(newPath, optimizedResult[2], optimizedResult[1])
         elif subChoice >= 2:
-            results = CornerPositionChange.hillSort(newPath, optimizedResult[1], optimizedResult[3])
+            results = CornerPositionChange.hillSort(newPath, optimizedResult[2], optimizedResult[1])
 
         optimizationAttempts, optimizedResult = ScoreCheck(results, optimizedResult, optimizationAttempts)
 
-    # Vis
+    # Visualizes results and updates user about final status.
     if results[1] < optimizedRandom[1]:
-        VisualJSON(optimizedResult, optimizedRandom)
         print(f"hillclimbSortv2: couldn't find a better result after {iterations} attempts. Final Score = {optimizedResult[1]}")
+        VisualJSON(optimizedResult, optimizedRandom)
     else:
-        print("hillclimbing did not improve the score. No visualization made.")
+        print(f"hillclimbing did not improve the score. No visualization made. Score remains {optimizedResult[1]}")
 
-    
 if __name__ == "__main__":
 
     # Sets the parameters of the function based on the input, and creates default values
@@ -190,7 +193,6 @@ if __name__ == "__main__":
         finalizer = int(sys.argv[5])
     except:
         finalizer = 1000
-
 
     main(iterations, filePrefix, randomizer, optimizer, finalizer)
 
