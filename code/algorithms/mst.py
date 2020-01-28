@@ -1,7 +1,6 @@
 """
 
 mst.py
-21-01-2020
 
 Concept implementation of a Kruskal MST algorithm. Finally decided it would be 
 suboptimal for our problem; also could't correctly fit the output in our existing
@@ -24,7 +23,8 @@ class Vertix():
         self.network = network
     
     def __str__(self):
-        return f"Vertix id: {self.id}, coordinates: {self.coordinates}, network: {self.network}"
+        return f"Vertix id: {self.id}, coordinates: {self.coordinates}, \
+                network: {self.network}"
 
 
 def ListFormat(string):
@@ -100,7 +100,9 @@ def DistanceCalculator(network):
 
 class Graph: 
     """
-    Source: https://www.geeksforgeeks.org/kruskals-minimum-spanning-tree-algorithm-greedy-algo-2/
+    Source: 
+    https://www.geeksforgeeks.org/kruskals-minimum-spanning-tree-algorithm-greedy-algo-2/
+    
     """
 
     def __init__(self,vertices): 
@@ -172,31 +174,43 @@ class Graph:
             print (f"from node {u} to node {v}, with weight {weight}.")
   
 
-def MST(input)
+def MST(input):
+    """ Concept version, will print all optimal connections in network,
+        calculated by Kruskal's MST. """
 
+    # Load networks from JSON file
     networks = Load("networkresults_5.json")
 
     networkNodesDict = {}
     networkLengths = []
 
+    # Iterate over networks
     for i, network in enumerate(networks.values()):
 
+        # Calculate distances between all nodes in network
         nodes = DistanceCalculator(network)
 
+        # Put in dict
         networkNodesDict[i] = nodes
 
+        # Save number of nodes for input in Kruskal algorithm
         networkLengths.append(len(network))
 
-  
+    # Iterate over networks (nodes)
     for i, network in enumerate(networkNodesDict.values()):
 
         print(f"CONNECTIONS FOR NETWORK {i}:\n")
+
+        # Prime Graph class for correct numer of nodes
         g = Graph(networkLengths[i])
         
+        # Iterate over nodes
         for node in network:
     
+            # Add edges in format: node, node, weight
             g.addEdge(node[0], node[1], node[2])
 
+        # Generate MST
         g.KruskalMST()
         print("\n")
 
