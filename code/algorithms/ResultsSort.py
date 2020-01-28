@@ -1,8 +1,12 @@
 """
+
+ResultsSort.py
+
 Takes a json file and keeps its connections, but reconfiguring its connections based on distance to the battery
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
+
 """
 
 from code.algorithms.LineTrackRandominput import TrackRandom

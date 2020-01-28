@@ -1,8 +1,12 @@
 """
+
+ResultsDynamicSort.py
+
 Takes a json file and keeps its connections, but reconfiguring its connections based on distance to all other points on the network
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
+
 """
 
 from code.algorithms.LineTrackRandominput import TrackRandom

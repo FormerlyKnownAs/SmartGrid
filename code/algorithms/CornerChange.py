@@ -1,8 +1,12 @@
 """
+
+CornerPositionChange.py
+
 Generates a set of turns and changes them 
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
+
 """
 
 from code.algorithms.LineTrackRandominput import TrackRandom

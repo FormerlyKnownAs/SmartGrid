@@ -1,3 +1,16 @@
+"""
+
+LineTrackRandominput.py
+
+Tracks a line between two given points and returns a list of all 
+points on that line. This version incorporates "controlled randomness", so
+corners can be manually swapped.
+
+The Group Formerly Known as 'The Prince Statement'
+Ben Groot, Boy Stekelbos, Momo Schaap
+
+"""
+
 import random
 import numpy as np
 

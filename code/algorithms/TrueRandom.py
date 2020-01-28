@@ -1,8 +1,12 @@
 """
+
+TrueRandom.py
+
 Purely random algorithm, used for score reference. 
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
+
 """
 
 from code.algorithms.LineTrackRandom import TrackRandom

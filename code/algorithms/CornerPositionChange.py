@@ -1,8 +1,12 @@
 """
+
+CornerPositionChange.py
+
 Takes previous input data and changes one element, be it a randomized corner or the location of a house.
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
+
 """
 
 from code.algorithms.LineTrackRandominput import TrackRandom
