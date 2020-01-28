@@ -1,5 +1,4 @@
 """
-
 lowerboudCalculator.py
 
 Calculates a possible lower bound based on nearest location of other points.
@@ -15,7 +14,7 @@ def LowestBound(houses, batteries):
     totalCost = 0
 
     cableCost = 9
-    
+
     # Finds the nearest point for each house
     for house in houses:
 
