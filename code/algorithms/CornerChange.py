@@ -1,8 +1,12 @@
 """
-Generates a set of turns and changes them 
+
+CornerChange.py
+
+Generates a set of turns and changes them.
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
+
 """
 
 from code.algorithms.LineTrackRandominput import TrackRandom
@@ -10,7 +14,8 @@ import random as r
 import os as o
 import json
 
-def hillSort(inputFile, randomizationList, previousScore):
+def hillSort(inputFile, previousScore, randomizationList):
+    """ Generates a set of turns and changes them. """
 
     # Set variables to be measured
     totalCost = 0
@@ -23,7 +28,8 @@ def hillSort(inputFile, randomizationList, previousScore):
 
     # Makes one random change in the inputfile
     randomNetwork = json_dict[r.randint(0, len(json_dict) - 1)]
-    randomHouse = randomNetwork["huizen"][r.randint(0, len(randomNetwork["huizen"]) - 1)]
+    randomHouse = randomNetwork["huizen"][r.randint(0, 
+                            len(randomNetwork["huizen"]) - 1)]
     if randomHouse["corner"] == 0:
         randomHouse["corner"] = 1
     else:
@@ -45,8 +51,10 @@ def hillSort(inputFile, randomizationList, previousScore):
         for house in network["huizen"]:
             house["kabels"] = []
             coordinatesHouse = house["locatie"].split(",")
-            coordinatesHouse = (int(coordinatesHouse[0]), int(coordinatesHouse[1]))
-            house["distance"] = abs(coordinatesHouse[0] - sourceCable[0]) + abs(coordinatesHouse[1] - sourceCable[1])
+            coordinatesHouse = (int(coordinatesHouse[0]), 
+                                int(coordinatesHouse[1]))
+            house["distance"] = abs(coordinatesHouse[0] - sourceCable[0]) + \
+                                abs(coordinatesHouse[1] - sourceCable[1])
             houseList.append(house)
 
         # Sorts the houses based on distance to battery
@@ -58,12 +66,14 @@ def hillSort(inputFile, randomizationList, previousScore):
             cableDistance = []
             cableLocation = []
             coordinatesHouse = house["locatie"].split(",")
-            coordinatesHouse = (int(coordinatesHouse[0]), int(coordinatesHouse[1]))
+            coordinatesHouse = (int(coordinatesHouse[0]), 
+                                int(coordinatesHouse[1]))
 
             for cable in cables:
 
                 # calculates distance between cable and house
-                distanceCable = abs(coordinatesHouse[0] - cable[0]) + abs(coordinatesHouse[1] - cable[1])
+                distanceCable = abs(coordinatesHouse[0] - cable[0]) + \
+                                abs(coordinatesHouse[1] - cable[1])
                 cableDistance.append(distanceCable)
                 cableLocation.append(cable)
 
@@ -72,7 +82,8 @@ def hillSort(inputFile, randomizationList, previousScore):
             shortestCableIndex = cableDistance.index(shortestCableDistance)
 
             # Connect the house to the nearest cable
-            for cable in TrackRandom(coordinatesHouse, cableLocation[shortestCableIndex], house["corner"]):
+            for cable in TrackRandom(coordinatesHouse, 
+                        cableLocation[shortestCableIndex], house["corner"]):
                 cables.add(cable)
                 house["kabels"].append(cable)
 
@@ -100,7 +111,8 @@ def hillSort(inputFile, randomizationList, previousScore):
         ]
     } for network in json_dict]
 
-    return finalOutput, totalCost, f"{inputFile}.json", randomizationList, houseList
+    return finalOutput, totalCost, f"{inputFile}.json", randomizationList, \
+                                                                    houseList
 
 
 

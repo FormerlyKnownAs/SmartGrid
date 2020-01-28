@@ -1,8 +1,13 @@
 """
-Algorithm that connects houses on separate networks to the battery that fits it best.
+
+BestFitNetwork.py
+
+Algorithm that connects houses on separate networks 
+to the battery that fits it best.
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
+
 """
 
 from code.algorithms.LineTrackRandom import TrackRandom
@@ -10,6 +15,8 @@ import random as r
 import os as o
 
 def BestFit(houses, networks):
+    """ Connects houses on seperate networks to battery
+        that fits it the best. """
 
     totalCost = 0
     cableCost = 9
@@ -50,8 +57,9 @@ def BestFit(houses, networks):
             # Iterates through all cables in best fit network
             for cable in lowestNetwork.cables:
 
-                # calculates distance between cable and house
-                distanceCable = abs(house.coordinates[0] - cable[0])  + abs(house.coordinates[1] - cable[1])
+                # Calculates distance between cable and house
+                distanceCable = abs(house.coordinates[0] - cable[0]) + \
+                                abs(house.coordinates[1] - cable[1])
                 cableDistances.append(distanceCable)
                 cableLocation.append(cable)
             
@@ -60,7 +68,8 @@ def BestFit(houses, networks):
             shortestCableIndex = cableDistances.index(shortestCableDistance)
 
             # Connects the cable between network and house
-            for cable in TrackRandom(house.coordinates, cableLocation[shortestCableIndex]):
+            for cable in TrackRandom(house.coordinates, 
+                                        cableLocation[shortestCableIndex]):
                 lowestNetwork.cables.add(cable)
                 house.cables.append(cable)
 

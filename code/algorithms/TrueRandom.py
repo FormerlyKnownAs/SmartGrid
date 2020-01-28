@@ -1,8 +1,12 @@
 """
+
+TrueRandom.py
+
 Purely random algorithm, used for score reference. 
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
+
 """
 
 from code.algorithms.LineTrackRandom import TrackRandom
@@ -33,7 +37,8 @@ def RandomConnect(houses, networks):
             unconnectedHouses.append(house)
 
         else:
-            randomNetwork = availabilityList[r.randint(0, len(availabilityList) - 1)]
+            randomNetwork = availabilityList[r.randint(0, 
+                                    len(availabilityList) - 1)]
 
 
             # Sets battery and route

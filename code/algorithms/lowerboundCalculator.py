@@ -25,14 +25,17 @@ def LowestBound(houses, batteries):
 
             if house.coordinates != location.coordinates:
 
-                distance = abs(house.coordinates[0] - location.coordinates[0]) + abs(house.coordinates[1] - location.coordinates[1])
+                distance = abs(house.coordinates[0] - 
+                        location.coordinates[0]) + abs(house.coordinates[1] - 
+                        location.coordinates[1])
 
                 if distance < shortestDistance:
                     shortestDistance = distance
 
         for location in batteries:
 
-            distance = abs(house.coordinates[0] - location.coordinates[0]) + abs(house.coordinates[1] - location.coordinates[1])
+            distance = abs(house.coordinates[0] - location.coordinates[0]) +
+                        abs(house.coordinates[1] - location.coordinates[1])
 
             if distance < shortestDistance:
                 shortestDistance = distance
@@ -49,14 +52,17 @@ def LowestBound(houses, batteries):
         for location in batteries:
 
             if battery.coordinates != location.coordinates:
-                distance = abs(battery.coordinates[0] - location.coordinates[0]) + abs(battery.coordinates[1] - location.coordinates[1])
+                distance = abs(battery.coordinates[0] - 
+                    location.coordinates[0]) + abs(battery.coordinates[1] - 
+                    location.coordinates[1])
 
                 if distance < shortestDistance:
                     shortestDistance = distance
 
         for location in houses:
 
-            distance = abs(battery.coordinates[0] - location.coordinates[0]) + abs(battery.coordinates[1] - location.coordinates[1])
+            distance = abs(battery.coordinates[0] - location.coordinates[0]) + 
+                        abs(battery.coordinates[1] - location.coordinates[1])
 
             if distance < shortestDistance:
                 shortestDistance = distance

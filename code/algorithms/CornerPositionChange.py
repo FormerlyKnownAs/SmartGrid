@@ -1,8 +1,13 @@
 """
-Takes previous input data and changes one element, be it a randomized corner or the location of a house.
+
+CornerPositionChange.py
+
+Takes previous input data and changes one element, 
+be it a randomized corner or the location of a house.
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
+
 """
 
 from code.algorithms.LineTrackRandominput import TrackRandom
@@ -12,6 +17,8 @@ import os as o
 import json
 
 def hillSort(inputFile, previousScore, randomizationList):
+    """ Changes one element in input, corner or
+        house location. """
 
     # Set variables to be measured
     totalCost = 0
@@ -30,7 +37,8 @@ def hillSort(inputFile, previousScore, randomizationList):
     #  Makes a random choice between 0 and 1
     randomChoice = r.randint(0, 1)
 
-    # Changes either the corner layout or moves a house in order depending on randomChoice
+    # Changes either the corner layout or moves a house in order 
+    # depending on randomChoice
     if randomChoice == 1:
         
         if randomHouse["corner"] == 0:
@@ -40,7 +48,8 @@ def hillSort(inputFile, previousScore, randomizationList):
     else:
         changeIndex = 0
 
-        while changeIndex <= 0 or changeIndex > len(randomNetwork["huizen"]) - 1:
+        while changeIndex <= 0 or changeIndex > \
+                                len(randomNetwork["huizen"]) - 1:
             changeIndex = r.randint(-3, 3) + randomHouseIndex
 
         randomNetwork["huizen"].pop(randomHouseIndex)
@@ -65,8 +74,10 @@ def hillSort(inputFile, previousScore, randomizationList):
         for house in network["huizen"]:
             house["kabels"] = []
             coordinatesHouse = house["locatie"].split(",")
-            coordinatesHouse = (int(coordinatesHouse[0]), int(coordinatesHouse[1]))
-            house["distance"] = abs(coordinatesHouse[0] - sourceCable[0]) + abs(coordinatesHouse[1] - sourceCable[1])
+            coordinatesHouse = (int(coordinatesHouse[0]), 
+                                int(coordinatesHouse[1]))
+            house["distance"] = abs(coordinatesHouse[0] - sourceCable[0]) + \
+                                abs(coordinatesHouse[1] - sourceCable[1])
             houseList.append(house)
 
         # Finds closest point on network for each house
@@ -79,13 +90,15 @@ def hillSort(inputFile, previousScore, randomizationList):
 
                 # Corrects the input for further calculation
                 coordinatesHouse = house["locatie"].split(",")
-                coordinatesHouse = (int(coordinatesHouse[0]), int(coordinatesHouse[1]))
+                coordinatesHouse = (int(coordinatesHouse[0]), 
+                                    int(coordinatesHouse[1]))
 
                 currentDistance = 1000
 
                 # Finds the shortest distance from all known cable locations
                 for cable in cables:
-                   distance = abs(coordinatesHouse[0] - cable[0]) + abs(coordinatesHouse[1] - cable[1])
+                   distance = abs(coordinatesHouse[0] - cable[0]) + \
+                                abs(coordinatesHouse[1] - cable[1])
                    if distance < currentDistance:
                        currentDistance = distance
                 houseDistance.append(currentDistance)
@@ -94,7 +107,8 @@ def hillSort(inputFile, previousScore, randomizationList):
             # Takes the shortest distance from houseDistance list
             houseMinimalDistance = min(houseDistance)
 
-            # Finds the index of the shortest distance and then is able to find the house associated with that distance
+            # Finds the index of the shortest distance and then is able to find
+            # the house associated with that distance
             indexHouseMinimalDistance = houseDistance.index(houseMinimalDistance)
             currentHouse = houseLocation[indexHouseMinimalDistance]
 
@@ -103,12 +117,14 @@ def hillSort(inputFile, previousScore, randomizationList):
             cableDistance = []
             cableLocation = []
             coordinatesHouse = currentHouse["locatie"].split(",")
-            coordinatesHouse = (int(coordinatesHouse[0]), int(coordinatesHouse[1]))
+            coordinatesHouse = (int(coordinatesHouse[0]), 
+                                int(coordinatesHouse[1]))
 
             for cable in cables:
 
                 # calculates distance between cable and house
-                distanceCable = abs(coordinatesHouse[0] - cable[0]) + abs(coordinatesHouse[1] - cable[1])
+                distanceCable = abs(coordinatesHouse[0] - cable[0]) + \
+                                abs(coordinatesHouse[1] - cable[1])
                 cableDistance.append(distanceCable)
                 cableLocation.append(cable)
 
@@ -119,7 +135,8 @@ def hillSort(inputFile, previousScore, randomizationList):
             # Connect the house to the nearest cable
             corner = np.random.randint(2)
             currentHouse["corner"] = corner
-            for cable in TrackRandom(coordinatesHouse, cableLocation[shortestCableIndex], corner):
+            for cable in TrackRandom(coordinatesHouse, 
+                                cableLocation[shortestCableIndex], corner):
                 cables.add(cable)
                 currentHouse["kabels"].append(cable)
 
