@@ -15,6 +15,8 @@ import json
 def NearestHouse(houses, networks):
 
     totalCost = 0
+    cableCost = 9
+
     r.shuffle(networks)
     filledNetworks = []
     unconnectedHouses = []
@@ -75,7 +77,7 @@ def NearestHouse(houses, networks):
                 chosenHouse.cables.append(cable)
 
             currentNetwork.capacity -= chosenHouse.output
-            totalCost += nearestHouseDistance * 9
+            totalCost += nearestHouseDistance * cableCost
 
     for house in houses:
         if house.connected is False:

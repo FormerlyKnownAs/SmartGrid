@@ -14,6 +14,8 @@ def hillSort(inputFile, previousScore, randomizationList):
     # Set variables to be measured
     totalCost = 0
 
+    cableCost = 9
+
     # Load JSON file
     with open(inputFile, 'r') as JSON:
         json_dict = json.load(JSON)
@@ -73,7 +75,7 @@ def hillSort(inputFile, previousScore, randomizationList):
                 cables.add(cable)
                 house["kabels"].append(cable)
 
-            totalCost += shortestCableDistance * 9
+            totalCost += shortestCableDistance * cableCost
             houseId += 1
 
         networkID += 1

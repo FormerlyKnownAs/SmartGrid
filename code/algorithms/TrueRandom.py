@@ -11,6 +11,8 @@ import os as o
 
 def RandomConnect(houses, networks):
 
+    cableCost = 9
+
     unconnectedHouses = []
 
     r.shuffle(houses)
@@ -52,7 +54,7 @@ def RandomConnect(houses, networks):
     for network in networks:
         totalCables += len(network.cables)
 
-    totalCost = totalCables * 9
+    totalCost = totalCables * cableCost
 
     # Finds filename for results
     pathFound = False

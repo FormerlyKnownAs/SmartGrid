@@ -1,7 +1,4 @@
 """
-09-01-2020
-
-
 Algorithm that connects houses on separate networks to the closest available network. 
 
 The Group Formerly Known as 'The Prince Statement'
@@ -14,6 +11,7 @@ import os as o
 
 def NearestNetwork(houses, networks):
 
+    cableCost = 9
     unconnectedHouses = []
 
     r.shuffle(houses)
@@ -45,7 +43,7 @@ def NearestNetwork(houses, networks):
             # Sets battery and route
             house.battery = chosenNetwork.source
             house.route = (house.coordinates[0], house.battery[1])
-            house.cost = shortestDistance * 9
+            house.cost = shortestDistance * cableCost
 
             chosenNetwork.capacity -= house.output
             chosenNetwork.houses.append(house)
@@ -61,7 +59,7 @@ def NearestNetwork(houses, networks):
     for network in networks:
         totalCables += len(network.cables)
 
-    totalCost = totalCables * 9
+    totalCost = totalCables * cableCost
 
     # Finds filename for results
     pathFound = False

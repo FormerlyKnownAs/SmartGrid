@@ -15,6 +15,7 @@ def Sort(inputFile, previousScore):
 
     # Set variables to be measured
     totalCost = 0
+    cableCost = 9
 
     # Load JSON file
     with open(inputFile, 'r') as JSON:
@@ -91,7 +92,7 @@ def Sort(inputFile, previousScore):
                 cables.add(cable)
                 currentHouse["kabels"].append(cable)
 
-            totalCost += shortestCableDistance * 9
+            totalCost += shortestCableDistance * cableCost
 
             # Find index of current house in houselist
             houseListIndex = houseList.index(currentHouse)
