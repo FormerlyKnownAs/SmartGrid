@@ -85,7 +85,7 @@ def Random(filePrefix, iterations, subChoice):
     while failedImprovements < iterations:
 
         runCounter += 1
-        houseList, networkList = readinInfo(filePrefix, True)
+        houseList, networkList = readinInfo(filePrefix)
         
         if subChoice == 1:
             results = TrueRandom.RandomConnect(houseList, networkList)    
@@ -141,7 +141,7 @@ def Optimize(goodRandom, iterations, subChoice):
         print("Result Optimization: couldn't find a better result after" \
             f"{iterations} attempts. Final Score = {optimizedResult[1]}")
 
-        VisualJSON(optimizedResult, goodRandom)
+        VisualJSON(optimizedResult)
         wasOptimized = True
     else:
         print("Optimizing did not improve the score. No visualization " \
@@ -175,13 +175,13 @@ def Finalize(optimizedRandom, iterations, subChoice):
 
     # Visualizes results and updates user about final status.
     if results[1] < optimizedRandom[1]:
-        print(f"hillclimbSortv2: couldn't find a better result after {iterations}" \ 
+        print(f"Finalizing: couldn't find a better result after {iterations}" \
             f" attempts. Final Score = {optimizedResult[1]}")
 
-        VisualJSON(optimizedResult, optimizedRandom)
+        VisualJSON(optimizedResult)
     else:
-        print(f"hillclimbing did not improve the score. No visualization made." \
-             f"Score remains {optimizedResult[1]}")
+        print(f"Finalizing did not improve the score. No visualization made. " \
+             f"Score remains = {optimizedResult[1]}")
 
 if __name__ == "__main__":
 
