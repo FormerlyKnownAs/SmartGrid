@@ -14,10 +14,11 @@ Ben Groot, Boy Stekelbos, Momo Schaap
 import csv
 
 class Network(object):
-    """The model for a cable network."""
+    """ The model for a cable network. """
 
     def __init__(self, x, y, capacity):
-        """Initializes the source location and capacity of the battery."""
+        """ Initializes the source location 
+            and capacity of the battery. """
 
         self.source = (x, y)
         self.capacity = capacity
