@@ -52,6 +52,7 @@ def Sort(inputFile, previousScore):
             coordinatesHouse = (int(coordinatesHouse[0]), int(coordinatesHouse[1]))
 
             for cable in cables:
+                
                 # calculates distance between cable and house
                 distanceCable = abs(coordinatesHouse[0] - cable[0]) + abs(coordinatesHouse[1] - cable[1])
                 cableDistance.append(distanceCable)
