@@ -1,7 +1,4 @@
 """
-09-01-2020
-
-
 Algorithm that connects houses on separate networks to the closest available network node.
 This functions similarly to v2, but gives a correctly formatted output.
 

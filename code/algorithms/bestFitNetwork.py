@@ -1,7 +1,4 @@
 """
-09-01-2020
-
-
 Algorithm that connects houses on separate networks to the battery that fits it best.
 
 The Group Formerly Known as 'The Prince Statement'
