@@ -20,6 +20,24 @@ Resultaten reproduceren:
 
     python main.py 10 wijk1 1 3 2 kiest de hillclimber methode die gebruikt wordt, met keuzes van 1 en 2
 
+    Keuzes van algoritmes:
+    1: TrueRandom
+    2: BatterySearch
+    3: bestFitNetwork
+    4: HouseSearchHybrid
+    5: HouseSearchFull
+    6: NetworkSearch
+
+    Keuzes van optimizers:
+    1: ResultsShuffle
+    2: ResultsSort
+    3: ResultsDynamicSort
+
+    Keuzes van hillclimbers:
+    1: CornerChange
+    2: CornerPositionChange
+
+
 
 SmartGrid bevat de volgende mapjes en files:
 
