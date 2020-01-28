@@ -12,8 +12,8 @@ De case die ons team gegeven is heet SmartGrid, het objectief voor dit probleem 
     - Iterations: geeft aan hoeveel iteraties het programma moet doen voordat het klaar is. Dit is een nummer
     - Wijk: geeft de wijk mee als input. Dit is de prefix van een wijk (bijv. wijk1)
     - Randomizer: besluit het basis algoritme, waarbij 1 tot 6 de opties zijn.
-    - Optimizer: Besluit welke optimizing heuristiek gebruikt wordt, met keuzes van 1 tot 3
-    - Finalizer: Besluit welke finalizing heuristiek gebruikt wordt, met keuzes van 1 en 2
+    - Optimizer: Besluit welke heuristiek gebruikt wordt om het randomizer resultaat te verbeteren, met keuzes van 1 tot 3
+    - Finalizer: Besluit welke heuristiek gebruikt wordt om kleine aanpassing te maken aan een optimized resultaat, met keuzes van 1 en 2
 
     Een input zonder argumenten runt de volgende set up: python main.py 100 wijk1 6 3 2
 

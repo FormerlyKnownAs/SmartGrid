@@ -3,7 +3,13 @@ The SmartGrid assignment repository for the group 'The Group Formerly Known as '
 
 Ben Groot, Boy Stekelbos, Momo Schaap
 
-Algorithms:
+De code is verdeeld in drie mappen. In algorithms staan de algorithmes en heuristieken die gebruikt worden, en hulpfuncties die de heuristieken nodig heeft om te kunnen functioneren. 
+
+In de map classes staat de datastructuur en de csvreader. 
+
+In de map visualization staat het bestand om de outputs te kunnen functioneren.
+
+## Algorithms:
 
 #### BatterySearch:
 Simpelste oplossing voor het zoeken naar de dichstbijzijnde batterij, zonder ander factors in overweging te nemen.
@@ -51,4 +57,4 @@ Doet hetzelfde als ResultsDynamicSort behalve dat de inleesvolgorde van huizen w
 Houdt de configuratie die gemaakt is tussen welke huizen verbonden zijn met welke batterijen. vervolgens haalt het deze kabels weg. Gaat over elk netwerk heen en sorteert de huizen op basis van afstand en maakt nieuwe kabels aan.
 
 #### TrueRandom.py:
-Compleet willekeurige oplossing, wordt voornamelijk gebruikt als crossreference voor de puntentelling van andere algoritmen.
+Verbindt de huizen met een willekeurige batterij. De huizen staan in een willekeurige volgorde.
