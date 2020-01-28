@@ -1,3 +1,14 @@
+"""
+
+visualize.py
+
+Generates a visualization of JSON results file.
+
+The Group Formerly Known as 'The Prince Statement'
+Ben Groot, Boy Stekelbos, Momo Schaap
+
+"""
+
 import matplotlib.pyplot as plt 
 import numpy as np 
 import json
@@ -69,12 +80,11 @@ def Visualize(input, underlay=False):
     plt.xticks(ticks, labels)
     plt.yticks(ticks, labels)
 
-    # Lock graph aspect ratio
-    plt.gca().set_aspect('equal', adjustable='box')
+    # Lock graph aspect ratio to square
+    plt.gca().set_aspect("equal", adjustable="box")
 
     # Plot grid
     plt.grid(True, which='both', linewidth=0.3)
-
 
     # Line types for cable visualization
     lines = ['y-', 'b-', 'c-', 'm-', 'g-']
