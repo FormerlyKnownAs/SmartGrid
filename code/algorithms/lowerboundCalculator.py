@@ -1,7 +1,6 @@
 """
 09-01-2020
 
-
 Calculates a possible lower bound based on nearest location of other points.
 
 The Group Formerly Known as 'The Prince Statement'

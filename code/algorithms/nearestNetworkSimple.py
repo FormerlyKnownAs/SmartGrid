@@ -2,7 +2,7 @@
 09-01-2020
 
 
-Algorithm that connects houses on separate networks to the closest available battery. 
+Algorithm that connects houses on separate networks to the closest available network. 
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap

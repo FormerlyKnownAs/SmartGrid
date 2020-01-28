@@ -15,7 +15,7 @@ import random as r
 import json
 
 from code.classes import house, battery, network
-from code.algorithms import *
+from code.algorithms import bestFitNetwork, CornerChange, CornerPositionChange, nearestHousev2better
 from code.visualization import visualize
 
 def main(filePrefix, algorithmChoice, iterations):
