@@ -68,9 +68,9 @@ def Visualize(input, underlay=False):
             networks[i].append(cableList)
 
     # Determine tick labels
-    ax = plt.axes()
-    ax.yaxis.set_minor_locator(plt.MultipleLocator(1))
-    ax.xaxis.set_minor_locator(plt.MultipleLocator(1))
+    ax1 = plt.axes()
+    ax1.yaxis.set_minor_locator(plt.MultipleLocator(1))
+    ax1.xaxis.set_minor_locator(plt.MultipleLocator(1))
 
     # Set up grid for visualization
     plt.title("SmartGrid")

@@ -6,7 +6,7 @@ Ben Groot, Boy Stekelbos, Momo Schaap
 Algorithms:
 
 BatterySearch:
-Simpelste oplossing voor het zoeken naar de dichstbijzijndste batterij, zonder ander factors in overweging te nemen.
+Simpelste oplossing voor het zoeken naar de dichstbijzijnde batterij, zonder ander factors in overweging te nemen.
 
 bestFitNetwork.py:
 Algoritme dat huizen verbindt op aparte netwerken aan de batterijen waar die het beste in passen.
@@ -18,7 +18,7 @@ CornerPositionChange.py:
 Neemt een redelijk geoptimaliseerde oplossing en vervolgens verandert het de hoek die de kabels nemen om de connectiepunt van het netwerk te bereiken. Ook verandert het de inleesvolgorde van de huizen met gerugeleerde mate.
 
 HouseSearchFull.py:
-Werkt uit een battery first approach waar het van nature clusters vormt met huizen. Vanaf de batterij zoekt het de dichtsbijzijndste huis en maakt daar een connectie mee vervolgens zoekt het naar de dichstbijzijdnste huis vanaf dat punt en maakt weer een connectie
+Werkt uit een battery first approach waar het van nature clusters vormt met huizen. Vanaf de batterij zoekt het de dichtsbijzijnde huis en maakt daar een connectie mee vervolgens zoekt het naar de dichstbijzijdnste huis vanaf dat punt en maakt weer een connectie
 
 HouseSearchHybrid.py:
 Doet hezelfde als de HouseSearchFull maar sinds er geen viable solutions uit deze versie kwam, zorgt deze versie er voor dat de laatste 10 huizen willekeurig verbonden raken. Dit vermeidt het probleem van dat er geen oplossingen gevonden worden.
