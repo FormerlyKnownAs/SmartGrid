@@ -12,7 +12,7 @@ from code.algorithms.LineTrackRandom import TrackRandom
 import random as r
 import os as o
 
-def BestFit(houses, networks, id):
+def BestFit(houses, networks):
 
     totalCost = 0
     unconnectedHouses = []

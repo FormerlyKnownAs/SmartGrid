@@ -14,8 +14,8 @@ import re
 import random as r
 import json
 
-from code.classes import house, battery, network
-from code.algorithms import bestFitNetwork, CornerChange, CornerPositionChange, nearestHousev2better
+from code.classes import house, network
+from code.algorithms import BatterySearch, bestFitNetwork, CornerChange, CornerPositionChange, HouseSearchFull, HouseSearchHybrid, NetworkSearch, ResultsDynamicSort, ResultShuffle, ResultsSort
 from code.visualization import visualize
 
 def main(filePrefix, algorithmChoice, iterations):
@@ -23,19 +23,22 @@ def main(filePrefix, algorithmChoice, iterations):
         Chooses the file, function and repetition, and sends the output to the visualizer.
     """
 
-    # Opens the results file to possibly write results in
-    with open("resultaten/simulatieresulaten.txt", "w+") as f:
-
-        if algorithmChoice == 1:
-            result = HillClimb(Optimize(RandomV3(filePrefix, iterations), iterations * 2, 1), iterations * 4)
-        elif algorithmChoice == 2:
-            result = HillClimb(Optimize(RandomV3(filePrefix, iterations), iterations * 2, 1), iterations * 4, True)
-        elif algorithmChoice == 3:
-            result = HillClimb(Optimize(RandomV3(filePrefix, iterations), iterations * 2, 2), iterations * 4)
-        elif algorithmChoice == 4:
-            result = HillClimb(Optimize(RandomV3(filePrefix, iterations), iterations * 2, 2), iterations * 4, True)
-        elif algorithmChoice >= 5 or algorithmChoice < 1:
-            results = Optimize(NetworkSearch(filePrefix, iterations), iterations * 2, 2)
+    if algorithmChoice == 1:
+        result = HillClimb(Optimize(Random(filePrefix, iterations), iterations * 2, 1), iterations * 4)
+    elif algorithmChoice == 2:
+        result = HillClimb(Optimize(Random(filePrefix, iterations), iterations * 2, 1), iterations * 4, True)
+    elif algorithmChoice == 3:
+        result = HillClimb(Optimize(Random(filePrefix, iterations), iterations * 2, 2), iterations * 4)
+    elif algorithmChoice == 4:
+        result = HillClimb(Optimize(Random(filePrefix, iterations), iterations * 2, 2), iterations * 4, True)
+    elif algorithmChoice == 5:
+        results = Optimize(NetworkSearch(filePrefix, iterations), iterations * 2, 2)
+    elif algorithmChoice == 6:
+        results = Random(filePrefix, iterations, 3)
+    elif algorithmChoice >= 7 or algorithmChoice < 1:
+        results = Random(filePrefix, iterations, 5)
+        
+    
         
 def readinInfo(filePrefix, networkBool):
     """
@@ -82,7 +85,7 @@ def VisualJSON(result, previousResult=None):
         visualize.Visualize(previousResult[2], True)
     visualize.Visualize(result[2])
 
-def RandomV3(filePrefix, iterations):
+def Random(filePrefix, iterations, subChoice):
     """
     Runs the NearestNetworkV3 random algorithm as many times as iterations, and returns the best result.
     """
@@ -97,7 +100,16 @@ def RandomV3(filePrefix, iterations):
         runCounter += 1
         houseList, networkList = readinInfo(filePrefix, True)
         
-        results = nearestNetworkv3random.NearestNetworkV3(houseList, networkList, 1)
+        if subChoice == 1:
+            results = nearestNetworkv3random.NearestNetworkV3(houseList, networkList, 1)
+        if subChoice == 2:
+            results = HouseSearchHybrid.NearestHouse(houseList, networkList)
+        if subChoice == 3:
+            results = HouseSearchFull.NearestHouse(houseList, networkList)
+        if subChoice == 4:
+            results = bestFitNetwork.BestFit(houseList, networkList)
+        if subChoice == 5:
+            results = BatterySearch.NearestNetwork(houseList, networkList)
 
         if bestRandom is None:
             bestRandom = results
