@@ -22,7 +22,6 @@ def LowestBound(houses, batteries):
                 distance = abs(house.coordinates[0] - location.coordinates[0]) + abs(house.coordinates[1] - location.coordinates[1])
 
                 if distance < shortestDistance:
-                    print(f"found new shortest distance for {house.coordinates}. It is {location.coordinates}. The distance = {distance}")
                     shortestDistance = distance
 
         for location in batteries:
@@ -30,13 +29,11 @@ def LowestBound(houses, batteries):
             distance = abs(house.coordinates[0] - location.coordinates[0]) + abs(house.coordinates[1] - location.coordinates[1])
 
             if distance < shortestDistance:
-                print(f"found new shortest distance for {house.coordinates}. It is {location.coordinates}. The distance = {distance}")
                 shortestDistance = distance
 
             
         # Adds score for house
         totalCost += shortestDistance * 9
-        print(f"totalCost = {totalCost}. shortestDistance = {shortestDistance}")
 
     for battery in batteries:
 
@@ -49,7 +46,6 @@ def LowestBound(houses, batteries):
                 distance = abs(battery.coordinates[0] - location.coordinates[0]) + abs(battery.coordinates[1] - location.coordinates[1])
 
                 if distance < shortestDistance:
-                    print(f"found new shortest distance for {battery.coordinates}. It is {location.coordinates}. The distance = {distance}")
                     shortestDistance = distance
 
         for location in houses:
@@ -57,7 +53,6 @@ def LowestBound(houses, batteries):
             distance = abs(battery.coordinates[0] - location.coordinates[0]) + abs(battery.coordinates[1] - location.coordinates[1])
 
             if distance < shortestDistance:
-                print(f"found new shortest distance for {battery.coordinates}. It is {location.coordinates}. The distance = {distance}")
                 shortestDistance = distance
 
             
