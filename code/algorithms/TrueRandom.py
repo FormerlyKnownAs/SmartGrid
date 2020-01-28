@@ -12,7 +12,7 @@ from code.algorithms.LineTrackRandom import TrackRandom
 import random as r
 import os as o
 
-def NearestNetwork(houses, networks):
+def RandomConnect(houses, networks):
 
     unconnectedHouses = []
 
@@ -21,37 +21,32 @@ def NearestNetwork(houses, networks):
     for house in houses:
 
         # Makes empty list to store distance between house and networkpoint
-        distanceList = []
+        availabilityList = []
 
         for network in networks:
 
             # Checks capacity and if available checks distance to battery
             if network.capacity > house.output:
+                availabilityList.append(network)
 
 
-            else:
-                distanceList.append(None)
-
-        if all(i is None for i in distanceList):
+        if len(availabilityList) <= 0:
             unconnectedHouses.append(house)
 
         else:
-            # Finds nearest available battery
-            shortestDistance = min(i for i in distanceList if i is not None)
-            shortestIndex = distanceList.index(shortestDistance)
-            chosenNetwork = networks[shortestIndex]
+            randomNetwork = availabilityList[r.randint(0, len(availabilityList) - 1)]
+
 
             # Sets battery and route
-            house.battery = chosenNetwork.source
+            house.battery = randomNetwork.source
             house.route = (house.coordinates[0], house.battery[1])
-            house.cost = shortestDistance * 9
 
-            chosenNetwork.capacity -= house.output
-            chosenNetwork.houses.append(house)
+            randomNetwork.capacity -= house.output
+            randomNetwork.houses.append(house)
 
             # Connects the cable between network and house
-            for cable in TrackRandom(house.coordinates, chosenNetwork.source):
-                chosenNetwork.cables.add(cable)
+            for cable in TrackRandom(house.coordinates, randomNetwork.source):
+                randomNetwork.cables.add(cable)
                 house.cables.append(cable)
 
     # Finds total cost
