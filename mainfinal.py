@@ -15,7 +15,7 @@ import random as r
 import json
 
 from code.classes import house, network
-from code.algorithms import BatterySearch, bestFitNetwork, CornerChange, CornerPositionChange, HouseSearchFull, HouseSearchHybrid, NetworkSearch, ResultsDynamicSort, ResultShuffle, ResultsSort
+from code.algorithms import BatterySearch, bestFitNetwork, CornerChange, CornerPositionChange, HouseSearchFull, HouseSearchHybrid, NetworkSearch, ResultsDynamicSort, ResultShuffle, ResultsSort, TrueRandom
 from code.visualization import visualize
 
 def main(filePrefix, algorithmChoice, iterations):
@@ -36,7 +36,7 @@ def main(filePrefix, algorithmChoice, iterations):
     elif algorithmChoice == 6:
         results = Random(filePrefix, iterations, 3)
     elif algorithmChoice >= 7 or algorithmChoice < 1:
-        results = Random(filePrefix, iterations, 5)
+        results = Random(filePrefix, iterations, 6)
         
     
         
@@ -110,6 +110,8 @@ def Random(filePrefix, iterations, subChoice):
             results = bestFitNetwork.BestFit(houseList, networkList)
         if subChoice == 5:
             results = BatterySearch.NearestNetwork(houseList, networkList)
+        if subChoice == 6:
+            results = TrueRandom.RandomConnect(houseList, networkList)
 
         if bestRandom is None:
             bestRandom = results
