@@ -1,7 +1,4 @@
 """
-09-01-2020
-
-
 Algorithm that connects houses on separate networks to the closest available network node.
 This functions similarly to v2, but gives a correctly formatted output.
 
@@ -60,7 +57,6 @@ def NearestHouse(houses, networks):
                     chosenCable = subCable
 
         if chosenHouse is None:
-            print(f"we're here. {filledNetworks}")
             filledNetworks.append(curNetID)
 
         # Connects the house with nearest house
@@ -76,8 +72,6 @@ def NearestHouse(houses, networks):
             currentNetwork.capacity -= chosenHouse.output
             totalCost += nearestHouseDistance * 9
 
-    # for network in networks:
-    #     print(f"this is the leftover capacity of {network.source}: {network.capacity}")
     for house in houses:
         if house.connected is False:
             unconnectedHouses.append(house)
@@ -110,9 +104,8 @@ def NearestHouse(houses, networks):
     } for network in networks]
 
     if len(unconnectedHouses) != 0:
-        # print(f"oops, failed. {len(unconnectedHouses)}")
         return None
 
-    print(f"ay, we golden. {len(unconnectedHouses)}")
+    
     return finalOutput, totalCost, path
 

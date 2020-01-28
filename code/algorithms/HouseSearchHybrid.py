@@ -1,7 +1,4 @@
 """
-09-01-2020
-
-
 Algorithm that connects houses on separate networks to the closest available network node.
 This functions similarly to v2, but gives a correctly formatted output.
 
@@ -126,7 +123,7 @@ def NearestHouse(houses, networks):
                     house.cables.append(cable)
  
                 totalCost += shortestDistance * 9
-
+    
     allhouses = 0
     for network in networks:
         allhouses += len(network.houses2)

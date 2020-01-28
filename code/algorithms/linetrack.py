@@ -1,7 +1,4 @@
 """
-09-01-2020
-
-
 Draws a line from source to destination with manhattan distance. 
 
 The Group Formerly Known as 'The Prince Statement'

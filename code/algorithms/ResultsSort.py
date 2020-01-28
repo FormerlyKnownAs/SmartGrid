@@ -1,6 +1,4 @@
 """
-09-01-2020
-
 Takes a json file and keeps its connections, but reconfiguring its connections based on distance to the battery
 
 The Group Formerly Known as 'The Prince Statement'

@@ -1,6 +1,4 @@
 """
-09-01-2020
-
 Takes previous input data and changes one element, be it a randomized corner or the location of a house.
 
 The Group Formerly Known as 'The Prince Statement'
@@ -48,6 +46,8 @@ def hillSort(inputFile, previousScore, randomizationList):
 
 
     networkID = 0
+
+    # Loops over every network
     for network in json_dict:
 
         houseList = []
@@ -74,10 +74,13 @@ def hillSort(inputFile, previousScore, randomizationList):
             houseLocation = []
             for house in houseList:
 
+                # Corrects the input for further calculation
                 coordinatesHouse = house["locatie"].split(",")
                 coordinatesHouse = (int(coordinatesHouse[0]), int(coordinatesHouse[1]))
 
                 currentDistance = 1000
+
+                # Finds the shortest distance from all known cable locations
                 for cable in cables:
                    distance = abs(coordinatesHouse[0] - cable[0]) + abs(coordinatesHouse[1] - cable[1])
                    if distance < currentDistance:
@@ -98,6 +101,7 @@ def hillSort(inputFile, previousScore, randomizationList):
             coordinatesHouse = (int(coordinatesHouse[0]), int(coordinatesHouse[1]))
 
             for cable in cables:
+
                 # calculates distance between cable and house
                 distanceCable = abs(coordinatesHouse[0] - cable[0]) + abs(coordinatesHouse[1] - cable[1])
                 cableDistance.append(distanceCable)

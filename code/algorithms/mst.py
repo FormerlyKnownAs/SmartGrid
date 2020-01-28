@@ -1,3 +1,10 @@
+"""
+Proof of concept for Kruskal's minimum spanning tree algorithm
+
+The Group Formerly Known as 'The Prince Statement'
+Ben Groot, Boy Stekelbos, Momo Schaap
+"""
+
 from collections import defaultdict 
 import json
 
