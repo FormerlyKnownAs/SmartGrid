@@ -44,7 +44,7 @@ def Sort(inputFile, previousScore):
             houseList.append(house)
 
         houseList = sorted(houseList, key=lambda x: x["distance"])
-
+        
         # Finds closest point on network for each house
         for house in houseList:
             

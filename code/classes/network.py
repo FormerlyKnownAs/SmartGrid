@@ -10,6 +10,7 @@ class Network(object):
         self.capacity = capacity
         self.startcapacity = capacity
         self.houses = []
+        self.houses2 = set()
         self.cables = set()
 
         sourceCable = (x, y)

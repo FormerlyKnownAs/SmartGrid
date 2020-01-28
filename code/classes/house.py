@@ -10,6 +10,7 @@ class House(object):
         self.output = output
         self.route = (None, None)
         self.battery = (None, None)
+        self.networks = []
         self.cables = []
         self.cost = 0
 

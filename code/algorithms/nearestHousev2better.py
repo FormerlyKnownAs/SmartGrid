@@ -23,14 +23,16 @@ def NearestHouse(houses, networks):
     r.shuffle(networks)
     filledNetworks = []
     unconnectedHouses = []
+    connectedHouses = []
 
-    for i, house in enumerate(houses):
+    for i in range(len(houses) - 10):
 
         # Picks an available network, or stores the house in the overflow list if none are available
         curNetID = i % len(networks)
         while curNetID in filledNetworks and len(filledNetworks) < len(networks):
             curNetID = (curNetID + 1) % len(networks)
         if len(filledNetworks) >= len(networks):
+            # print(f"{i} - was unable to connect this house {house.coordinates}")
             unconnectedHouses.append(house)   
 
         currentNetwork = networks[curNetID]
@@ -60,14 +62,16 @@ def NearestHouse(houses, networks):
                     chosenCable = subCable
 
         if chosenHouse is None:
-            print(f"we're here. {filledNetworks}")
+            # print(f"we're here. {filledNetworks}")
             filledNetworks.append(curNetID)
 
         # Connects the house with nearest house
         else:
             corner = np.random.randint(2)
-            currentNetwork.houses.append(chosenHouse)
+            currentNetwork.houses2.add(chosenHouse)
             chosenHouse.connected = True
+            chosenHouse.networks.append(currentNetwork)
+            connectedHouses.append(chosenHouse)
             for cable in TrackRandom(chosenHouse.coordinates, chosenCable, corner):
 
                 currentNetwork.cables.add(cable)
@@ -75,12 +79,68 @@ def NearestHouse(houses, networks):
 
             currentNetwork.capacity -= chosenHouse.output
             totalCost += nearestHouseDistance * 9
+            # print(f"{i} - connected this house ({chosenHouse.coordinates}) with this network ({currentNetwork.source}). {len(currentNetwork.houses2)}")
+
+    # After the first amount of houses, places the last few houses randomly rather than based on distance to network
+    r.shuffle(houses)
+
+    for house in houses:
+        
+        if house.connected is False:
+            closestNetworkPoint = []
+            closestPointDistance = []
+            for network in networks:
+
+                if house.output < network.capacity:
+                    
+                    nearestCable = None
+                    nearestCableDistance = 10000
+                    for cable in network.cables:
+                        cableDistance = abs(house.coordinates[0] - cable[0]) + abs(house.coordinates[1] - cable[1])
+                        if cableDistance < nearestCableDistance:
+                            nearestCable = cable
+                            nearestCableDistance = cableDistance
+                        
+                    closestNetworkPoint.append(nearestCable)
+                    closestPointDistance.append(nearestCableDistance)
+                    
+                else:
+                    closestNetworkPoint.append(None)
+                    closestPointDistance.append(None)
+
+            if all(i is None for i in closestPointDistance):
+                unconnectedHouses.append(house)
+                # print(f"{y} - was unable to connect this house ({house.coordinates})")
+
+
+            else:        
+                shortestDistance = min(i for i in closestPointDistance if i is not None)
+                shortestIndex = closestPointDistance.index(shortestDistance)
+                closestNetwork = networks[shortestIndex]
+
+                # Finds all cables
+                corner = np.random.randint(2)
+                closestNetwork.houses2.add(house)
+                house.networks.append(closestNetwork)
+                closestNetwork.capacity -= house.output
+                house.connected = True
+                connectedHouses.append(house)
+                
+                for cable in TrackRandom(house.coordinates, closestNetworkPoint[shortestIndex], corner):
+                    closestNetwork.cables.add(cable)
+                    house.cables.append(cable)
+ 
+                totalCost += shortestDistance * 9
+                # print(f"{y} - connected this house ({house.coordinates}) to this network {closestNetwork.source}. {len(closestNetwork.houses2)} - {closestPointDistance}")
 
     # for network in networks:
     #     print(f"this is the leftover capacity of {network.source}: {network.capacity}")
-    for house in houses:
-        if house.connected is False:
-            unconnectedHouses.append(house)
+
+    allhouses = 0
+    for network in networks:
+        allhouses += len(network.houses2)
+        for house in network.houses2:
+            network.houses.append(house)
 
     # Creates correct output format
     # Finds filename for results
@@ -110,9 +170,7 @@ def NearestHouse(houses, networks):
     } for network in networks]
 
     if len(unconnectedHouses) != 0:
-        # print(f"oops, failed. {len(unconnectedHouses)}")
         return None
 
-    print(f"ay, we golden. {len(unconnectedHouses)}")
     return finalOutput, totalCost, path
 

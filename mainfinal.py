@@ -15,11 +15,7 @@ import random as r
 import json
 
 from code.classes import house, battery, network
-from code.algorithms import nearestBatterySimple, nearestNetworkSimple, \
-    nearestNetworkv2, nearestNetworkv2random, bestFitNetwork, nearestHouse, \
-    nearestNetworkv3random, nearestNetworkShuffle, nearestNetworkSort, lowerboundCalculator, \
-    hillclimbSort, nearestNetworkSortOrderList, nearestNetworkSortv2, hillclimbSortv2, \
-    nearestHousev2, nearestHousev2rework, nearestHousev2better
+from code.algorithms import *
 from code.visualization import visualize
 
 def main(filePrefix, algorithmChoice, iterations):
@@ -67,7 +63,7 @@ def ScoreCheck(newResults, previousResults, failedImprovements):
             return failedImprovements, newResults
         else:
             failedImprovements += 1
-            if failedImprovements % 10 == 0:
+            if failedImprovements % 50 == 0:
                 print(failedImprovements)
 
             return failedImprovements, previousResults
@@ -126,7 +122,7 @@ def NetworkSearch(filePrefix, iterations):
         runCounter += 1
         houseList, networkList = readinInfo(filePrefix, True)
 
-        results = nearestHousev2better.NearestHouse(houseList, networkList)
+        results = nearestHousev2rework.NearestHouse(houseList, networkList)
 
         if bestRandom is None:
             bestRandom = results
