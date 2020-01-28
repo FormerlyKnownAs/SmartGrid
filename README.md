@@ -32,7 +32,7 @@ De case die ons team gegeven is heet SmartGrid, het objectief voor dit probleem 
 
     Keuzes van finalizers:
     1: CornerChange         -   Neemt een optimizer oplossing en verandert een willekeurige hoek.
-    2: CornerPositionChange -   Neemt een optimizer oplossing en verandert een willekeurige hoek, of verandert de volgorde van de huizen                                kleinschalig.
+    2: CornerPositionChange -   Neemt een optimizer oplossing, verandert willekeurige hoek of verplaats huis in aanlegvolgorde.
 
 
 
