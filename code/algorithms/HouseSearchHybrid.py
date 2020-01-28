@@ -15,8 +15,6 @@ from code.algorithms.LineTrackRandominput import TrackRandom
 import random as r
 import os as o
 import numpy as np
-import copy
-import json
 
 def NearestHouse(houses, networks):
     """ Connects houses on seperate networks to closest network
@@ -24,6 +22,7 @@ def NearestHouse(houses, networks):
 
     totalCost = 0
 
+    cableCost = 9
     r.shuffle(networks)
     filledNetworks = []
     unconnectedHouses = []
@@ -91,7 +90,7 @@ def NearestHouse(houses, networks):
                 chosenHouse.cables.append(cable)
 
             currentNetwork.capacity -= chosenHouse.output
-            totalCost += nearestHouseDistance * 9
+            totalCost += nearestHouseDistance * cableCost
 
     # After the first amount of houses, places the last few houses 
     # randomly rather than based on distance to network
@@ -155,7 +154,7 @@ def NearestHouse(houses, networks):
                     closestNetwork.cables.add(cable)
                     house.cables.append(cable)
  
-                totalCost += shortestDistance * 9
+                totalCost += shortestDistance * cableCost
     
     # Prevents multiple cables from the same network 
     # being drawn on the same point

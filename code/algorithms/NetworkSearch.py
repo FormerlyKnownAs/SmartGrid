@@ -13,13 +13,13 @@ Ben Groot, Boy Stekelbos, Momo Schaap
 from code.algorithms.LineTrackRandom import TrackRandom
 import random as r
 import os as o
-import json
 
 def NearestNetworkV3(houses, networks, id):
     """ Connects houses on seperate networks to the closest
         available network node. """
 
     totalCost = 0
+    cableCost = 9
     unconnectedHouses = [] 
 
     r.shuffle(houses)
@@ -79,7 +79,7 @@ def NearestNetworkV3(houses, networks, id):
                 closestNetwork.cables.add(cable)
                 house.cables.append(cable)
 
-            totalCost += shortestDistance * 9
+            totalCost += shortestDistance * cableCost
             closestNetwork.capacity -= house.output
             closestNetwork.houses.append(house)
             house.connected = True

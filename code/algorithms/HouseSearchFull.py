@@ -14,14 +14,14 @@ from code.algorithms.LineTrackRandominput import TrackRandom
 import random as r
 import os as o
 import numpy as np
-import copy
-import json
 
 def NearestHouse(houses, networks):
     """ Connects houses on seperate networks to
         closes available network node. """
 
     totalCost = 0
+    cableCost = 9
+
     r.shuffle(networks)
     filledNetworks = []
     unconnectedHouses = []
@@ -90,7 +90,7 @@ def NearestHouse(houses, networks):
                 chosenHouse.cables.append(cable)
 
             currentNetwork.capacity -= chosenHouse.output
-            totalCost += nearestHouseDistance * 9
+            totalCost += nearestHouseDistance * cableCost
 
     for house in houses:
         if house.connected is False:

@@ -12,12 +12,15 @@ Ben Groot, Boy Stekelbos, Momo Schaap
 from code.algorithms.LineTrackRandominput import TrackRandom
 import random as r
 import os as o
+import json
 
 def hillSort(inputFile, previousScore, randomizationList):
     """ Generates a set of turns and changes them. """
 
     # Set variables to be measured
     totalCost = 0
+
+    cableCost = 9
 
     # Load JSON file
     with open(inputFile, 'r') as JSON:
@@ -84,7 +87,7 @@ def hillSort(inputFile, previousScore, randomizationList):
                 cables.add(cable)
                 house["kabels"].append(cable)
 
-            totalCost += shortestCableDistance * 9
+            totalCost += shortestCableDistance * cableCost
             houseId += 1
 
         networkID += 1

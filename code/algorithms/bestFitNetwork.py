@@ -19,6 +19,7 @@ def BestFit(houses, networks):
         that fits it the best. """
 
     totalCost = 0
+    cableCost = 9
     unconnectedHouses = []
 
     r.shuffle(houses)
@@ -72,7 +73,7 @@ def BestFit(houses, networks):
                 lowestNetwork.cables.add(cable)
                 house.cables.append(cable)
 
-            totalCost += shortestCableDistance * 9
+            totalCost += shortestCableDistance * cableCost
             lowestNetwork.capacity -= house.output
             lowestNetwork.houses.append(house)
             house.connected = True

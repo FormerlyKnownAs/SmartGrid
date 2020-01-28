@@ -23,6 +23,8 @@ def Sort(inputFile, previousScore):
     # Set variables to be measured
     totalCost = 0
 
+    cableCost = 9
+
     # Load JSON file
     with open(inputFile, 'r') as JSON:
         json_dict = json.load(JSON)
@@ -62,7 +64,7 @@ def Sort(inputFile, previousScore):
                                 int(coordinatesHouse[1]))
 
             for cable in cables:
-                
+
                 # calculates distance between cable and house
                 distanceCable = abs(coordinatesHouse[0] - cable[0]) + 
                                 abs(coordinatesHouse[1] - cable[1])
@@ -81,7 +83,7 @@ def Sort(inputFile, previousScore):
                 cables.add(cable)
                 house["kabels"].append(cable)
 
-            totalCost += shortestCableDistance * 9
+            totalCost += shortestCableDistance * cableCost
 
     # Creates correct output format
     # Finds filename for results
