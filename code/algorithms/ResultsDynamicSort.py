@@ -18,7 +18,8 @@ import json
 
 def Sort(inputFile, previousScore):
     """ Reconfigures network connections based on all other
-        points in network. """
+        points in network. Takes a path to a JSON file as input
+        and a score to improve. """
 
     # Set variables to be measured
     totalCost = 0

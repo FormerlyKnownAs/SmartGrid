@@ -1,11 +1,10 @@
 """
-06-01-2020
-
 
 De functionaliteit.
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
+
 """
 
 import sys
@@ -20,7 +19,9 @@ from code.algorithms import BatterySearch, bestFitNetwork, CornerChange, \
 from code.visualization import visualize
 
 def main(iterations, filePrefix, Randomizer, Optimizer, Finisher):
-    """ Chooses the file, function and repetition, and sends the output to the visualizer."""
+    """ Chooses the file, function and repetition, and sends the output to 
+        the visualizer. Takes a number of interations, a prefix as arguments, and
+        the three choices of algorithm. """
 
     # Runs the chosen algorithms
     if Randomizer != 0:
@@ -32,8 +33,9 @@ def main(iterations, filePrefix, Randomizer, Optimizer, Finisher):
     else:
         print("Please select an algorithm.")
 
-def readinInfo(filePrefix, networkBool):
-    """ Reads in the csv files for the neighborhoods."""
+def readinInfo(filePrefix):
+    """ Reads in the csv files for the neighborhoods. Takes a fileprefix as an
+        argument. """
     houseList = csvreader.LoadHouses(f"data/{filePrefix}_huizen.csv")
     networkList = csvreader.LoadNetwork(f"data/{filePrefix}_batterijen.csv")
 
@@ -41,7 +43,8 @@ def readinInfo(filePrefix, networkBool):
 
 
 def ScoreCheck(newResults, previousResults, failedImprovements):
-    """ Compares scores, increments counter and returns the better result."""
+    """ Compares scores, increments counter and returns the better result. Takes
+        two sets of results and a number of failed improvements as argument. """
 
     if newResults is not None:
         if newResults[1] < previousResults[1]:
@@ -57,20 +60,20 @@ def ScoreCheck(newResults, previousResults, failedImprovements):
 
     return failedImprovements, previousResults
 
-def VisualJSON(result, previousResult=None):
-    """ Creates a JSON file and visualizes the result. If a previousResult is given, creates an underlay."""
+def VisualJSON(result):
+    """ Creates a JSON file and visualizes the result, based on the result given
+        as input. """
 
     # Writes the JSON file
     with open(result[2], "w+") as f:
         json.dump(result[0], f, indent=4)
 
-    # # Checks if there's a background layer and visualizes the data
-    # if previousResult is not None:
-    #     visualize.Visualize(previousResult[2], True)
     visualize.Visualize(result[2])
 
 def Random(filePrefix, iterations, subChoice):
-    """ Runs the NearestNetworkV3 random algorithm as many times as iterations, and returns the best result."""
+    """ Runs a randomizer algorithm as many times as iteration. Takes a
+        file prefix, a number of iterations and a choice of algorithm as 
+        argument. """
 
     # Sets the counters to correctly iterate over results
     runCounter = 0
@@ -95,7 +98,7 @@ def Random(filePrefix, iterations, subChoice):
         if subChoice == 5:
             results = HouseSearchFull.NearestHouse(houseList, networkList)
         if subChoice >= 6:
-            results = NetworkSearch.NearestNetworkV3(houseList, networkList, 1)
+            results = NetworkSearch.NearestNetwork(houseList, networkList)
 
         # Makes sure the first result is set
         if bestRandom is None:
@@ -103,14 +106,18 @@ def Random(filePrefix, iterations, subChoice):
 
         failedImprovements, bestRandom = ScoreCheck(results, bestRandom, failedImprovements)
 
-    print(f"Randomization Algorithm: couldn't find a better result after {iterations} attemps. Ran a total of {runCounter}. Final Score = {bestRandom[1]}")
+    print("Randomization Algorithm: couldn't find a better result after" \
+        f"{iterations} attemps. Ran a total of {runCounter}. Final Score" \
+        f"= {bestRandom[1]}")
 
     VisualJSON(bestRandom)
 
     return bestRandom
 
 def Optimize(goodRandom, iterations, subChoice):
-    """ Runs the Sort random algorithm as many times as interations, and returns the best one."""
+    """ Runs an optimzer algorithm as many times as iterations. Takes 
+        a previous reuslt, a number of iterations and a choice of algorithm
+        as argument. """
 
     # Sets the base to improve over
     baseCost = goodRandom[1]
@@ -131,16 +138,21 @@ def Optimize(goodRandom, iterations, subChoice):
 
     wasOptimized = False
     if optimizedResult[1] < goodRandom[1]: 
-        print(f"Result Optimization: couldn't find a better result after {iterations} attempts. Final Score = {optimizedResult[1]}")
+        print("Result Optimization: couldn't find a better result after" \
+            f"{iterations} attempts. Final Score = {optimizedResult[1]}")
+
         VisualJSON(optimizedResult, goodRandom)
         wasOptimized = True
     else:
-        print(f"Optimizing did not improve the score. No visualization made. Score remains {optimizedResult[1]}")
+        print("Optimizing did not improve the score. No visualization " \
+            f"made. Score remains {optimizedResult[1]}")
 
     return optimizedResult, wasOptimized
 
 def Finalize(optimizedRandom, iterations, subChoice):
-    """ Runs the hillclimb algorithm as many times as iterations and returns the best result."""
+    """ Runs a finalizer algorithm as many times as iterations. Takes an 
+        optimized result, a number of iterations and a choice of
+        algorithm as argument. """
     
     # Sets the base for improvement
     optimizationAttempts = 0
@@ -163,10 +175,13 @@ def Finalize(optimizedRandom, iterations, subChoice):
 
     # Visualizes results and updates user about final status.
     if results[1] < optimizedRandom[1]:
-        print(f"hillclimbSortv2: couldn't find a better result after {iterations} attempts. Final Score = {optimizedResult[1]}")
+        print(f"hillclimbSortv2: couldn't find a better result after {iterations}" \ 
+            f" attempts. Final Score = {optimizedResult[1]}")
+
         VisualJSON(optimizedResult, optimizedRandom)
     else:
-        print(f"hillclimbing did not improve the score. No visualization made. Score remains {optimizedResult[1]}")
+        print(f"hillclimbing did not improve the score. No visualization made." \
+             f"Score remains {optimizedResult[1]}")
 
 if __name__ == "__main__":
 

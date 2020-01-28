@@ -13,7 +13,7 @@ Ben Groot, Boy Stekelbos, Momo Schaap
 import csv
 
 class House(object):
-    """ The model for House objects. """
+    """ The model for House objects."""
     
     def __init__(self, x, y, output):
         """ Initializes a House. """

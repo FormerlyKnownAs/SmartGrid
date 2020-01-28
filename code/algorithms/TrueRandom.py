@@ -14,7 +14,10 @@ import random as r
 import os as o
 
 def RandomConnect(houses, networks):
-
+    """ Connects houses randomly to networks.
+        Takes a list of house objects and a list of 
+        network objects as argument. """
+        
     cableCost = 9
 
     unconnectedHouses = []

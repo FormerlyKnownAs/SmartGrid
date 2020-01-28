@@ -14,9 +14,10 @@ from code.algorithms.LineTrackRandom import TrackRandom
 import random as r
 import os as o
 
-def NearestNetworkV3(houses, networks, id):
+def NearestNetwork(houses, networks):
     """ Connects houses on seperate networks to the closest
-        available network node. """
+        available network node. Takes a list of house objects
+        and a list of network objects as argument."""
 
     totalCost = 0
     cableCost = 9

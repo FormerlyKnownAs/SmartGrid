@@ -18,7 +18,8 @@ import numpy as np
 
 def NearestHouse(houses, networks):
     """ Connects houses on seperate networks to closest network
-        node in correctly formatted output. """
+        node in correctly formatted output. Takes a list of 
+        house objects and a list of network objects as argument."""
 
     totalCost = 0
 

@@ -14,9 +14,8 @@ Ben Groot, Boy Stekelbos, Momo Schaap
 import json
 
 def ListFormat(string):
-    """ Mold string coordinates into correct list format for
-        further calculation. Input is coordinates string. """
-
+    """ Converts a coordinate string to a list. Takes coordinates as a string
+    as argument. """
     outputList = []
 
     # Loop over elements in string
@@ -30,7 +29,8 @@ def ListFormat(string):
 
 
 def Load(input):
-    """ Loads JSON file, convert into dict or list-in-list format. """
+    """ Loads JSON file, convert into dict or list-in-list format,
+        visualize using pyplot. """
 
     # Load JSON file
     with open(input, 'r') as JSON:

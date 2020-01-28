@@ -18,7 +18,10 @@ import json
 
 def hillSort(inputFile, previousScore, randomizationList):
     """ Changes one element in input, corner or
-        house location. """
+        house location. Takes a path to a json file 
+        as input file, a previous score, and a list 
+        of randomization choices made by the previous 
+        algorithm. """
 
     # Set variables to be measured
     totalCost = 0

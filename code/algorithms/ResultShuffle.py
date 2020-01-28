@@ -2,8 +2,9 @@
 
 ResultShuffle.py
 
-Takes a json file and keeps its connections, but shuffling its 
-cable connections.
+Takes a json file and keeps the relationship between
+houses and networks, but randomizing its connection
+order.
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
@@ -17,7 +18,8 @@ import os as o
 import json
 
 def Shuffle(inputFile, previousScore):
-    """ Shuffles cable connections in an existing network. """
+    """ Shuffles cable connections in an existing network. Takes a path to 
+        a JSON file as input and a score to improve. """
 
     # Set variables to be measured
     totalCost = 0
