@@ -12,50 +12,36 @@ import sys
 import random as r
 import json
 
-from code.classes import house, network
-from code.algorithms import BatterySearch, bestFitNetwork, CornerChange, CornerPositionChange, HouseSearchFull, HouseSearchHybrid, NetworkSearch, ResultsDynamicSort, ResultShuffle, ResultsSort, TrueRandom
+from code.classes import house, network, csvreader
+from code.algorithms import BatterySearch, bestFitNetwork, CornerChange, \
+                            CornerPositionChange, HouseSearchFull, HouseSearchHybrid, \
+                            NetworkSearch, ResultsDynamicSort, ResultShuffle, \
+                            ResultsSort, TrueRandom
 from code.visualization import visualize
 
-def main(filePrefix, algorithmChoice, iterations):
-    """
-        Chooses the file, function and repetition, and sends the output to the visualizer.
-    """
+def main(iterations, filePrefix, Randomizer, Optimizer, Finisher):
+    """ Chooses the file, function and repetition, and sends the output to the visualizer."""
 
-    if algorithmChoice == 1:
-        result = HillClimb(Optimize(Random(filePrefix, iterations, 1), iterations * 2, 1), iterations * 4)
-    elif algorithmChoice == 2:
-        result = HillClimb(Optimize(Random(filePrefix, iterations, 1), iterations * 2, 1), iterations * 4, True)
-    elif algorithmChoice == 3:
-        result = HillClimb(Optimize(Random(filePrefix, iterations, 1), iterations * 2, 2), iterations * 4)
-    elif algorithmChoice == 4:
-        result = HillClimb(Optimize(Random(filePrefix, iterations, 1), iterations * 2, 2), iterations * 4, True)
-    elif algorithmChoice == 5:
-        results = HillClimb(Optimize(Random(filePrefix, iterations, 1), iterations * 2, 2), iterations * 4, True)
-    elif algorithmChoice == 6:
-        results = Random(filePrefix, iterations, 3)
-    elif algorithmChoice >= 7 or algorithmChoice < 1:
-        results = Random(filePrefix, iterations, 6)
-        
-    
-        
+    # Runs the chosen algorithms
+    if Randomizer != 0:
+        randomizedResult = Random(filePrefix, iterations, Randomizer)
+        if Optimizer != 0:
+            optimizedResult = Optimize(randomizedResult, iterations * 2, Optimizer)
+            if Finisher != 0:
+                finalResult = Finalize(randomizedResult, iterations * 4, Finisher)
+    else:
+        print("Please select an algorithm.")
+
 def readinInfo(filePrefix, networkBool):
-    """
-    Reads in the csv files for the neighborhoods.
-    """
-    houseList = house.LoadHouses(f"data/{filePrefix}_huizen.csv")
-    if networkBool:
-        networkList = network.LoadNetwork(f"data/{filePrefix}_batterijen.csv")
+    """ Reads in the csv files for the neighborhoods."""
+    houseList = csvreader.LoadHouses(f"data/{filePrefix}_huizen.csv")
+    networkList = csvreader.LoadNetwork(f"data/{filePrefix}_batterijen.csv")
 
-        return houseList, networkList
+    return houseList, networkList
 
-    batteryList = battery.LoadBatteries(f"data/{filePrefix}_batterijen.csv")
-
-    return houseList, batteryList
 
 def ScoreCheck(newResults, previousResults, failedImprovements):
-    """
-    Compares scores, increments counter and returns the better result.
-    """
+    """ Compares scores, increments counter and returns the better result."""
 
     if newResults is not None:
         if newResults[1] < previousResults[1]:
@@ -72,9 +58,7 @@ def ScoreCheck(newResults, previousResults, failedImprovements):
     return failedImprovements, previousResults
 
 def VisualJSON(result, previousResult=None):
-    """
-    Creates a JSON file and visualizes the result. If a previousResult is given, creates an underlay. 
-    """
+    """ Creates a JSON file and visualizes the result. If a previousResult is given, creates an underlay."""
 
     with open(result[2], "w+") as f:
         json.dump(result[0], f, indent=4)
@@ -84,33 +68,34 @@ def VisualJSON(result, previousResult=None):
     visualize.Visualize(result[2])
 
 def Random(filePrefix, iterations, subChoice):
-    """
-    Runs the NearestNetworkV3 random algorithm as many times as iterations, and returns the best result.
-    """
+    """ Runs the NearestNetworkV3 random algorithm as many times as iterations, and returns the best result."""
 
+    # Sets the counters to correctly iterate over results
     runCounter = 0
     failedImprovements = 0
     bestScore = 1000
     bestRandom = None
 
+    # Runs through results, disregarding invalid solutions
     while failedImprovements < iterations:
 
         runCounter += 1
         houseList, networkList = readinInfo(filePrefix, True)
         
         if subChoice == 1:
-            results = NetworkSearch.NearestNetworkV3(houseList, networkList, 1)
+            results = TrueRandom.RandomConnect(houseList, networkList)    
         if subChoice == 2:
-            results = HouseSearchHybrid.NearestHouse(houseList, networkList)
+            results = BatterySearch.NearestNetwork(houseList, networkList)    
         if subChoice == 3:
-            results = HouseSearchFull.NearestHouse(houseList, networkList)
+            results = bestFitNetwork.BestFit(houseList, networkList)  
         if subChoice == 4:
-            results = bestFitNetwork.BestFit(houseList, networkList)
+            results = HouseSearchHybrid.NearestHouse(houseList, networkList)
         if subChoice == 5:
-            results = BatterySearch.NearestNetwork(houseList, networkList)
-        if subChoice == 6:
-            results = TrueRandom.RandomConnect(houseList, networkList)
+            results = HouseSearchFull.NearestHouse(houseList, networkList)
+        if subChoice >= 6:
+            results = NetworkSearch.NearestNetworkV3(houseList, networkList, 1)
 
+        # Makes sure the first result is set
         if bestRandom is None:
             bestRandom = results
 
@@ -123,21 +108,21 @@ def Random(filePrefix, iterations, subChoice):
     return bestRandom
 
 def Optimize(goodRandom, iterations, subChoice):
-    """
-    Runs the Sort random algorithm as many times as interations, and returns the best one. 
-    """
+    """ Runs the Sort random algorithm as many times as interations, and returns the best one."""
 
+    # Sets the base to improve over
     baseCost = goodRandom[1]
     optimizationAttempts = 0
     optimizedResult = goodRandom
 
+    # Iterates through results and sets improvements as new standard
     while optimizationAttempts < iterations:
 
         if subChoice == 1:
             results = ResultShuffle.Shuffle(goodRandom[2], goodRandom[1])
         elif subChoice == 2:
             results = ResultsSort.Sort(goodRandom[2], goodRandom[1])
-        elif subChoice == 3:
+        elif subChoice >= 3:
             results = ResultsDynamicSort.Sort(goodrandom[2], goodrandom[1])
 
         optimizationAttempts, optimizedResult = ScoreCheck(results, optimizedResult, optimizationAttempts)
@@ -148,26 +133,29 @@ def Optimize(goodRandom, iterations, subChoice):
 
     return optimizedResult
 
-def HillClimb(optimizedRandom, iterations, dynamic=False):
-    """
-    Runs the hillclimb algorithm as many times as iterations and returns the best result
-    """
+def Finalize(optimizedRandom, iterations, subChoice):
+    """ Runs the hillclimb algorithm as many times as iterations and returns the best result."""
 
+    # Sets the base for improvement
     optimizationAttempts = 0
     optimizedResult = optimizedRandom
     newPath = optimizedRandom[2].strip(".json") + "hillclimb.json"
+
+    # Creates dummy JSON to update throughout process
     with open(newPath, "w+") as f:
         json.dump(optimizedRandom[0], f, indent=4)
 
+    # Iterates over results and sets improvements as new standard
     while optimizationAttempts < iterations:
 
-        if dynamic:
+        if subChoice == 1:
             results = CornerChange.hillSort(newPath, optimizedResult[1], optimizedResult[3])
-        else:
+        elif subChoice >= 2:
             results = CornerPositionChange.hillSort(newPath, optimizedResult[1], optimizedResult[3])
 
         optimizationAttempts, optimizedResult = ScoreCheck(results, optimizedResult, optimizationAttempts)
 
+    # Vis
     if results[1] < optimizedRandom[1]:
         VisualJSON(optimizedResult, optimizedRandom)
         print(f"hillclimbSortv2: couldn't find a better result after {iterations} attempts. Final Score = {optimizedResult[1]}")
@@ -179,22 +167,32 @@ if __name__ == "__main__":
 
     # Sets the parameters of the function based on the input, and creates default values
     try:
-        algorithmChoice = int(sys.argv[3])
+        iterations = int(sys.argv[1])
     except:
-        algorithmChoice = 10000
-
+        iterations = 10000
+    
     try:
         filePrefix = sys.argv[2]
     except:
         filePrefix = "wijk1"
+    
+    try:
+        randomizer = int(sys.argv[3])
+    except:
+        randomizer = 1000
 
     try:
-        iterations = int(sys.argv[1])
+        optimizer = int(sys.argv[4])
     except:
-        iterations = 100
+        optimizer = 1000
+
+    try:
+        finalizer = int(sys.argv[5])
+    except:
+        finalizer = 1000
 
 
-    main(filePrefix, algorithmChoice, iterations)
+    main(iterations, filePrefix, randomizer, optimizer, finalizer)
 
 
 

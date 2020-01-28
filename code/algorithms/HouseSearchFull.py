@@ -9,8 +9,6 @@ from code.algorithms.LineTrackRandominput import TrackRandom
 import random as r
 import os as o
 import numpy as np
-import copy
-import json
 
 def NearestHouse(houses, networks):
 
