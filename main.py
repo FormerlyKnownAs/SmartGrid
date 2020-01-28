@@ -27,8 +27,8 @@ def main(iterations, filePrefix, Randomizer, Optimizer, Finisher):
         randomizedResult = Random(filePrefix, iterations, Randomizer)
         if Optimizer != 0:
             optimizedResult = Optimize(randomizedResult, iterations * 2, Optimizer)
-            if Finisher != 0:
-                finalResult = Finalize(optimizedResult, iterations * 4, Finisher)
+            if Finisher != 0 and optimizedResult[1] is True:
+                finalResult = Finalize(optimizedResult[0], iterations * 4, Finisher)
     else:
         print("Please select an algorithm.")
 
@@ -64,9 +64,9 @@ def VisualJSON(result, previousResult=None):
     with open(result[2], "w+") as f:
         json.dump(result[0], f, indent=4)
 
-    # Checks if there's a background layer and visualizes the data
-    if previousResult is not None:
-        visualize.Visualize(previousResult[2], True)
+    # # Checks if there's a background layer and visualizes the data
+    # if previousResult is not None:
+    #     visualize.Visualize(previousResult[2], True)
     visualize.Visualize(result[2])
 
 def Random(filePrefix, iterations, subChoice):
@@ -129,13 +129,15 @@ def Optimize(goodRandom, iterations, subChoice):
 
         optimizationAttempts, optimizedResult = ScoreCheck(results, optimizedResult, optimizationAttempts)
 
-    if results[1] < goodRandom[1]:
+    wasOptimized = False
+    if optimizedResult[1] < goodRandom[1]: 
         print(f"Result Optimization: couldn't find a better result after {iterations} attempts. Final Score = {optimizedResult[1]}")
         VisualJSON(optimizedResult, goodRandom)
+        wasOptimized = True
     else:
         print(f"Optimizing did not improve the score. No visualization made. Score remains {optimizedResult[1]}")
 
-    return optimizedResult
+    return optimizedResult, wasOptimized
 
 def Finalize(optimizedRandom, iterations, subChoice):
     """ Runs the hillclimb algorithm as many times as iterations and returns the best result."""

@@ -100,8 +100,6 @@ def Shuffle(inputFile, previousScore):
     with open(f"{inputFile}shuffle.json", "w+") as f:
         json.dump(finalOutput, f, indent=4)
 
-    print(f"Originally: {previousScore}, now: {totalCost}")
-
     return finalOutput, totalCost, f"{inputFile}shuffle.json"
 
 

@@ -16,7 +16,8 @@ import os as o
 
 def NearestNetwork(houses, networks):
     """ Connects houses on seperate networks to closest
-        available network. """
+        available network. Takes a list of house objects
+        and a list of network objects as argument."""
 
     cableCost = 9
     unconnectedHouses = []

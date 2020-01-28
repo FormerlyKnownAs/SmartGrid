@@ -22,7 +22,7 @@ De case die ons team gegeven is heet SmartGrid, het objectief voor dit probleem 
     2: BatterySearch        -   Verbindt huizen in een willekeurige volgorde aan dichtsbijzijnde batterij
     3: bestFitNetwork       -   Verbindt huizen in een willekeurige volgorde met de batterij met het meeste capaciteit
     4: HouseSearchHybrid    -   Verbindt vanuit de netwerken met het dichtsbijzijnde huis. De laatste tien huizen zijn willekeurig.
-    5: HouseSearchFull      -   Verbindt vanuit de netwerken met het dichtsbijzijnde huis.
+    5: HouseSearchFull      -   Verbindt vanuit de netwerken met het dichtsbijzijnde huis. (Nog nooit in minder dan 2 uur een resultaat gevonden. Loopt niet vast)
     6: NetworkSearch        -   Verbindt huizen in een willekeurige volgorde met het dichtsbijzijnde netwerk punt.
 
     Keuzes van optimizers:
