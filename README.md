@@ -14,7 +14,11 @@ Resultaten reproduceren:
     
     python main.py 10 wijk1  hier heb je de keuze van wijk1 tot wijk3
     
-    python main.py 10 wijk1 1  besluit de keuze van algoritme, waarbij 1 ot 4 opties zijn.
+    python main.py 10 wijk1 1 besluit de keuze van algoritme, waarbij 1 ot 6 opties zijn.
+
+    python main.py 10 wijk1 1 3 besluit welke optimizer gebruikt wordt, met keuzes van 1 tot 3
+
+    python main.py 10 wijk1 1 3 2 kiest de hillclimber methode die gebruikt wordt, met keuzes van 1 en 2
 
 
 SmartGrid bevat de volgende mapjes en files:
