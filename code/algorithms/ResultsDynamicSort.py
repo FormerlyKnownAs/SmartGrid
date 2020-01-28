@@ -1,6 +1,4 @@
 """
-09-01-2020
-
 Takes a json file and keeps its connections, but reconfiguring its connections based on distance to all other points on the network
 
 The Group Formerly Known as 'The Prince Statement'
@@ -17,6 +15,7 @@ def Sort(inputFile, previousScore):
 
     # Set variables to be measured
     totalCost = 0
+    cableCost = 9
 
     # Load JSON file
     with open(inputFile, 'r') as JSON:
@@ -62,6 +61,7 @@ def Sort(inputFile, previousScore):
                 houseDistance.append(currentDistance)
                 houseLocation.append(house)
 
+            #  Takes the shortest distance found from houseDistance, then finds the house that is linked to that distance
             houseMinimalDistance = min(houseDistance)
             indexHouseMinimalDistance = houseDistance.index(houseMinimalDistance)
 
@@ -75,6 +75,7 @@ def Sort(inputFile, previousScore):
             coordinatesHouse = (int(coordinatesHouse[0]), int(coordinatesHouse[1]))
 
             for cable in cables:
+                
                 # calculates distance between cable and house
                 distanceCable = abs(coordinatesHouse[0] - cable[0]) + abs(coordinatesHouse[1] - cable[1])
                 cableDistance.append(distanceCable)
@@ -91,7 +92,7 @@ def Sort(inputFile, previousScore):
                 cables.add(cable)
                 currentHouse["kabels"].append(cable)
 
-            totalCost += shortestCableDistance * 9
+            totalCost += shortestCableDistance * cableCost
 
             # Find index of current house in houselist
             houseListIndex = houseList.index(currentHouse)

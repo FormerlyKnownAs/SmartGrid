@@ -1,9 +1,5 @@
 """
-09-01-2020
-
-
 Algorithm that connects houses on separate networks to the closest available network node.
-This functions similarly to v2, but gives a correctly formatted output.
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
@@ -16,6 +12,7 @@ import os as o
 def NearestNetworkV3(houses, networks, id):
 
     totalCost = 0
+    cableCost = 9
     unconnectedHouses = [] 
 
     r.shuffle(houses)
@@ -72,7 +69,7 @@ def NearestNetworkV3(houses, networks, id):
                 closestNetwork.cables.add(cable)
                 house.cables.append(cable)
 
-            totalCost += shortestDistance * 9
+            totalCost += shortestDistance * cableCost
             closestNetwork.capacity -= house.output
             closestNetwork.houses.append(house)
             house.connected = True

@@ -1,6 +1,5 @@
 """
 Algorithm that connects houses on separate networks to the closest available network node.
-This functions similarly to v2, but gives a correctly formatted output.
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
@@ -14,17 +13,21 @@ import numpy as np
 def NearestHouse(houses, networks):
 
     totalCost = 0
+    cableCost = 9
 
     r.shuffle(networks)
     filledNetworks = []
     unconnectedHouses = []
 
+    # Loops over all houses
     for i, house in enumerate(houses):
 
         # Picks an available network, or stores the house in the overflow list if none are available
         curNetID = i % len(networks)
         while curNetID in filledNetworks and len(filledNetworks) < len(networks):
             curNetID = (curNetID + 1) % len(networks)
+
+        # If no networks are available for connection, the house is registered as unconnected
         if len(filledNetworks) >= len(networks):
             unconnectedHouses.append(house)   
 
@@ -35,16 +38,20 @@ def NearestHouse(houses, networks):
 
         for house in houses:
 
+            #  Checks for capacity and if the house hasn't already been connected
             if currentNetwork.capacity > house.output and house.connected is False:
                 
                 nearestCableDistance = 10000
                 subCable = None
                 cableDistances = []
+
+                # Loops over all the cables in the current network
                 for cable in currentNetwork.cables:
                     
                     cableDistance = abs(house.coordinates[0] - cable[0]) + abs(house.coordinates[1] - cable[1])
                     cableDistances.append((cableDistance, cable))
-
+                    
+                    #  Finds the shortest distance between a house and all the cables
                     if cableDistance < nearestCableDistance:
                         nearestCableDistance = cableDistance
                         subCable = cable
@@ -68,7 +75,7 @@ def NearestHouse(houses, networks):
                 chosenHouse.cables.append(cable)
 
             currentNetwork.capacity -= chosenHouse.output
-            totalCost += nearestHouseDistance * 9
+            totalCost += nearestHouseDistance * cableCost
 
     for house in houses:
         if house.connected is False:

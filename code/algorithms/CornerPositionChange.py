@@ -16,6 +16,8 @@ def hillSort(inputFile, previousScore, randomizationList):
     # Set variables to be measured
     totalCost = 0
 
+    cableCost = 9
+
     # Load JSON file
     with open(inputFile, 'r') as JSON:
         json_dict = json.load(JSON)
@@ -25,9 +27,10 @@ def hillSort(inputFile, previousScore, randomizationList):
     randomHouseIndex = r.randint(0, len(randomNetwork["huizen"]) - 1)
     randomHouse = randomNetwork["huizen"][randomHouseIndex ]
 
+    #  Makes a random choice between 0 and 1
     randomChoice = r.randint(0, 1)
 
-    # Changes either the corner layout or moves a house in order
+    # Changes either the corner layout or moves a house in order depending on randomChoice
     if randomChoice == 1:
         
         if randomHouse["corner"] == 0:
@@ -58,7 +61,7 @@ def hillSort(inputFile, previousScore, randomizationList):
         sourceCable = (int(sourceCable[0]), int(sourceCable[1]))
         cables.add(sourceCable)
 
-        # Finds all houses associated with network
+        # Finds all houses associated with network and appends them to the houseList
         for house in network["huizen"]:
             house["kabels"] = []
             coordinatesHouse = house["locatie"].split(",")
@@ -88,9 +91,11 @@ def hillSort(inputFile, previousScore, randomizationList):
                 houseDistance.append(currentDistance)
                 houseLocation.append(house)
 
+            # Takes the shortest distance from houseDistance list
             houseMinimalDistance = min(houseDistance)
-            indexHouseMinimalDistance = houseDistance.index(houseMinimalDistance)
 
+            # Finds the index of the shortest distance and then is able to find the house associated with that distance
+            indexHouseMinimalDistance = houseDistance.index(houseMinimalDistance)
             currentHouse = houseLocation[indexHouseMinimalDistance]
 
 
@@ -118,7 +123,7 @@ def hillSort(inputFile, previousScore, randomizationList):
                 cables.add(cable)
                 currentHouse["kabels"].append(cable)
 
-            totalCost += shortestCableDistance * 9
+            totalCost += shortestCableDistance * cableCost
 
             # Find index of current house in houselist
             houseListIndex = houseList.index(currentHouse)

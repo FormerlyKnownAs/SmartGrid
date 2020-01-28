@@ -15,17 +15,21 @@ def NearestHouse(houses, networks):
 
     totalCost = 0
 
+    cableCost = 9
     r.shuffle(networks)
     filledNetworks = []
     unconnectedHouses = []
     connectedHouses = []
 
+    # Loops over all houses except the last 10
     for i in range(len(houses) - 10):
 
         # Picks an available network, or stores the house in the overflow list if none are available
         curNetID = i % len(networks)
         while curNetID in filledNetworks and len(filledNetworks) < len(networks):
             curNetID = (curNetID + 1) % len(networks)
+        
+        # If no networks are available for connection, the house is registered as unconnected
         if len(filledNetworks) >= len(networks):
             unconnectedHouses.append(house)   
 
@@ -35,7 +39,8 @@ def NearestHouse(houses, networks):
         nearestHouseDistance = 10000
 
         for house in houses:
-
+            
+            #  Checks for capacity and if the house hasn't already been connected
             if currentNetwork.capacity > house.output and house.connected is False:
                 
                 nearestCableDistance = 10000
@@ -71,22 +76,26 @@ def NearestHouse(houses, networks):
                 chosenHouse.cables.append(cable)
 
             currentNetwork.capacity -= chosenHouse.output
-            totalCost += nearestHouseDistance * 9
+            totalCost += nearestHouseDistance * cableCost
 
     # After the first amount of houses, places the last few houses randomly rather than based on distance to network
     r.shuffle(houses)
 
     for house in houses:
         
+        # Only accepts houses that are not connected
         if house.connected is False:
             closestNetworkPoint = []
             closestPointDistance = []
+
             for network in networks:
 
                 if house.output < network.capacity:
                     
                     nearestCable = None
                     nearestCableDistance = 10000
+
+                    # Finds the shortest distance to a cable for a house to connect to
                     for cable in network.cables:
                         cableDistance = abs(house.coordinates[0] - cable[0]) + abs(house.coordinates[1] - cable[1])
                         if cableDistance < nearestCableDistance:
@@ -100,9 +109,11 @@ def NearestHouse(houses, networks):
                     closestNetworkPoint.append(None)
                     closestPointDistance.append(None)
 
+            # If no connections are available appends the house to the unconnectedhouses list
             if all(i is None for i in closestPointDistance):
                 unconnectedHouses.append(house)
 
+            # Otherwise looks for the shortest distance, finds the index for the network belonging to that distance
             else:        
                 shortestDistance = min(i for i in closestPointDistance if i is not None)
                 shortestIndex = closestPointDistance.index(shortestDistance)
@@ -116,12 +127,14 @@ def NearestHouse(houses, networks):
                 house.connected = True
                 connectedHouses.append(house)
                 
+                # Adds the cables to make a connection to the found network point
                 for cable in TrackRandom(house.coordinates, closestNetworkPoint[shortestIndex], corner):
                     closestNetwork.cables.add(cable)
                     house.cables.append(cable)
  
-                totalCost += shortestDistance * 9
+                totalCost += shortestDistance * cableCost
     
+    # Prevents multiple cables from the same network being drawn on the same point
     allhouses = 0
     for network in networks:
         allhouses += len(network.houses2)

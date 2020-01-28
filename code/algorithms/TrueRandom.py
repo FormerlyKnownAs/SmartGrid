@@ -1,8 +1,5 @@
 """
-09-01-2020
-
-
-Algorithm that connects houses on separate networks to the closest available network. 
+Purely random algorithm, used for score reference. 
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
@@ -13,6 +10,8 @@ import random as r
 import os as o
 
 def RandomConnect(houses, networks):
+
+    cableCost = 9
 
     unconnectedHouses = []
 
@@ -55,7 +54,7 @@ def RandomConnect(houses, networks):
     for network in networks:
         totalCables += len(network.cables)
 
-    totalCost = totalCables * 9
+    totalCost = totalCables * cableCost
 
     # Finds filename for results
     pathFound = False

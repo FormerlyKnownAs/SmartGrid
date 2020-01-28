@@ -1,10 +1,24 @@
+"""
+
+network.py
+
+Houses the Network class, also loads batteries from a given input files
+and generates network objects.
+
+The Group Formerly Known as 'The Prince Statement'
+Ben Groot, Boy Stekelbos, Momo Schaap
+
+"""
+
+
 import csv
 
 class Network(object):
-    """The model for a cable network."""
+    """ The model for a cable network. """
 
     def __init__(self, x, y, capacity):
-        """Initializes the source location and capacity of the battery."""
+        """ Initializes the source location 
+            and capacity of the battery. """
 
         self.source = (x, y)
         self.capacity = capacity
@@ -20,6 +34,8 @@ class Network(object):
         return f"{self.capacity}, {self.source}, cables: {self.cables}"
 
 def LoadNetwork(filePath):
+    """ Reads out, parses input file, generates
+        network objects. """
 
     # Makes list to return to be filled with csv data
     networks = []
@@ -42,7 +58,8 @@ def LoadNetwork(filePath):
                 networkData.append(element)
 
             # Appends to list
-            newNetwork = Network(int(networkData[0]), int(networkData[1]), float(networkData[2]))
+            newNetwork = Network(int(networkData[0]), int(networkData[1]), 
+                                    float(networkData[2]))
             networks.append(newNetwork)
 
     return networks

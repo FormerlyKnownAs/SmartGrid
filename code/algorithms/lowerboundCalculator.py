@@ -1,14 +1,21 @@
 """
+
+lowerboudCalculator.py
+
 Calculates a possible lower bound based on nearest location of other points.
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
+
 """
 
 def LowestBound(houses, batteries):
+    """ Calculates an approximation of the lower bound. """
 
     totalCost = 0
 
+    cableCost = 9
+    
     # Finds the nearest point for each house
     for house in houses:
 
@@ -33,7 +40,7 @@ def LowestBound(houses, batteries):
 
             
         # Adds score for house
-        totalCost += shortestDistance * 9
+        totalCost += shortestDistance * cableCost
 
     for battery in batteries:
 
@@ -57,7 +64,7 @@ def LowestBound(houses, batteries):
 
             
         # Adds score for house
-        totalCost += shortestDistance * 9
+        totalCost += shortestDistance * cableCost
 
     print(totalCost)
             
