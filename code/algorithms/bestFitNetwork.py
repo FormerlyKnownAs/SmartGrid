@@ -84,7 +84,7 @@ def BestFit(houses, networks, id):
             pathFound = True
             
         
-
+    # Only produces output if there are no unconnected houses left
     if len(unconnectedHouses) == 0:
 
         finalOutput = [{

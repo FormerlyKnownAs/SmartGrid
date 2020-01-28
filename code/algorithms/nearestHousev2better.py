@@ -32,7 +32,6 @@ def NearestHouse(houses, networks):
         while curNetID in filledNetworks and len(filledNetworks) < len(networks):
             curNetID = (curNetID + 1) % len(networks)
         if len(filledNetworks) >= len(networks):
-            # print(f"{i} - was unable to connect this house {house.coordinates}")
             unconnectedHouses.append(house)   
 
         currentNetwork = networks[curNetID]
@@ -62,7 +61,6 @@ def NearestHouse(houses, networks):
                     chosenCable = subCable
 
         if chosenHouse is None:
-            # print(f"we're here. {filledNetworks}")
             filledNetworks.append(curNetID)
 
         # Connects the house with nearest house
@@ -79,7 +77,6 @@ def NearestHouse(houses, networks):
 
             currentNetwork.capacity -= chosenHouse.output
             totalCost += nearestHouseDistance * 9
-            # print(f"{i} - connected this house ({chosenHouse.coordinates}) with this network ({currentNetwork.source}). {len(currentNetwork.houses2)}")
 
     # After the first amount of houses, places the last few houses randomly rather than based on distance to network
     r.shuffle(houses)
@@ -110,8 +107,6 @@ def NearestHouse(houses, networks):
 
             if all(i is None for i in closestPointDistance):
                 unconnectedHouses.append(house)
-                # print(f"{y} - was unable to connect this house ({house.coordinates})")
-
 
             else:        
                 shortestDistance = min(i for i in closestPointDistance if i is not None)
@@ -131,11 +126,7 @@ def NearestHouse(houses, networks):
                     house.cables.append(cable)
  
                 totalCost += shortestDistance * 9
-                # print(f"{y} - connected this house ({house.coordinates}) to this network {closestNetwork.source}. {len(closestNetwork.houses2)} - {closestPointDistance}")
-
-    # for network in networks:
-    #     print(f"this is the leftover capacity of {network.source}: {network.capacity}")
-
+    
     allhouses = 0
     for network in networks:
         allhouses += len(network.houses2)

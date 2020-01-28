@@ -49,6 +49,7 @@ def hillSort(inputFile, previousScore, randomizationList):
             house["distance"] = abs(coordinatesHouse[0] - sourceCable[0]) + abs(coordinatesHouse[1] - sourceCable[1])
             houseList.append(house)
 
+        # Sorts the houses based on distance to battery
         houseList = sorted(houseList, key=lambda x: x["distance"])
 
         # Finds closest point on network for each house
@@ -60,6 +61,7 @@ def hillSort(inputFile, previousScore, randomizationList):
             coordinatesHouse = (int(coordinatesHouse[0]), int(coordinatesHouse[1]))
 
             for cable in cables:
+                
                 # calculates distance between cable and house
                 distanceCable = abs(coordinatesHouse[0] - cable[0]) + abs(coordinatesHouse[1] - cable[1])
                 cableDistance.append(distanceCable)
