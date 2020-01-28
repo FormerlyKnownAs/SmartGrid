@@ -8,13 +8,13 @@ De case die ons team gegeven is heet SmartGrid, het objectief voor dit probleem 
 
 Resultaten reproduceren:
 
-    python main.py is altijd het begin.
+    python main.py is het basis formaat.
     
     pthon  main.py 10 geeft aan hoeveel iteraties het programma moet doen voordat het klaar is.
     
     python main.py 10 wijk1  hier heb je de keuze van wijk1 tot wijk3
     
-    python main.py 10 wijk1 1  besluit de keuze van algoritme, waarbij 1 tot 4 opties zijn.
+    python main.py 10 wijk1 1  besluit de keuze van algoritme, waarbij 1 ot 4 opties zijn.
 
 
 SmartGrid bevat de volgende mapjes en files:
@@ -31,7 +31,6 @@ SmartGrid bevat de volgende mapjes en files:
     > algorithms - onze algoritmes, die daadwerklijk dingen toepassen
     > classes - onze objecten, zoals huizen, netwerken en batterijen
     > visualization - al onze code die visualizeert
-    > zDELETEBEFOREHANDINGIN - test files die verwijderd moeten worden
 > data - hier staat onze csv data van de opdracht
 > resulaten - hier staat onze output.
 
