@@ -20,12 +20,11 @@ Berekent de lower bound van een wijk gebaseerd op de afstand tussen huizen en ba
 
 nearestBatterySimple.py
 Een simpel algoritme dat huizen verbindt met een batterij gebaseerd op de afstand tussen het huis en de dichtstbijzijnde batterij locatie en de capaciteit.
+
 nearestHouseReworkv2.py:
 
 ----Moet nog gemaakt worden
 
-nearestNetworkCluster.py:
-Een algoritme dat huizen verbindt op basis van afstand met andere huizen, dit vormt dat uiteindelijk een cluster van huizen wat leidt tot het efficient leggen van kabel.
 
 nearestNetworkShuffle.py:
 Houdt de configuratie die gemaakt is tussen welke huizen verbonden zijn met welke batterijen. Vervolgens verwijdert het de kabels en maakt nieuwe kabels aan gebaseerd op de afstand tussen het huis en de dichstbijzijnde netwerk punt wat een kabel, batterij en huis kan zijn.
