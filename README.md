@@ -6,36 +6,33 @@ Ben Groot, Boy Stekelbos, Momo Schaap
 De case die ons team gegeven is heet SmartGrid, het objectief voor dit probleem is zo efficient mogelijk huizen, die energie produceren te verbinden aan batterijen die deze energie opslaan. De batterijen hebben gelimiteerde capaciteit dus is het van belang dat de correcte configuratie van huizen verbonden aan een batterij gekozen wordt. Zonder dit te doen is er risico van het overlaten van een of twee huizen die bij geen enkele batterij er meer in past. 
 
 
-Resultaten reproduceren:
+## Gebruiksaanwijzing:
 
-    python main.py is het basis formaat.
-    
-    pthon  main.py 10 geeft aan hoeveel iteraties het programma moet doen voordat het klaar is.
-    
-    python main.py 10 wijk1  hier heb je de keuze van wijk1 tot wijk3
-    
-    python main.py 10 wijk1 1 besluit de keuze van algoritme, waarbij 1 ot 6 opties zijn.
+    Cmd command format: python main.py ITERATIONS WIJK RANDOMIZER OPTIMIZER FINALIZER
+    - Iterations: geeft aan hoeveel iteraties het programma moet doen voordat het klaar is. Dit is een nummer
+    - Wijk: geeft de wijk mee als input. Dit is de prefix van een wijk (bijv. wijk1)
+    - Randomizer: besluit het basis algoritme, waarbij 1 tot 6 de opties zijn.
+    - Optimizer: Besluit welke optimizing heuristiek gebruikt wordt, met keuzes van 1 tot 3
+    - Finalizer: Besluit welke finalizing heuristiek gebruikt wordt, met keuzes van 1 en 2
 
-    python main.py 10 wijk1 1 3 besluit welke optimizer gebruikt wordt, met keuzes van 1 tot 3
+    Een input zonder argumenten runt de volgende set up: python main.py 100 wijk1 6 3 2
 
-    python main.py 10 wijk1 1 3 2 kiest de hillclimber methode die gebruikt wordt, met keuzes van 1 en 2
-
-    Keuzes van algoritmes:
-    1: TrueRandom
-    2: BatterySearch
-    3: bestFitNetwork
-    4: HouseSearchHybrid
-    5: HouseSearchFull
-    6: NetworkSearch
+    Keuzes van randomizers:
+    1: TrueRandom           -   Compleet willekeurige oplossing
+    2: BatterySearch        -   Verbindt huizen in een willekeurige volgorde aan dichtsbijzijnde batterij
+    3: bestFitNetwork       -   Verbindt huizen in een willekeurige volgorde met de batterij met het meeste capaciteit
+    4: HouseSearchHybrid    -   Verbindt vanuit de netwerken met het dichtsbijzijnde huis. De laatste tien huizen zijn willekeurig.
+    5: HouseSearchFull      -   Verbindt vanuit de netwerken met het dichtsbijzijnde huis.
+    6: NetworkSearch        -   Verbindt huizen in een willekeurige volgorde met het dichtsbijzijnde netwerk punt.
 
     Keuzes van optimizers:
-    1: ResultsShuffle
-    2: ResultsSort
-    3: ResultsDynamicSort
+    1: ResultsShuffle       -   Houdt de configuratie van netwerken, maar legt kabels opnieuw aan in willekeurige volgorde.
+    2: ResultsSort          -   Houdt de configuratie van netwerken, maar legt kabels opnieuw aan op afstand tot batterij.
+    3: ResultsDynamicSort   -   Houdt de configuratie van netwerken, maar legt kabels opnieuw aan op afstand tot netwerk punten.
 
-    Keuzes van hillclimbers:
-    1: CornerChange
-    2: CornerPositionChange
+    Keuzes van finalizers:
+    1: CornerChange         -   Neemt een optimizer oplossing en verandert een willekeurige hoek.
+    2: CornerPositionChange -   Neemt een optimizer oplossing, verandert willekeurige hoek of verplaats huis in aanlegvolgorde.
 
 
 

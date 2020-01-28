@@ -172,7 +172,7 @@ if __name__ == "__main__":
     try:
         iterations = int(sys.argv[1])
     except:
-        iterations = 10000
+        iterations = 100
     
     try:
         filePrefix = sys.argv[2]
