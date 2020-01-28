@@ -125,7 +125,7 @@ def Optimize(goodRandom, iterations, subChoice):
         elif subChoice == 2:
             results = ResultsSort.Sort(goodRandom[2], goodRandom[1])
         elif subChoice >= 3:
-            results = ResultsDynamicSort.Sort(goodrandom[2], goodrandom[1])
+            results = ResultsDynamicSort.Sort(goodRandom[2], goodRandom[1])
 
         optimizationAttempts, optimizedResult = ScoreCheck(results, optimizedResult, optimizationAttempts)
 
@@ -172,7 +172,7 @@ if __name__ == "__main__":
     try:
         iterations = int(sys.argv[1])
     except:
-        iterations = 10000
+        iterations = 100
     
     try:
         filePrefix = sys.argv[2]
