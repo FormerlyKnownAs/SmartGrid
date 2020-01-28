@@ -9,503 +9,192 @@ Ben Groot, Boy Stekelbos, Momo Schaap
 """
 
 import sys
-import csv
-import re
 import random as r
 import json
 
-from code.classes import house, battery, network
-from code.algorithms import nearestBatterySimple, nearestNetworkSimple, nearestNetworkv2, nearestNetworkv2random, bestFitNetwork, nearestHouse, nearestNetworkv3random, nearestNetworkShuffle, nearestNetworkSort, lowerboundCalculator, hillclimbSort, nearestNetworkSortOrderList, nearestNetworkSortv2, hillclimbSortv2, nearestHousev2
+from code.classes import house, network
+from code.algorithms import BatterySearch, bestFitNetwork, CornerChange, CornerPositionChange, HouseSearchFull, HouseSearchHybrid, NetworkSearch, ResultsDynamicSort, ResultShuffle, ResultsSort, TrueRandom
 from code.visualization import visualize
 
-def main(filePrefix, algorithmChoice, repetition):
+def main(filePrefix, algorithmChoice, iterations):
     """
         Chooses the file, function and repetition, and sends the output to the visualizer.
     """
 
-    # Opens the results file to possibly write results in
-    with open("resultaten/simulatieresulaten.txt", "w+") as f:
+    if algorithmChoice == 1:
+        result = HillClimb(Optimize(Random(filePrefix, iterations, 1), iterations * 2, 1), iterations * 4)
+    elif algorithmChoice == 2:
+        result = HillClimb(Optimize(Random(filePrefix, iterations, 1), iterations * 2, 1), iterations * 4, True)
+    elif algorithmChoice == 3:
+        result = HillClimb(Optimize(Random(filePrefix, iterations, 1), iterations * 2, 2), iterations * 4)
+    elif algorithmChoice == 4:
+        result = HillClimb(Optimize(Random(filePrefix, iterations, 1), iterations * 2, 2), iterations * 4, True)
+    elif algorithmChoice == 5:
+        results = HillClimb(Optimize(Random(filePrefix, iterations, 1), iterations * 2, 2), iterations * 4, True)
+    elif algorithmChoice == 6:
+        results = Random(filePrefix, iterations, 3)
+    elif algorithmChoice >= 7 or algorithmChoice < 1:
+        results = Random(filePrefix, iterations, 6)
         
-        # Sets the information to be called upon later
-        numberList = []
-        unconnectedHouseList = []
-        totalCostList = []
+    
+        
+def readinInfo(filePrefix, networkBool):
+    """
+    Reads in the csv files for the neighborhoods.
+    """
+    houseList = house.LoadHouses(f"data/{filePrefix}_huizen.csv")
+    if networkBool:
+        networkList = network.LoadNetwork(f"data/{filePrefix}_batterijen.csv")
 
-        # Loads in the data types
-        houseCSV = f"data/{filePrefix}_huizen.csv"
-        batteryCSV = f"data/{filePrefix}_batterijen.csv"
-        houseList = house.LoadHouses(houseCSV)
-        batteryList = battery.LoadBatteries(batteryCSV)
-        networkList = network.LoadNetwork(batteryCSV)
+        return houseList, networkList
 
-        if False:
-            lowerboundCalculator.LowestBound(houseList, batteryList)
+    batteryList = battery.LoadBatteries(f"data/{filePrefix}_batterijen.csv")
+
+    return houseList, batteryList
+
+def ScoreCheck(newResults, previousResults, failedImprovements):
+    """
+    Compares scores, increments counter and returns the better result.
+    """
+
+    if newResults is not None:
+        if newResults[1] < previousResults[1]:
+            failedImprovements = 0
+            print(f"prev = {previousResults[1]}, new = {newResults[1]}")
+            return failedImprovements, newResults
         else:
-            # Chooses the algorithm
-            for i in range(repetition):
-
-                if algorithmChoice == 1:
-                    nearestBatterySimple.NearestBattery(houseList, batteryList)
-                elif algorithmChoice == 2:
-                    nearestNetworkSimple.NearestNetwork(houseList, networkList)
-                elif algorithmChoice == 3:    
-                    print("Using nearest Network, set")
-                    nearestNetworkv2.NearestNetworkV2(houseList, networkList)
-                elif algorithmChoice == 4:
-                    print("Using nearest Network, Random")
-                    results = nearestNetworkv2random.NearestNetworkV2(houseList, networkList, i)
-                    numberList.append(results[0])
-                    unconnectedHouseList.append(results[1])
-                    totalCostList.append(results[2])
-                    f.write(f"{results[0]}:\n")
-                    f.write(f"Unconnected Houses: {results[1]}\n")
-                    f.write(f"Total Cost: {results[2]}\n")
-                elif algorithmChoice == 5:
-                    print("Using BestFit")
-                    results = bestFitNetwork.BestFit(houseList, networkList, i)
-                    numberList.append(results[0])
-                    unconnectedHouseList.append(results[1])
-                    totalCostList.append(results[2])
-                    f.write(f"{results[0]}")
-                    f.write(f"Unconnected Houses: {results[1]}\n")
-                    f.write(f"Total Cost: {results[2]}\n")
-                elif algorithmChoice == 6:
-                    results = nearestHouse.NearestHouse(houseList, networkList, i)
-                elif algorithmChoice == 7:
-                    results = nearestNetworkv3random.NearestNetworkV3(houseList, networkList, i)
-                    if results is not None:
-                        visualize.Visualize(results[2])
-                elif algorithmChoice == 8:
-                    results = nearestNetworkv3random.NearestNetworkV3(houseList, networkList, i)
-                    if results is not None:
-                        baseCost = results[1]
-                        print("Starting the sort")
-                        visualize.Visualize(results[2])
-                        j = 0
-                        k = 0
-                        allResults = []
-                        allCostResults = []
-                        while j < 100 and k < 500:
-                            resultsNew = nearestNetworkShuffle.Shuffle(results[2], results[1])
-                            allCostResults.append(resultsNew[1])
-                            allResults.append(resultsNew)
-                            k += 1
-                            if resultsNew[1] < baseCost:
-                                j += 1
-
-                        # Gets information of run
-                        print(f"best Change: {min(allCostResults)}, total of {baseCost - min(allCostResults)}\nworst Change: {max(allCostResults)}, total of {baseCost - max(allCostResults)}\naverage change: {baseCost - (sum(allCostResults) / len(allCostResults))}.\n Total attempts: {k}, unsuccessful ones = {k - j}")
-                        
-                        # Visualizes best result
-                        visualize.Visualize(allResults[allCostResults.index(min(allCostResults))][2])
-                elif algorithmChoice == 9:
-
-                    runCounter = 0
-                    failedImprovements = 0
-                    bestScore = 10000
-                    finalOption = None
-
-                    while failedImprovements < 100:
-                        runCounter += 1
-
-                        results = nearestNetworkv3random.NearestNetworkV3(houseList, networkList, i)
-
-                        # gives function its own reading in to allow for repetition
-                        houseCSV = f"data/{filePrefix}_huizen.csv"
-                        batteryCSV = f"data/{filePrefix}_batterijen.csv"
-                        houseList = house.LoadHouses(houseCSV)
-                        batteryList = battery.LoadBatteries(batteryCSV)
-                        networkList = network.LoadNetwork(batteryCSV)
-
-                        if results is not None:
-                            if results[1] < bestScore:
-                                print(f"bestScore was {bestScore}, is now {results[1]}")
-                                bestScore = results[1]
-                                finalOption = results
-                                failedImprovements = 0
-                                
-
-                            else:
-                                failedImprovements += 1
-                                if failedImprovements % 50 == 0:
-                                    print(failedImprovements)
-
-
-                    # Creates a json for best result
-                    print(finalOption[2])
-                    with open(finalOption[2], "w+") as f:
-                        json.dump(finalOption[0], f, indent=4)
-
-                    print(f"Couln't find better result after 200 more attempts. Ran a total of {runCounter} times.")
-
-                    baseCost = finalOption[1]
-                    print("Starting the sort")
-                    visualize.Visualize(finalOption[2], True)
-
-                    optimizationAttempts = 0
-                    optimizedResult = finalOption
-
-                    while optimizationAttempts < 2000:
-                        resultsNew = nearestNetworkSort.Sort(finalOption[2], finalOption[1])
-
-                        if resultsNew[1] < baseCost:
-                            print(f"previous optimized result was {baseCost}, new result is {resultsNew[1]}")
-                            optimizedResult = resultsNew
-                            baseCost = resultsNew[1]
-                            optimizationAttempts = 0
-
-                        else:
-                            optimizationAttempts += 1
-                            if optimizationAttempts % 50 == 0:
-                                print(optimizationAttempts)
-                    
-                        with open(optimizedResult[2], "w+") as f:
-                            json.dump(optimizedResult[0], f, indent=4)
-                
-                    # Visualizes best result
-                    visualize.Visualize(optimizedResult[2])
-
-                elif algorithmChoice == 10:
-                    results = nearestNetworkv3random.NearestNetworkV3(houseList, networkList, i)
-                    if results is not None:
-                        baseCost = results[1]
-                        print("Starting the sort")
-
-                        # with open(finalOption[2], "w+") as f:
-                        #     json.dump(finalOption[0], f, indent=4)
-
-                        # visualize.Visualize(results[2])
-                        j = 0
-                        k = 0
-                        allResults = []
-                        allCostResults = []
-                        while j < 100 and k < 500:
-                            resultsNew = hillclimbSort.hillSort(results[2], results[1])
-                            allCostResults.append(resultsNew[1])
-                            allResults.append(resultsNew)
-                            k += 1
-                            if resultsNew[1] < baseCost:
-                                j += 1
-
-                        # Gets information of run
-                        print(f"best Change: {min(allCostResults)}, total of {baseCost - min(allCostResults)}\nworst Change: {max(allCostResults)}, total of {baseCost - max(allCostResults)}\naverage change: {baseCost - (sum(allCostResults) / len(allCostResults))}.\n Total attempts: {k}, unsuccessful ones = {k - j}")
-                        
-                        # Visualizes best result
-                        # visualize.Visualize(allResults[allCostResults.index(min(allCostResults))][2])
-
-                elif algorithmChoice == 11:
-
-                    runCounter = 0
-                    failedImprovements = 0
-                    bestScore = 10000
-                    finalOption = None
-
-                    while failedImprovements < 1000:
-                        runCounter += 1
-
-                        results = nearestNetworkv3random.NearestNetworkV3(houseList, networkList, i)
-
-                        # gives function its own reading in to allow for repetition
-                        houseCSV = f"data/{filePrefix}_huizen.csv"
-                        batteryCSV = f"data/{filePrefix}_batterijen.csv"
-                        houseList = house.LoadHouses(houseCSV)
-                        batteryList = battery.LoadBatteries(batteryCSV)
-                        networkList = network.LoadNetwork(batteryCSV)
-
-                        if results is not None:
-                            if results[1] < bestScore:
-                                print(f"bestScore was {bestScore}, is now {results[1]}")
-                                bestScore = results[1]
-                                finalOption = results
-                                failedImprovements = 0
-                                
-
-                            else:
-                                failedImprovements += 1
-                                if failedImprovements % 50 == 0:
-                                    print(failedImprovements)
-
-
-                    # Creates a json for best result
-                    print(finalOption[2])
-                    with open(finalOption[2], "w+") as f:
-                        json.dump(finalOption[0], f, indent=4)
-
-                    print(f"Couln't find better result after 200 more attempts. Ran a total of {runCounter} times.")
-
-                    baseCost = finalOption[1]
-                    print("Starting the sort")
-                    visualize.Visualize(finalOption[2])
-
-                    optimizationAttempts = 0
-                    optimizedResult = finalOption
-
-                    while optimizationAttempts < 5000:
-                        resultsNew = nearestNetworkSortOrderList.Sort(finalOption[2], finalOption[1])
-
-                        if resultsNew[1] < baseCost:
-                            print(f"previous optimized result was {baseCost}, new result is {resultsNew[1]}")
-                            optimizedResult = resultsNew
-                            baseCost = resultsNew[1]
-                            optimizationAttempts = 0
-
-                        else:
-                            optimizationAttempts += 1
-                            if optimizationAttempts % 50 == 0:
-                                print(optimizationAttempts)
-                    
-                    with open(optimizedResult[2], "w+") as f:
-                        json.dump(optimizedResult[0], f, indent=4)
-
-                    newPath = optimizedResult[2].strip(".json") + "hillclimb.json"
-                    with open(newPath, "w+") as f:
-                        json.dump(optimizedResult[0], f, indent=4)
-                
-                    # Visualizes best result
-                    visualize.Visualize(finalOption[2], True)
-                    visualize.Visualize(optimizedResult[2])
-
-                    hillClimbAttempts = 0
-                    hillclimbResult = optimizedResult
-
-                    while hillClimbAttempts < 10000:
-                        resultsNew = hillclimbSort.hillSort(newPath, hillclimbResult[1], hillclimbResult[3])
-
-                        if resultsNew[1] <= hillclimbResult[1]:
-                            # print(f"result changed but no improvement. Result still {resultsNew[1]}")
-                            if resultsNew[1] < hillclimbResult[1]:
-                                print(f"previous optimized was {hillclimbResult[1]}, new result is {resultsNew[1]}")
-                                hillClimbAttempts = 0
-                            hillclimbResult = resultsNew
-                            hillClimbAttempts += 1
-                            
-
-                        else: 
-                            hillClimbAttempts += 1
-                            if hillClimbAttempts % 1000 == 0:
-                                print(f"hillclimb attempt {hillClimbAttempts}")
-
-                    with open(hillclimbResult[2], "w+") as f:
-                            json.dump(hillclimbResult[0], f, indent=4)
-                            
-                    visualize.Visualize(optimizedResult[2], True)
-                    visualize.Visualize(hillclimbResult[2])
-
-                elif algorithmChoice == 12:
-
-                    runCounter = 0
-                    failedImprovements = 0
-                    bestScore = 10000
-                    finalOption = None
-
-                    while failedImprovements < 2:
-                        runCounter += 1
-
-                        results = nearestNetworkv3random.NearestNetworkV3(houseList, networkList, i)
-
-                        # gives function its own reading in to allow for repetition
-                        houseCSV = f"data/{filePrefix}_huizen.csv"
-                        batteryCSV = f"data/{filePrefix}_batterijen.csv"
-                        houseList = house.LoadHouses(houseCSV)
-                        batteryList = battery.LoadBatteries(batteryCSV)
-                        networkList = network.LoadNetwork(batteryCSV)
-
-                        if results is not None:
-                            if results[1] < bestScore:
-                                print(f"bestScore was {bestScore}, is now {results[1]}")
-                                bestScore = results[1]
-                                finalOption = results
-                                failedImprovements = 0
-                                
-
-                            else:
-                                failedImprovements += 1
-                                if failedImprovements % 50 == 0:
-                                    print(failedImprovements)
-
-
-                    # Creates a json for best result
-                    print(finalOption[2])
-                    with open(finalOption[2], "w+") as f:
-                        json.dump(finalOption[0], f, indent=4)
-
-                    print(f"Couln't find better result after 200 more attempts. Ran a total of {runCounter} times.")
-
-                    baseCost = finalOption[1]
-                    print("Starting the sort")
-                    visualize.Visualize(finalOption[2])
-
-                    optimizationAttempts = 0
-                    optimizedResult = finalOption
-
-                    while optimizationAttempts < 5:
-                        resultsNew = nearestNetworkSortv2.Sort(finalOption[2], finalOption[1])
-
-                        if resultsNew[1] < baseCost:
-                            print(f"previous optimized result was {baseCost}, new result is {resultsNew[1]}")
-                            optimizedResult = resultsNew
-                            baseCost = resultsNew[1]
-                            optimizationAttempts = 0
-
-                        else:
-                            optimizationAttempts += 1
-                            if optimizationAttempts % 50 == 0:
-                                print(optimizationAttempts)
-                    
-                    with open(optimizedResult[2], "w+") as f:
-                        json.dump(optimizedResult[0], f, indent=4)
-
-                    newPath = optimizedResult[2].strip(".json") + "hillclimb.json"
-                    with open(newPath, "w+") as f:
-                        json.dump(optimizedResult[0], f, indent=4)
-                
-                    # Visualizes best result
-                    visualize.Visualize(finalOption[2], True)
-                    visualize.Visualize(optimizedResult[2])
-
-                    hillClimbAttempts = 0
-                    hillclimbResult = optimizedResult
-
-                    while hillClimbAttempts < 10:
-                        resultsNew = hillclimbSortv2.hillSort(newPath, hillclimbResult[1], hillclimbResult[3])
-
-                        if resultsNew[1] <= hillclimbResult[1]:
-                            # print(f"result changed but no improvement. Result still {resultsNew[1]}")
-                            if resultsNew[1] < hillclimbResult[1]:
-                                print(f"previous optimized was {hillclimbResult[1]}, new result is {resultsNew[1]}")
-                                hillClimbAttempts = 0
-                            hillclimbResult = resultsNew
-                            hillClimbAttempts += 1
-                            
-
-                        else: 
-                            hillClimbAttempts += 1
-                            if hillClimbAttempts % 100 == 0:
-                                print(f"hillclimb attempt {hillClimbAttempts}")
-
-                    with open(hillclimbResult[2], "w+") as f:
-                            json.dump(hillclimbResult[0], f, indent=4)
-                            
-                    visualize.Visualize(optimizedResult[2], True)
-                    visualize.Visualize(hillclimbResult[2])
-
-                elif algorithmChoice >= 13:
-
-                    runCounter = 0
-                    failedImprovements = 0
-                    bestScore = 10000
-                    finalOption = None
-
-                    while failedImprovements < 2:
-                        runCounter += 1
-
-                        results = nearestHousev2.NearestHouse(houseList, networkList, i)
-                        # gives function its own reading in to allow for repetition
-                        houseCSV = f"data/{filePrefix}_huizen.csv"
-                        batteryCSV = f"data/{filePrefix}_batterijen.csv"
-                        houseList = house.LoadHouses(houseCSV)
-                        batteryList = battery.LoadBatteries(batteryCSV)
-                        networkList = network.LoadNetwork(batteryCSV)
-
-                        if results is not None:
-                            if results[1] < bestScore:
-                                print(f"bestScore was {bestScore}, is now {results[1]}")
-                                bestScore = results[1]
-                                finalOption = results
-                                failedImprovements = 0
-                                
-
-                            else:
-                                failedImprovements += 1
-                                if failedImprovements % 50 == 0:
-                                    print(failedImprovements)
-
-
-                    # Creates a json for best result
-                    print(finalOption[2])
-                    with open(finalOption[2], "w+") as f:
-                        json.dump(finalOption[0], f, indent=4)
-
-                    print(f"Couln't find better result after 200 more attempts. Ran a total of {runCounter} times.")
-
-                    baseCost = finalOption[1]
-                    print("Starting the sort")
-                    visualize.Visualize(finalOption[2])
-
-                    optimizationAttempts = 0
-                    optimizedResult = finalOption
-
-                    while optimizationAttempts < 2:
-                        resultsNew = nearestNetworkSortv2.Sort(finalOption[2], finalOption[1])
-
-                        if resultsNew[1] < baseCost:
-                            print(f"previous optimized result was {baseCost}, new result is {resultsNew[1]}")
-                            optimizedResult = resultsNew
-                            baseCost = resultsNew[1]
-                            optimizationAttempts = 0
-
-                        else:
-                            optimizationAttempts += 1
-                            if optimizationAttempts % 50 == 0:
-                                print(optimizationAttempts)
-                    
-                    with open(optimizedResult[2], "w+") as f:
-                        json.dump(optimizedResult[0], f, indent=4)
-
-                    newPath = optimizedResult[2].strip(".json") + "hillclimb.json"
-                    with open(newPath, "w+") as f:
-                        json.dump(optimizedResult[0], f, indent=4)
-                
-                    # Visualizes best result
-                    visualize.Visualize(finalOption[2], True)
-                    visualize.Visualize(optimizedResult[2])
-
-                    hillClimbAttempts = 0
-                    hillclimbResult = optimizedResult
-
-                    while hillClimbAttempts < 10:
-                        resultsNew = hillclimbSortv2.hillSort(newPath, hillclimbResult[1], hillclimbResult[3])
-
-                        if resultsNew[1] <= hillclimbResult[1]:
-                            # print(f"result changed but no improvement. Result still {resultsNew[1]}")
-                            if resultsNew[1] < hillclimbResult[1]:
-                                print(f"previous optimized was {hillclimbResult[1]}, new result is {resultsNew[1]}")
-                                hillClimbAttempts = 0
-                            hillclimbResult = resultsNew
-                            hillClimbAttempts += 1
-                            
-
-                        else: 
-                            hillClimbAttempts += 1
-                            if hillClimbAttempts % 100 == 0:
-                                print(f"hillclimb attempt {hillClimbAttempts}")
-
-                    with open(hillclimbResult[2], "w+") as f:
-                            json.dump(hillclimbResult[0], f, indent=4)
-                            
-                    visualize.Visualize(optimizedResult[2], True)
-                    visualize.Visualize(hillclimbResult[2])
+            failedImprovements += 1
+            if failedImprovements % 50 == 0:
+                print(failedImprovements)
 
+            return failedImprovements, previousResults
+
+    return failedImprovements, previousResults
+
+def VisualJSON(result, previousResult=None):
+    """
+    Creates a JSON file and visualizes the result. If a previousResult is given, creates an underlay. 
+    """
+
+    with open(result[2], "w+") as f:
+        json.dump(result[0], f, indent=4)
+
+    if previousResult is not None:
+        visualize.Visualize(previousResult[2], True)
+    visualize.Visualize(result[2])
+
+def Random(filePrefix, iterations, subChoice):
+    """
+    Runs the NearestNetworkV3 random algorithm as many times as iterations, and returns the best result.
+    """
+
+    runCounter = 0
+    failedImprovements = 0
+    bestScore = 1000
+    bestRandom = None
+
+    while failedImprovements < iterations:
+
+        runCounter += 1
+        houseList, networkList = readinInfo(filePrefix, True)
+        
+        if subChoice == 1:
+            results = NetworkSearch.NearestNetworkV3(houseList, networkList, 1)
+        if subChoice == 2:
+            results = HouseSearchHybrid.NearestHouse(houseList, networkList)
+        if subChoice == 3:
+            results = HouseSearchFull.NearestHouse(houseList, networkList)
+        if subChoice == 4:
+            results = bestFitNetwork.BestFit(houseList, networkList)
+        if subChoice == 5:
+            results = BatterySearch.NearestNetwork(houseList, networkList)
+        if subChoice == 6:
+            results = TrueRandom.RandomConnect(houseList, networkList)
+
+        if bestRandom is None:
+            bestRandom = results
+
+        failedImprovements, bestRandom = ScoreCheck(results, bestRandom, failedImprovements)
+
+    print(f"Randomization Algorithm: couldn't find a better result after {iterations} attemps. Ran a total of {runCounter}. Final Score = {bestRandom[1]}")
+
+    VisualJSON(bestRandom)
+
+    return bestRandom
+
+def Optimize(goodRandom, iterations, subChoice):
+    """
+    Runs the Sort random algorithm as many times as interations, and returns the best one. 
+    """
+
+    baseCost = goodRandom[1]
+    optimizationAttempts = 0
+    optimizedResult = goodRandom
+
+    while optimizationAttempts < iterations:
+
+        if subChoice == 1:
+            results = ResultShuffle.Shuffle(goodRandom[2], goodRandom[1])
+        elif subChoice == 2:
+            results = ResultsSort.Sort(goodRandom[2], goodRandom[1])
+        elif subChoice == 3:
+            results = ResultsDynamicSort.Sort(goodrandom[2], goodrandom[1])
+
+        optimizationAttempts, optimizedResult = ScoreCheck(results, optimizedResult, optimizationAttempts)
+
+    VisualJSON(optimizedResult, goodRandom)
+
+    print(f"Result Optimization: couldn't find a better result after {iterations} attempts. Final Score = {optimizedResult[1]}")
+
+    return optimizedResult
+
+def HillClimb(optimizedRandom, iterations, dynamic=False):
+    """
+    Runs the hillclimb algorithm as many times as iterations and returns the best result
+    """
+
+    optimizationAttempts = 0
+    optimizedResult = optimizedRandom
+    newPath = optimizedRandom[2].strip(".json") + "hillclimb.json"
+    with open(newPath, "w+") as f:
+        json.dump(optimizedRandom[0], f, indent=4)
+
+    while optimizationAttempts < iterations:
+
+        if dynamic:
+            results = CornerChange.hillSort(newPath, optimizedResult[1], optimizedResult[3])
+        else:
+            results = CornerPositionChange.hillSort(newPath, optimizedResult[1], optimizedResult[3])
+
+        optimizationAttempts, optimizedResult = ScoreCheck(results, optimizedResult, optimizationAttempts)
+
+    if results[1] < optimizedRandom[1]:
+        VisualJSON(optimizedResult, optimizedRandom)
+        print(f"hillclimbSortv2: couldn't find a better result after {iterations} attempts. Final Score = {optimizedResult[1]}")
+    else:
+        print("hillclimbing did not improve the score. No visualization made.")
+
+    
 if __name__ == "__main__":
 
     # Sets the parameters of the function based on the input, and creates default values
     try:
-        filePrefix = sys.argv[3]
-    except:
-        filePrefix = "wijk1"
-
-    try:
-        algorithmChoice = int(sys.argv[2])
+        algorithmChoice = int(sys.argv[3])
     except:
         algorithmChoice = 10000
 
     try:
-        repetition = int(sys.argv[1])
+        filePrefix = sys.argv[2]
     except:
-        repetition = 1
+        filePrefix = "wijk1"
+
+    try:
+        iterations = int(sys.argv[1])
+    except:
+        iterations = 100
 
 
-    main(filePrefix, algorithmChoice, repetition)
+    main(filePrefix, algorithmChoice, iterations)
 
 
 
