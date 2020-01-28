@@ -6,10 +6,10 @@ Ben Groot, Boy Stekelbos, Momo Schaap
 Algorithms:
 
 #### BatterySearch:
-Simpelste oplossing voor het zoeken naar de dichstbijzijnde batterij, zonder ander factors in overweging te nemen.
+Leest willekeurig de huizen in, gaat daarna op basis van afstand  en beschikbaardheid connecties maken met batterijen
 
 #### bestFitNetwork.py:
-Algoritme dat huizen verbindt op aparte netwerken aan de batterijen waar die het beste in passen.
+Algoritme dat huizen verbindt op aparte netwerken aan de batterijen waar die het beste in passen qua capaciteit.
 
 #### CornerChange.py:
 Neemt een redelijk geoptimaliseerde oplossing en vervolgens verandert het de hoek die de kabels nemen om de connectiepunt van het netwerk te bereiken.
