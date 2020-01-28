@@ -3,6 +3,8 @@ The SmartGrid assignment repository for the group 'The Group Formerly Known as '
 
 Ben Groot, Boy Stekelbos, Momo Schaap
 
+Algorithms:
+
 BatterySearch:
 Simpelste oplossing voor het zoeken naar de dichstbijzijndste batterij, zonder ander factors in overweging te nemen.
 
@@ -36,16 +38,17 @@ Berekent de lower bound van een wijk gebaseerd op de afstand tussen huizen en ba
 mst.py(conceptueel onverenigbaar):
 Niet volledig afgemaatk, maar aangepast om de configuratie tussen huizen en batterijen te onthouden en te accepteren in het programma. Deze als nodes in het programma te stoppen om vervolgens de minimum spanning tree te vinden.
 
-
-
+NetworkSearch.py:
+Genereert de initiele configuratie waar andere algoritmen uiteindelijk mee verder werken. De volgorde van het inlezen van de huizen is willekeurig, vervolgens maakt het verbindingen tussen huizen en batterijen op basis van afstand. dit generereert een netwerk van kabels die vervolgens ook meegenomen worden in de afstandsberekening.
 
 ResultsDynamicSort.py:
 Houdt de configuratie die gemaakt is tussen welke huizen verbonden zijn met welke batterijen. Vervolgens verwijdert het de kabels en maakt nieuwe kabels aan gebaseerd op de afstand tussen het huis en de dichstbijzijnde netwerk punt wat een kabel, batterij en huis kan zijn.
 
-Netw.py:
-Genereert de initiele configuratie waar andere algoritmen uiteindelijk mee verder werken. De volgorde van het inlezen van de huizen is willekeurig, vervolgens maakt het verbindingen tussen huizen en batterijen op basis van afstand. dit generereert een netwerk van kabels die vervolgens ook meegenomen worden in de afstandsberekening.
+ResultsShuffle.py:
+Doet hetzelfde als ResultsDynamicSort behalve dat de inleesvolgorde van huizen willekeurig is gemaakt.
 
-nearestNetworkSortOrderList.py :
-Neemt een json bestand, waarin de netwerken van huizen en batterijen al aangemaakt zijn. Vervolgens worden de kabels in deze netwerken weggehaald. Dan wordt er over elk netwerk en elk huis geloopt waarbij elk huis nieuwe connecties maakt naar het netwerk toe, vervolgens zoeken de volgende huizen connectiepunten aan het netwerk, waar elke kabel die deel uitmaakt van het netwerk een connectiepunt is.
+ResultsSort.py:
+Houdt de configuratie die gemaakt is tussen welke huizen verbonden zijn met welke batterijen. vervolgens haalt het deze kabels weg. Gaat over elk netwerk heen en sorteert de huizen op basis van afstand en maakt nieuwe kabels aan.
 
-
+TrueRandom.py:
+Compleet willekeurige oplossing, wordt voornamelijk gebruikt als crossreference voor de puntentelling van andere algoritmen.
