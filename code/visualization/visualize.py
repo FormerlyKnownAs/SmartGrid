@@ -16,7 +16,7 @@ import json
 
 def ListFormat(string):
     """ Converts coordinate strings to correct list
-        format for visualization """
+        format for visualization, string is a string of coordinates """
 
     outputList = []
 
@@ -32,7 +32,7 @@ def ListFormat(string):
 
 def Visualize(input, underlay=False):
     """ Loads JSON file, put data in dict,
-        visualize using pyplot """
+        visualize using pyplot. input is a JSON file """
 
     # Load JSON file
     with open(input, 'r') as JSON:
