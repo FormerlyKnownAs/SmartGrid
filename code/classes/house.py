@@ -42,8 +42,10 @@ class House(object):
 
             # Checks capacity and if available checks distance to battery
             if battery.capacity > self.output:
-                distance = abs(self.coordinates[0] - battery.coordinates[0]) + abs(self.coordinates[1] - battery.coordinates[1])
-                print(f"Self = {self.coordinates}. Battery = {battery.coordinates}, Capacity = {battery.capacity}")
+                distance = abs(self.coordinates[0] - battery.coordinates[0]) + 
+                            abs(self.coordinates[1] - battery.coordinates[1])
+                print(f"Self = {self.coordinates}. Battery = 
+                        {battery.coordinates}, Capacity = {battery.capacity}")
 
                 distanceList.append(distance)
             else:
@@ -61,7 +63,8 @@ class House(object):
 
 
     def __str__(self):
-        return f"{self.coordinates}, {self.output}, {self.route}, {self.battery}, {self.cost}, {self.connected}\n"
+        return f"{self.coordinates}, {self.output}, {self.route}, \
+                    {self.battery}, {self.cost}, {self.connected}\n"
 
 def LoadHouses(filePath):
     """ Reads out, parses input file, generates
@@ -87,7 +90,8 @@ def LoadHouses(filePath):
                 houseData.append(element)
 
             # Appends to list
-            newHouse = House(int(houseData[0]), int(houseData[1]), float(houseData[2]))
+            newHouse = House(int(houseData[0]), int(houseData[1]), 
+                                            float(houseData[2]))
             houses.append(newHouse)
 
     return houses
