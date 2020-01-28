@@ -1,10 +1,22 @@
+"""
+
+house.py
+
+Houses the House class, also loads houses from a given input files
+and generates House objects.
+
+The Group Formerly Known as 'The Prince Statement'
+Ben Groot, Boy Stekelbos, Momo Schaap
+
+"""
+
 import csv
 
 class House(object):
-    """Het model voor het huis object."""
+    """ The model for House objects. """
     
     def __init__(self, x, y, output):
-        """Initializeert het huis."""
+        """ Initializes a House. """
 
         self.coordinates = (x, y)
         self.output = output
@@ -14,12 +26,13 @@ class House(object):
         self.cables = []
         self.cost = 0
 
-        # attributes used for battery first approach
+        # Attributes used for battery first approach
         self.connected = False
         self.distance = 0
 
     def BatteryCheck(self, batteries):
-        """Checks the best battery based on distance and current capacity."""
+        """ Checks the best battery based on distance 
+            and current capacity. """
 
         # Makes empty list to store distance between house and battery
         distanceList = []
@@ -51,6 +64,8 @@ class House(object):
         return f"{self.coordinates}, {self.output}, {self.route}, {self.battery}, {self.cost}, {self.connected}\n"
 
 def LoadHouses(filePath):
+    """ Reads out, parses input file, generates
+        House objects. """
 
     # Makes list to return to be filled with csv data
     houses = []
