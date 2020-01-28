@@ -9,7 +9,8 @@ Ben Groot, Boy Stekelbos, Momo Schaap
 """
 
 def LowestBound(houses, batteries):
-    """ Calculates an approximation of the lower bound. """
+    """ Calculates an approximation of the lower bound. Takes a list
+    of house objects and network objects as input. """
 
     totalCost = 0
 

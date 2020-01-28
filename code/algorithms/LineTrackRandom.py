@@ -15,7 +15,8 @@ import numpy as np
 
 def TrackRandom(start, end):
     """ Returns a list of all coordinates 
-        between two given points. """
+        between two given points. Takes two sets
+        of coordinates as input. """
 
     # Define variables
     startX = start[0]

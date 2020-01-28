@@ -27,7 +27,8 @@ class Vertix():
 
 
 def ListFormat(string):
-
+    """Converts a coordinate string to a tuple. Takes coordinates as a string
+    as argument. """
     outputList = []
 
     for element in string.split(","):
@@ -40,7 +41,7 @@ def ListFormat(string):
 
 def Load(input):
     """ Loads JSON file, convert into dict or list-in-list format,
-        visualize using pyplot """
+        visualize using pyplot. """
 
     # Load JSON file
     with open(input, 'r') as JSON:
@@ -72,7 +73,7 @@ def Load(input):
 
 
 def DistanceCalculator(network):
-
+    """ . Takes a list of network objects as """
     networkDistances = []
 
     for i, node in enumerate(network):

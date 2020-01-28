@@ -2,8 +2,8 @@
 
 HouseSearchFull.py
 
-Algorithm that connects houses on separate networks to the 
-closest available network node.
+Algorithm that connects a network to its nearest house,
+as long as there is capacity available.
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
@@ -17,7 +17,8 @@ import numpy as np
 
 def NearestHouse(houses, networks):
     """ Connects houses on seperate networks to
-        closes available network node. """
+        closes available network node. Takes a list of house 
+        objects and a list of network objects as argument."""
 
     totalCost = 0
     cableCost = 9

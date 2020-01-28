@@ -2,7 +2,9 @@
 
 CornerChange.py
 
-Generates a set of turns and changes them.
+Takes a JSON file and a randomization list and 
+changes one corner connection, leaving the rest
+identical.
 
 The Group Formerly Known as 'The Prince Statement'
 Ben Groot, Boy Stekelbos, Momo Schaap
@@ -15,7 +17,10 @@ import os as o
 import json
 
 def hillSort(inputFile, previousScore, randomizationList):
-    """ Generates a set of turns and changes them. """
+    """ Generates a set of turns and changes them. Takes 
+        a path to a json file as input file, a previous
+        score, and a list of randomization choices made
+        by the previous algorithm."""
 
     # Set variables to be measured
     totalCost = 0

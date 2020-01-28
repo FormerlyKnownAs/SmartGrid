@@ -4,7 +4,7 @@ from code.classes.network import Network
 
 def LoadHouses(filePath):
     """ Reads out, parses input file, generates
-        House objects. """
+        House objects. Takes a filepath as an argument. """
 
     # Makes list to return to be filled with csv data
     houses = []
@@ -33,7 +33,8 @@ def LoadHouses(filePath):
 
 def LoadNetwork(filePath):
     """ Reads out, parses input file, generates
-        network objects. """
+        network objects. Takes a filepath as an
+        argument. """
 
     # Makes list to return to be filled with csv data
     networks = []
