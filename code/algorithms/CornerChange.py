@@ -8,6 +8,7 @@ Ben Groot, Boy Stekelbos, Momo Schaap
 from code.algorithms.LineTrackRandominput import TrackRandom
 import random as r
 import os as o
+import json
 
 def hillSort(inputFile, previousScore, randomizationList):
 

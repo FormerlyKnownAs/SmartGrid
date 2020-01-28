@@ -12,7 +12,6 @@ Ben Groot, Boy Stekelbos, Momo Schaap
 from code.algorithms.LineTrackRandom import TrackRandom
 import random as r
 import os as o
-import json
 
 def NearestNetworkV3(houses, networks, id):
 
